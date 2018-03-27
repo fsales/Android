@@ -22,8 +22,8 @@
 
     <TextView
         android:id="@+id/txt_ac"
-        android:layout_width="96"
-        android:layout_height="49"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
         android:background="?attr/actionModeSplitBackground"
         android:gravity="center"
         android:text="AC"
@@ -33,8 +33,8 @@
 
     <TextView
         android:id="@+id/txt_limpar"
-        android:layout_width="96"
-        android:layout_height="49"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
         android:background="?attr/actionModeSplitBackground"
         android:gravity="center"
         android:text="A"
@@ -44,8 +44,8 @@
 
     <TextView
         android:id="@+id/txt_percent"
-        android:layout_width="96"
-        android:layout_height="49"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
         android:background="?attr/actionModeSplitBackground"
         android:gravity="center"
         android:text="%"
@@ -55,8 +55,8 @@
 
     <TextView
         android:id="@+id/txt_divisao"
-        android:layout_width="96"
-        android:layout_height="49"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
         android:background="@android:color/holo_red_light"
         android:gravity="center"
         android:text="/"
@@ -67,8 +67,8 @@
 
     <TextView
         android:id="@+id/txt_sete"
-        android:layout_width="96"
-        android:layout_height="49"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
         android:background="?attr/actionModeSplitBackground"
         android:gravity="center"
         android:text="7"
@@ -78,8 +78,8 @@
 
     <TextView
         android:id="@+id/txt_oito"
-        android:layout_width="96"
-        android:layout_height="49"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
         android:background="?attr/actionModeSplitBackground"
         android:gravity="center"
         android:text="8"
@@ -89,8 +89,8 @@
 
     <TextView
         android:id="@+id/txt_nove"
-        android:layout_width="96"
-        android:layout_height="49"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
         android:background="?attr/actionModeSplitBackground"
         android:gravity="center"
         android:text="9"
@@ -100,8 +100,8 @@
 
     <TextView
         android:id="@+id/txt_multiplicacao"
-        android:layout_width="96"
-        android:layout_height="49"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
         android:background="@android:color/holo_red_light"
         android:gravity="center"
         android:text="X"
@@ -109,5 +109,125 @@
         tools:layout_editor_absoluteX="288dp"
         tools:layout_editor_absoluteY="89dp" />
 
+    <TextView
+        android:id="@+id/txt_quatro"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
+        android:background="?attr/actionModeSplitBackground"
+        android:gravity="center"
+        android:text="4"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="138dp" />
+
+    <TextView
+        android:id="@+id/txt_cinco"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
+        android:background="?attr/actionModeSplitBackground"
+        android:gravity="center"
+        android:text="5"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="138dp" />
+
+    <TextView
+        android:id="@+id/txt_seis"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
+        android:background="?attr/actionModeSplitBackground"
+        android:gravity="center"
+        android:text="6"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="192dp"
+        tools:layout_editor_absoluteY="138dp" />
+
+    <TextView
+        android:id="@+id/txt_subtracao"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"
+        android:text="-"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="288dp"
+        tools:layout_editor_absoluteY="138dp" />
+
+    <TextView
+        android:id="@+id/txt_um"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
+        android:background="?attr/actionModeSplitBackground"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="187dp" />
+
+    <TextView
+        android:id="@+id/txt_dois"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
+        android:background="?attr/actionModeSplitBackground"
+        android:gravity="center"
+        android:text="2"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="187dp" />
+
+    <TextView
+        android:id="@+id/txt_tres"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
+        android:background="?attr/actionModeSplitBackground"
+        android:gravity="center"
+        android:text="3"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="192dp"
+        tools:layout_editor_absoluteY="187dp" />
+
+    <TextView
+        android:id="@+id/txt_soma"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"
+        android:text="+"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="288dp"
+        tools:layout_editor_absoluteY="187dp" />
+
+    <TextView
+        android:id="@+id/txt_zero"
+        android:layout_width="192dp"
+        android:layout_height="49dp"
+        android:background="?attr/actionModeSplitBackground"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="236dp" />
+
+    <TextView
+        android:id="@+id/txt_virgula"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
+        android:background="?attr/actionModeSplitBackground"
+        android:gravity="center"
+        android:text=","
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="192dp"
+        tools:layout_editor_absoluteY="236dp" />
+
+    <TextView
+        android:id="@+id/txt_igual"
+        android:layout_width="96dp"
+        android:layout_height="49dp"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"
+        android:text="="
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="288dp"
+        tools:layout_editor_absoluteY="236dp" />
 
 </android.support.constraint.ConstraintLayout>
