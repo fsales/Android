@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/display"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="40dp"
         android:background="@android:color/background_dark"
         android:gravity="center_horizontal|end"
         android:paddingEnd="5dp"
@@ -50,15 +50,17 @@
 
     <TextView
         android:id="@+id/txt_percent"
-        android:layout_width="96dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="?attr/actionModeSplitBackground"
         android:gravity="center"
         android:text="%"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/txt_nove"
-        app:layout_constraintTop_toBottomOf="@+id/display"
-        tools:layout_editor_absoluteX="192dp" />
+        app:layout_constraintEnd_toStartOf="@+id/txt_divisao"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txt_limpar"
+        app:layout_constraintTop_toBottomOf="@+id/display" />
 
     <TextView
         android:id="@+id/txt_divisao"
@@ -259,7 +261,7 @@
 
     <TextView
         android:id="@+id/txt_virgula"
-        android:layout_width="96dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="?attr/actionModeSplitBackground"
         android:gravity="center"
@@ -268,12 +270,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txt_igual"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/txt_zero"
+        app:layout_constraintStart_toEndOf="@+id/txt_dois"
         app:layout_constraintTop_toBottomOf="@+id/txt_tres" />
 
     <TextView
         android:id="@+id/txt_igual"
-        android:layout_width="96dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/holo_red_light"
         android:gravity="center"
