@@ -1,19 +1,17 @@
 import enuns.SituacaoAluno
 import vo.Aluno
-import desconto.DescontoExAluno
-import desconto.DescontoNovoAluno
+import desconto.MensalidadeExAluno
+import desconto.MensalidadeNovoAluno
 
 class MensalidadeStrategy {
     private val valor = 700.00
 
     fun calcular(aluno: Aluno): Double {
-        val desconto = if (SituacaoAluno.Ex.equals(aluno.situacao)) {
-            DescontoExAluno()
+        return if (SituacaoAluno.Ex.equals(aluno.situacao)) {
+            MensalidadeExAluno().valorMensalidade(valor)
         } else {
-            DescontoNovoAluno()
+            MensalidadeNovoAluno().valorMensalidade(valor)
         }
-
-        return valor - desconto.calcularValor(valor)
     }
 }
 

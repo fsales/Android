@@ -1,5 +1,4 @@
-import desconto.DescontoExAluno
-import desconto.DescontoNovoAluno
+import desconto.DescontoVintePorCento
 import enuns.SituacaoAluno
 import vo.Aluno
 
@@ -7,7 +6,7 @@ class MensalidadeSemDesconto {
     private val valor = 700.00
 
     fun calcular(aluno: Aluno): Double = if (SituacaoAluno.Ex.equals(aluno.situacao)){
-         valor * 0.8
+       valor -  DescontoVintePorCento().valorDesconto(valor)
      }else {
          valor
      }
