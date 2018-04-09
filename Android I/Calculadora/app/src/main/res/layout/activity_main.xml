@@ -7,11 +7,11 @@
     tools:context="fos.com.br.calculadora.MainActivity">
 
     <TextView
-        android:id="@+id/display"
+        android:id="@+id/txt_display"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="70dp"
         android:background="@android:color/background_dark"
-        android:gravity="center_horizontal|end"
+        android:gravity="center_vertical|center_horizontal|end"
         android:paddingEnd="5dp"
         android:text="0"
         android:textColor="@android:color/white"
@@ -29,24 +29,25 @@
         android:text="AC"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/txt_sete"
-        app:layout_constraintEnd_toStartOf="@+id/txt_limpar"
+        app:layout_constraintEnd_toStartOf="@+id/txt_limpar_ultima_operacao"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/display" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_display" />
 
     <TextView
-        android:id="@+id/txt_limpar"
+        android:id="@+id/txt_limpar_ultima_operacao"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="?attr/actionModeSplitBackground"
         android:gravity="center"
-        android:text="A"
+        android:text="\u2190"
         android:textColor="@android:color/white"
+        android:textSize="38sp"
         app:layout_constraintBottom_toTopOf="@+id/txt_oito"
         app:layout_constraintEnd_toStartOf="@+id/txt_percent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/txt_ac"
-        app:layout_constraintTop_toBottomOf="@+id/display" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_display" />
 
     <TextView
         android:id="@+id/txt_percent"
@@ -59,8 +60,8 @@
         app:layout_constraintBottom_toTopOf="@+id/txt_nove"
         app:layout_constraintEnd_toStartOf="@+id/txt_divisao"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/txt_limpar"
-        app:layout_constraintTop_toBottomOf="@+id/display" />
+        app:layout_constraintStart_toEndOf="@+id/txt_limpar_ultima_operacao"
+        app:layout_constraintTop_toBottomOf="@+id/txt_display" />
 
     <TextView
         android:id="@+id/txt_divisao"
@@ -74,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/txt_percent"
-        app:layout_constraintTop_toBottomOf="@+id/display" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_display" />
 
 
     <TextView
@@ -103,7 +104,7 @@
         app:layout_constraintEnd_toStartOf="@+id/txt_nove"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/txt_sete"
-        app:layout_constraintTop_toBottomOf="@+id/txt_limpar" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_limpar_ultima_operacao" />
 
     <TextView
         android:id="@+id/txt_nove"
