@@ -4,10 +4,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.OnClickListener
 import android.widget.TextView
-import fos.com.br.calculadora.operacao.Expressao
-import fos.com.br.calculadora.operacao.Numero
-import fos.com.br.calculadora.operacao.Operacao
-import fos.com.br.calculadora.operacao.Operacao.Companion.from
+import fos.com.br.calculadora.calculadora.Calculadora
+import fos.com.br.calculadora.calculadora.Operacao
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
@@ -38,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             R.id.txt_multiplicacao,
             R.id.txt_subtracao,
             R.id.txt_soma,
-            R.id.txt_virgula -> addOperacao(textView)
+            R.id.txt_virgula, R.id.txt_percent -> addOperacao(textView)
             R.id.txt_ac -> limpar()
             R.id.txt_limpar_ultima_operacao -> limparUltimaOperacao()
             R.id.txt_igual -> calcularExpressao()
@@ -73,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         txt_multiplicacao.setOnClickListener(listener)
         txt_subtracao.setOnClickListener(listener)
         txt_soma.setOnClickListener(listener)
+        txt_percent.setOnClickListener(listener)
 
         /***
          * click listener função
@@ -87,18 +86,16 @@ class MainActivity : AppCompatActivity() {
         var valorAtual = button.text.toString()
         val operador = Operacao.from(valorAtual)
 
-
-
         valorAtual = concatenarNumeros(operador = operador, valorAtual = valorAtual)
 
-
-
-
+        if (listaOperacao.isNotEmpty() && valorAtual.isNotEmpty()) {
+            val ultimoElementoOperador = Operacao.from(findValue = listaOperacao.last()) != null
+            val elementoAtualOperador = Operacao.from(valorAtual) != null
+            if (ultimoElementoOperador && elementoAtualOperador)
+                return
+        }
 
         listaOperacao.add(valorAtual)
-
-        toast(message = button.text.toString())
-
         // atualiza os dados no display da calculadora
         atualizaDisplay()
     }
@@ -106,7 +103,7 @@ class MainActivity : AppCompatActivity() {
     private fun concatenarNumeros(operador: Operacao?, valorAtual: String): String {
         var ultimoElementoLisOperacao = listaOperacao.lastOrNull()
         var valorTemp = valorAtual
-        var limparUltimoElemento: Boolean = false
+        var removerUltimoElemento: Boolean = false
 
         if (ultimoElementoLisOperacao != null && operador == null && (
                         ultimoElementoLisOperacao.endsWith(VIRGULA)
@@ -114,17 +111,17 @@ class MainActivity : AppCompatActivity() {
                         )) {
 
             valorTemp = ultimoElementoLisOperacao + valorTemp
-            limparUltimoElemento = true
+            removerUltimoElemento = true
         } else if (Operacao.from(ultimoElementoLisOperacao) == null && ultimoElementoLisOperacao != null && operador == null) {
             valorTemp = ultimoElementoLisOperacao + valorTemp
-            limparUltimoElemento = true
+            removerUltimoElemento = true
         }
 
-        if (limparUltimoElemento) {
-            limparUltimaOperacao()
+        if (removerUltimoElemento) {
+            removerUltimoElementoListaOperacao()
         }
 
-        if(valorTemp == VIRGULA){
+        if (valorTemp == VIRGULA) {
             valorTemp = ZERO + VIRGULA
         }
 
@@ -134,58 +131,54 @@ class MainActivity : AppCompatActivity() {
     private fun atualizaDisplay() {
         val display = StringBuilder()
         listaOperacao.forEach { op -> display.append(op) }
-        txt_display.setText(display)
+        txt_display.text = display
     }
 
     private fun limpar() {
         listaOperacao.clear()
-        addValorPadrao()
-        atualizaDisplay()
+        exibeValorPadraoDisplay()
     }
 
-    private fun addValorPadrao() {
-        if (listaOperacao.isEmpty()) {
-            listaOperacao.add(ZERO)
-        }
-    }
 
-    private fun limparUltimaOperacao() {
+    private fun removerUltimoElementoListaOperacao() {
         if (listaOperacao.lastIndex >= 0) {
             listaOperacao.removeAt(listaOperacao.lastIndex)
 
         }
-
         atualizaDisplay()
     }
 
-    private fun calcularExpressao() {
-        var list = mutableListOf<Any>()
-
-        var expressao: Expressao? = null
-        val listaNumero = mutableListOf<Numero>()
-        var operador: Operacao? = null
-
-        listaOperacao.forEach { v ->
-            val valor = if (v.contains(",")) v.replace(",", ".") else v
-            val op = Operacao.from(valor)
-
-            if (op == null) {
-                listaNumero.add(Numero(valor.toDoubleOrNull()))
-            } else {
-                operador = op
+    private fun limparUltimaOperacao() {
+        val ultimoElemento = listaOperacao.lastOrNull()
+        if (ultimoElemento != null && ultimoElemento.isNotEmpty()) {
+            removerUltimoElementoListaOperacao()
+            val novoElemento = ultimoElemento?.substring(0, ultimoElemento.length - 1)
+            if (novoElemento.isNotEmpty()) {
+                listaOperacao.add(novoElemento)
             }
-
-            if (listaNumero.size == 2 && operador != null) {
-                expressao = operador?.calculo(listaNumero.get(0), listaNumero.get(1))
-            } else if (expressao != null) {
-                expressao = operador?.calculo(expressao!!, Numero(valor.toDoubleOrNull()))
-            }
-
         }
 
-        val result = expressao?.calcula().toString();
+        if (listaOperacao.isEmpty()) {
+            exibeValorPadraoDisplay()
+        } else {
+            atualizaDisplay()
+        }
+
+    }
+
+    private fun exibeValorPadraoDisplay() {
+        txt_display.text = ZERO
+    }
+
+    private fun calcularExpressao() {
+
+        val result = Calculadora().executarOperacao(listaOperacao)
         listaOperacao.clear()
-        listaOperacao.add(result.replace(".", ","))
+        if (result == null) {
+            txt_display.text = "Error"
+            return
+        }
+        listaOperacao.add(result.toString().replace(".", ","))
         atualizaDisplay()
     }
 }
