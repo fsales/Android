@@ -10,6 +10,8 @@ enum class Operacao(val operador: String) {
         override fun calculo(expressao1: Expressao, expressao2: Expressao): Expressao = object : Expressao {
             override fun calcula(): Double = expressao1.calcula()!!.minus(expressao2.calcula()!!)
         }
+
+        fun numero() = ""
     },
     Multiplicacao(operador = "X") {
         override fun calculo(expressao1: Expressao, expressao2: Expressao): Expressao = object : Expressao {
@@ -44,29 +46,32 @@ enum class Operacao(val operador: String) {
 
 class Calculadora {
 
-    fun executarOperacao(listaOperacao: List<String>): Double? {
-        var expressao: Expressao? = null
-        val listaNumero = mutableListOf<Numero>()
-        var operador: Operacao? = null
 
-        listaOperacao.forEach { v ->
+    fun executarOperacao(listaOperacao: List<String>): Double? {
+
+        val mapNumero = mutableMapOf<Int, Numero>()
+        val mapOperador = mutableMapOf<Int, Operacao>()
+
+        listaOperacao.forEachIndexed { index, v ->
             val valor = if (v.contains(",")) v.replace(",", ".") else v
             val op = Operacao.from(valor)
-
-            if (op == null) {
-                listaNumero.add(Numero(valor.toDoubleOrNull()))
+            if (op == null && valor.toDoubleOrNull() != null) {
+                mapNumero.put(index, Numero(valor.toDouble()))
+            } else if (op != null) {
+                mapOperador.put(index, op)
+            }
+        }
+        var expressao: Expressao? = null
+        mapOperador.forEach { key, value ->
+            if (expressao == null) {
+                expressao = value.calculo(mapNumero[key - 1]!!, mapNumero[key + 1]!!)
             } else {
-                operador = op
+                expressao = value.calculo(Numero(expressao!!.calcula()), mapNumero[key + 1]!!)
             }
-
-            if (listaNumero.size == 2 && operador != null) {
-                expressao = operador?.calculo(listaNumero.get(0), listaNumero.get(1))
-            } else if (expressao != null) {
-                expressao = operador?.calculo(expressao!!, Numero(valor.toDoubleOrNull()))
-            }
-
         }
 
-        return expressao?.calcula()
+        return expressao!!.calcula()
     }
 }
+
+
