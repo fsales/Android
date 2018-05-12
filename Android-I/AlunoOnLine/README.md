@@ -1,5 +1,5 @@
 
-###Projeto Final 
+### Projeto Final 
 
 ## Aluno
 Matr: 1731088030 - Fabio de Oliveira Sales
@@ -12,5 +12,5 @@ Pós-Gradução Desenvolvimento para Dispositivos Móveis
 ## Disciplina
 Desenvolvimento para Android I
 
-##GIT HUB
+## GIT HUB
 https://github.com/fsales/Android/tree/master/Android-I/AlunoOnLine
