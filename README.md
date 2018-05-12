@@ -1,2 +1,7 @@
 # Android
-Pós-Graduação em Dispositivos Móveis - IESB
+## Curso
+Pós-Graduação em Dispositivos Móveis
+## Instituição
+Centro Universitário IESB 
+## Professor
+Kenniston Bonfim

@@ -11,4 +11,4 @@ Pós-Gradução Desenvolvimento para Dispositivos Móveis
 Desenvolvimento para Android I
 
 ## GIT HUB
-https://github.com/fsales/Android/tree/master/Android-I/Calculadora
+https://github.com/fsales/Android/tree/master/Android-I/Padrões-projeto
