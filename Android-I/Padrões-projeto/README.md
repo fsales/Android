@@ -1,12 +1,18 @@
 
 ## Aluno
-Matr: 1731088030 - Fabio de Oliveira Sales
+Matr: 1731088030 - Fábio de Oliveira Sales
 
 # Android I
+
 ## Curso
 Pós-Gradução Desenvolvimento para Dispositivos Móveis
+
+## Instituição
+Centro Universitário IESB 
+
 ## Turma
 2017a
+
 ## Disciplina
 Desenvolvimento para Android I
 
