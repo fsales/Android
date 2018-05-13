@@ -10,13 +10,14 @@ import com.androidi.fos.alunoonline.R
 
 class SplashScreen : AppCompatActivity() {
 
-    private val DELAY = 5000
+    private val DELAY = 2000
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
         Handler().postDelayed({
-            startActivity(Intent(this@SplashScreen, Login::class.java), ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-            finish()
+            val intent = Intent(this@SplashScreen, Login::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
         }, DELAY.toLong())
     }
 }

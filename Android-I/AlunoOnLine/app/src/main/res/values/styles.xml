@@ -20,18 +20,17 @@
 
     </style>
 
-    <style name="PopupMenuTheme" parent="Theme.AppCompat.Light" >
+    <style name="PopupMenuTheme" parent="Theme.AppCompat.Light">
         <item name="android:background">@android:color/white</item>
 
     </style>
 
 
     <style name="Theme.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowFullscreen" >true</item>
-
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
-
-
 
 
 </resources>

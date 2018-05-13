@@ -19,8 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.Login" />
-        <activity android:name=".EsqueceuSenha" />
-        <activity android:name=".CadastrarLogin"></activity>
+        <activity android:name=".activity.EsqueceuSenha" />
+        <activity android:name=".activity.CadastrarLogin"></activity>
     </application>
 
 </manifest>

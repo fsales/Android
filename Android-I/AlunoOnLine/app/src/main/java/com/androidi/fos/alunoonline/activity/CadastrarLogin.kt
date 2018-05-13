@@ -1,7 +1,8 @@
-package com.androidi.fos.alunoonline
+package com.androidi.fos.alunoonline.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.androidi.fos.alunoonline.R
 
 class CadastrarLogin : AppCompatActivity() {
 
