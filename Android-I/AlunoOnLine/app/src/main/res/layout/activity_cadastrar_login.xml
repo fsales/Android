@@ -79,11 +79,11 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputSenha"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
         app:passwordToggleEnabled="true">
 
         <android.support.design.widget.TextInputEditText
@@ -100,11 +100,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="32dp"
         android:text="@string/titulo_confirmar"
         app:layout_constraintBottom_toTopOf="@+id/guideline12"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textInputSenha" />
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
 
 </android.support.constraint.ConstraintLayout>
