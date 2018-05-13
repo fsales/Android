@@ -7,4 +7,5 @@
     <string name="btn_cadastra_se">Cadastra-se</string>
     <string name="hint_senha">Senha</string>
     <string name="hint_e_mail">E-mail</string>
+    <string name="titulo_confirmar">Confirmar</string>
 </resources>

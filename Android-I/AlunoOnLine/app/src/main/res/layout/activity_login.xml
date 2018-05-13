@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/login"
+    android:id="@+id/contraintLayoutLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="start"
@@ -19,13 +19,13 @@
 
     <TextView
         android:id="@+id/txtLogin"
+        style="@style/Base.TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/titulo_login"
-        style="@style/Base.TextAppearance.AppCompat.Title"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,11 +54,11 @@
 
     <Button
         android:id="@+id/buttonEntrar"
+        style="@style/RaisedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/btn_entrar"
-        style="@style/RaisedButton"
         app:layout_constraintBottom_toTopOf="@+id/btnEsqueceuSenha"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline4" />
@@ -87,10 +87,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        app:passwordToggleEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/buttonEntrar"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintStart_toStartOf="@+id/guideline4">
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:passwordToggleEnabled="true">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/editTextSenha"
@@ -109,13 +109,13 @@
 
     <TextView
         android:id="@+id/btnEsqueceuSenha"
+        style="@style/Base.TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/titulo_esqueceu_a_senha"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline4" />
@@ -143,10 +143,10 @@
 
     <TextView
         android:id="@+id/textView13"
+        style="@style/Base.TextAppearance.AppCompat.Medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/ou"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toTopOf="@+id/guideline13"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
         app:layout_constraintStart_toStartOf="@+id/guideline10"
