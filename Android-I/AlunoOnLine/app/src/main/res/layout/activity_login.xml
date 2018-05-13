@@ -24,7 +24,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="LOGIN"
+        android:text="@string/titulo_login"
         style="@style/Base.TextAppearance.AppCompat.Title"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Entrar"
+        android:text="@string/btn_entrar"
         style="@style/RaisedButton"
         app:layout_constraintBottom_toTopOf="@+id/textViewEsqueceuSenha"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
@@ -78,7 +78,7 @@
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"
+            android:hint="@string/hint_e_mail"
             android:inputType="textWebEmailAddress" />
     </android.support.design.widget.TextInputLayout>
 
@@ -96,7 +96,7 @@
             android:id="@+id/editTextSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Senha"
+            android:hint="@string/hint_senha"
             android:inputType="textWebPassword" />
     </android.support.design.widget.TextInputLayout>
 
@@ -114,7 +114,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Esqueceu a senha?"
+        android:text="@string/titulo_esqueceu_a_senha"
         style="@style/Base.TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
@@ -145,7 +145,7 @@
         android:id="@+id/textView13"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="ou"
+        android:text="@string/ou"
         style="@style/Base.TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toTopOf="@+id/guideline13"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
@@ -191,7 +191,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:text="Cadastra-se"
+        android:text="@string/btn_cadastra_se"
         style="@style/RaisedButton"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
