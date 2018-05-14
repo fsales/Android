@@ -18,7 +18,7 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
             validarCampoObrigatorio(textInputLayoutEmail, editTextEmail, getString(R.string.msg_email_obrigatorio))
             validarCampoObrigatorio(textInputLayoutSenha, editTextSenha, getString(R.string.msg_senha_obrigatorio))
 
-            val senhaIguais = if (editTextEmail.text.toString().equals(editTextConfirmarSenha.text.toString())) {
+            val senhaIguais = if (editTextSenha.text.toString().equals(editTextConfirmarSenha.text.toString())) {
                 textInputLayoutConfirmacao.isErrorEnabled = false
                 true
             } else {

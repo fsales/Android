@@ -14,4 +14,7 @@ interface UsuarioDAO {
 
     @Query("SELECT * FROM Usuario WHERE email = :email ")
     fun getUsuario(email: String): Usuario?
+
+    @Query("SELECT * FROM Usuario WHERE email = :email AND senha = :senha ")
+    fun getUsuario(email: String, senha: String): Usuario?
 }
