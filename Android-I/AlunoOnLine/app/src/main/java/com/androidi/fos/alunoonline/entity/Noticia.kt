@@ -1,6 +1,7 @@
 package com.androidi.fos.alunoonline.entity
 
 import android.graphics.Bitmap
+import java.io.Serializable
 import java.util.*
 
 class Noticia(var id: Int? = 0,
@@ -8,4 +9,4 @@ class Noticia(var id: Int? = 0,
               var dataNoticia: Date? = Date(),
               var descricaoCurta: String? = null,
               var descricao: String? = null,
-              var imagem:Bitmap? = null)
+              var imagem:Bitmap? = null) : Serializable

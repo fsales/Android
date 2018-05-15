@@ -14,6 +14,7 @@ import com.androidi.fos.alunoonline.entity.Noticia
 import kotlinx.android.synthetic.main.card_noticia.view.*
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import java.io.Serializable
 import java.text.SimpleDateFormat
 
 
@@ -33,6 +34,9 @@ class RecyclerViewNoticia(private val list: List<Noticia>) : RecyclerView.Adapte
         holder.desc.text = noticia.descricaoCurta
         holder.featuredImage.imageBitmap = noticia.imagem
         holder.btnLink.onClick {
+            val i = Intent(holder.itemView.context.applicationContext, DetalharNoticia::class.java)
+            i.putExtra("PUT_EXTRA_NOTICIA",noticia)
+
             holder.itemView.context.startActivity(Intent(holder.itemView.context.applicationContext, DetalharNoticia::class.java))
         }
     }
