@@ -12,12 +12,11 @@ class Galeria @JvmOverloads constructor(
         defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
     val TOTAL_IMAGEM = 2
-    val tempoCarrossel: Long = 3000
-    var imagens = intArrayOf(R.drawable.img0, R.drawable.img1, R.drawable.img2)
-    var contador: Int? = null
+    val DELAY: Long = 4000
+    val IMAGENS = intArrayOf(R.drawable.img0, R.drawable.img1, R.drawable.img2)
 
-    private fun imagem(): Bitmap =
-            BitmapFactory.decodeResource(resources, imagens[getContador()])
+    var contador: Int? = null
+   
 
     private fun getContador(): Int =
             if (contador == null || contador == TOTAL_IMAGEM.toInt()) {
@@ -35,12 +34,15 @@ class Galeria @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val bmp = imagem()
+        val bmp = BitmapFactory.decodeResource(resources, IMAGENS[getContador()])
         val matrix = Matrix()
         matrix.postScale(getXBitmap(bmp), getYBitmap(bmp))
         canvas.drawColor(Color.TRANSPARENT)
         canvas.drawBitmap(Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, matrix, true), 0f, 0f, Paint())
-        postInvalidateDelayed(tempoCarrossel)
-    }
 
+
+        postInvalidateDelayed(DELAY)
+
+
+    }
 }
