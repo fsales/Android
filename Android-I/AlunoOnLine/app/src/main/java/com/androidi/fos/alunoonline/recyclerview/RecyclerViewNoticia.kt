@@ -1,6 +1,5 @@
 package com.androidi.fos.alunoonline.recyclerview
 
-import android.graphics.BitmapFactory
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,8 @@ import com.androidi.fos.alunoonline.R
 import com.androidi.fos.alunoonline.entity.Noticia
 import kotlinx.android.synthetic.main.card_noticia.view.*
 import org.jetbrains.anko.imageBitmap
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class RecyclerViewNoticia(private val list: List<Noticia>) : RecyclerView.Adapter<ViewHolder>() {
@@ -26,8 +27,8 @@ class RecyclerViewNoticia(private val list: List<Noticia>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val noticia = list[position]
 
-        holder.title.text = noticia.titulo
-        holder.desc.text = noticia.descricao
+        holder.title.text =  SimpleDateFormat("dd/MM/yyyy").format(noticia.dataNoticia) + " - " + noticia.titulo
+        holder.desc.text = noticia.descricaoCurta
         holder.featuredImage.imageBitmap = noticia.imagem
     }
 
