@@ -1,5 +1,6 @@
 package com.androidi.fos.alunoonline.activity
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -23,9 +24,9 @@ class Home : AppCompatActivity() {
 
 
 
-        list.addAll(arrayListOf<Noticia>(Noticia(id = 1, descricao = "Teste 1", titulo = "Teste 11111"),
-                Noticia(id = 2, descricao = "Teste 2", titulo = "Teste 11111"),
-                Noticia(id = 3, descricao = "Teste 3", titulo = "Teste 11111")))
+        list.addAll(arrayListOf<Noticia>(Noticia(id = 1, descricao = "Teste 1", titulo = "Teste 11111", imagem = BitmapFactory.decodeResource(resources, R.drawable.trem)),
+                Noticia(id = 2, descricao = "Teste 2", titulo = "Teste 11111", imagem = BitmapFactory.decodeResource(resources, R.drawable.pessoas)),
+                Noticia(id = 3, descricao = "Teste 3", titulo = "Teste 11111", imagem = BitmapFactory.decodeResource(resources, R.drawable.senhores))))
         adapter?.notifyDataSetChanged();
     }
 }
