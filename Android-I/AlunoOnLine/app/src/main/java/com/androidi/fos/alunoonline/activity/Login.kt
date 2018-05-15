@@ -9,6 +9,7 @@ import org.jetbrains.anko.toast
 
 class Login : AlunoOnLineBaseActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

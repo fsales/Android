@@ -3,6 +3,7 @@
     package="com.androidi.fos.alunoonline">
 
     <application
+        android:name=".util.UsuarioApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,7 +22,10 @@
         <activity android:name=".activity.Login" />
         <activity android:name=".activity.EsqueceuSenha" />
         <activity android:name=".activity.CadastrarLogin" />
-        <activity android:name=".activity.Home"></activity>
+        <activity
+            android:name=".activity.Home"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
