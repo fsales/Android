@@ -16,7 +16,7 @@ class Galeria @JvmOverloads constructor(
     val IMAGENS = intArrayOf(R.drawable.img0, R.drawable.img1, R.drawable.img2)
 
     var contador: Int? = null
-   
+
 
     private fun getContador(): Int =
             if (contador == null || contador == TOTAL_IMAGEM.toInt()) {
