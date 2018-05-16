@@ -14,6 +14,8 @@ import com.androidi.fos.alunoonline.entity.Noticia
 import kotlinx.android.synthetic.main.card_noticia.view.*
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import java.io.Serializable
+import java.text.SimpleDateFormat
 
 
 class RecyclerViewNoticia(private val list: List<Noticia>) : RecyclerView.Adapter<ViewHolder>() {

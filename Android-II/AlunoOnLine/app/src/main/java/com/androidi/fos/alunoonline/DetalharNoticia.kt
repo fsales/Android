@@ -13,7 +13,7 @@ class DetalharNoticia : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhar_noticia)
         setSupportActionBar(toolbar)
-        val a = intent.extras.getParcelable("PUT_EXTRA_NOTICIA") as Noticia
+        val a = intent.extras.getSerializable("PUT_EXTRA_NOTICIA")
 
         toast("tse")
     }
