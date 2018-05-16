@@ -1,6 +1,5 @@
 package com.androidi.fos.alunoonline.recyclerview
 
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -26,16 +25,14 @@ class RecyclerViewNoticia(private val list: List<Noticia>) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val noticia = list[position]
+        val noticia = list[position] as Noticia
 
         holder.title.text = noticia.dataNoticia + " - " + noticia.titulo
         holder.desc.text = noticia.descricaoCurta
-        holder.featuredImage.imageBitmap = noticia.imagem
-        holder.btnLink.onClick {
-            val i = Intent(holder.itemView.context.applicationContext, DetalharNoticia::class.java)
-            i.putExtra("PUT_EXTRA_NOTICIA",noticia)
+        holder.featuredImage.imageBitmap = noticia.imagem(holder.itemView.context.resources)
 
-            holder.itemView.context.startActivity(i)
+        holder.btnLink.onClick {
+            holder.itemView.context.startActivity(DetalharNoticia.intent(holder.itemView.context, noticia))
         }
     }
 
