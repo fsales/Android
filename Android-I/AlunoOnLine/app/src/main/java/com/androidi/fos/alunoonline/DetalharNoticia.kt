@@ -7,10 +7,8 @@ import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
 import com.androidi.fos.alunoonline.entity.Noticia
 import kotlinx.android.synthetic.main.activity_detalhar_noticia.*
-import kotlinx.android.synthetic.main.card_noticia.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.imageBitmap
-import org.jetbrains.anko.toast
 
 
 class DetalharNoticia : AppCompatActivity() {
