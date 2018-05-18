@@ -31,7 +31,15 @@ class RecyclerViewNoticia(private val list: List<Noticia>) : RecyclerView.Adapte
         holder.desc.text = noticia.descricaoCurta
         holder.featuredImage.imageBitmap = noticia.imagem(holder.itemView.context.resources)
 
-        holder.btnLink.onClick {
+        holder.featuredImage.onClick {
+            holder.itemView.context.startActivity(DetalharNoticia.intent(holder.itemView.context, noticia))
+        }
+
+        holder.featuredImage.onClick {
+            holder.itemView.context.startActivity(DetalharNoticia.intent(holder.itemView.context, noticia))
+        }
+
+        holder.title.onClick {
             holder.itemView.context.startActivity(DetalharNoticia.intent(holder.itemView.context, noticia))
         }
     }
@@ -46,7 +54,6 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var featuredImage: ImageView
     var title: TextView
     var desc: TextView
-    var btnLink: Button
 
     init {
 
@@ -54,6 +61,5 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         this.featuredImage = itemView.featureImage
         this.title = itemView.titulo
         this.desc = itemView.desc
-        this.btnLink = itemView.btn_link
     }
 }
