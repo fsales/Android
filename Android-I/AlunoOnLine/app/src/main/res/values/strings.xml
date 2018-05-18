@@ -12,4 +12,5 @@
     <string name="msg_senha_obrigatorio">Senha obrigatório!</string>
     <string name="titulo_confirmar_senha">Confirmar senha</string>
     <string name="confirmar_senha_obrigatorio">Confirmar senha obrigatório</string>
+    <string name="menu_usuario">Usuário</string>
 </resources>

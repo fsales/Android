@@ -27,12 +27,14 @@ abstract class AlunoOnLineBaseActivity() : AppCompatActivity() {
         return null
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.getItemId()
-        if (id == android.R.id.home) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        android.R.id.home -> {
             finish()
-            return true
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else ->
+            super.onOptionsItemSelected(item)
     }
+
+
 }

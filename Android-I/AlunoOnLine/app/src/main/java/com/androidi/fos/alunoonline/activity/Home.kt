@@ -4,10 +4,13 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.view.MenuItem
 import com.androidi.fos.alunoonline.R
 import com.androidi.fos.alunoonline.entity.Noticia
 import com.androidi.fos.alunoonline.recyclerview.RecyclerViewNoticia
 import kotlinx.android.synthetic.main.activity_home.*
+import org.jetbrains.anko.longToast
 
 class Home : AppCompatActivity() {
 
@@ -18,6 +21,8 @@ class Home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar);
+        collapseLayout.title = "Aluno On Line"
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = RecyclerViewNoticia(list)
         recyclerView.adapter = adapter
@@ -99,5 +104,21 @@ class Home : AppCompatActivity() {
                             codigoImagem = R.drawable.senhores)))
         val a =R.drawable.senhores
         adapter?.notifyDataSetChanged();
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_home, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menuUsuario -> {
+            longToast("Usuário")
+            true
+        }
+        else ->
+            super.onOptionsItemSelected(item)
     }
 }
