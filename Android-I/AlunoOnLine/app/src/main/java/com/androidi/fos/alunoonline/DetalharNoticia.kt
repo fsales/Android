@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import com.androidi.fos.alunoonline.entity.Noticia
 import kotlinx.android.synthetic.main.activity_detalhar_noticia.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -17,6 +18,8 @@ class DetalharNoticia : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhar_noticia)
         setSupportActionBar(toolbar)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
 
 
         val noticia = intent.extras.getParcelable(DetalharNoticia.INTENT_NOTICIA) as? Noticia
@@ -32,6 +35,15 @@ class DetalharNoticia : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.getItemId()
+        if (id == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

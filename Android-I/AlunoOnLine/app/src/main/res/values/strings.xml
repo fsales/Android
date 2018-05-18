@@ -11,4 +11,5 @@
     <string name="msg_email_obrigatorio">E-mail obrigatório!</string>
     <string name="msg_senha_obrigatorio">Senha obrigatório!</string>
     <string name="titulo_confirmar_senha">Confirmar senha</string>
+    <string name="confirmar_senha_obrigatorio">Confirmar senha obrigatório</string>
 </resources>
