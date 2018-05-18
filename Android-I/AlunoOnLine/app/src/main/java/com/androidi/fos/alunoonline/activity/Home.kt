@@ -40,7 +40,23 @@ class Home : AppCompatActivity() {
                                         "Se name for null a chamada ao método length não será feita, mas podemos também forçar essa chamada:\n" +
                                         "\n" +
                                         "name!!.length\n" +
-                                        "Dessa forma, se name for null teremos uma exception explicita que deverá ser tratada.",
+                                        "Dessa forma, se name for null teremos uma exception explicita que deverá ser tratada." +
+                                    "Similar em outras linguagens, Kotlin pode declarar métodos em tipos que você não controla , por exemplo:\n" +
+                                    "\n" +
+                                    "fun String.hello(): String{\n" +
+                                    " return “Hello ${this}”\n" +
+                                    "}\n" +
+                                    "\n" +
+                                    "val x = \"Kotlin\"\n" +
+                                    "print(x.hello()) // prints \"Hello Kotlin\"\n" +
+                                    "Nesse caso foi declarado um método dentro do tipo String, um exemplo mais adentro do mundo Android seria esse:\n" +
+                                    "\n" +
+                                    "fun ImageView.load(url: String){\n" +
+                                    "  Picasso.with(context).load(url).into(this)\n" +
+                                    "}\n" +
+                                    "Agora qualquer ImageView pode chamar o método load e carregar uma imagem passando uma url.\n" +
+                                    "\n" +
+                                    "Extensions trazem um grande ganho em legibilidade, pois evita que tenhamos de escrever os famigerados Utils (StringUtils, FileUtils , etc), que com certeza todo dev Android já deve ter escrito algum dia.",
                             titulo = "Null Safety",
                             codigoImagem = R.drawable.trem),
                 Noticia(
