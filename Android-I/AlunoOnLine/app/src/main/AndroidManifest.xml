@@ -25,7 +25,8 @@
         <activity
             android:name=".activity.Home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".DetalharNoticia"></activity>
+        <activity android:name=".activity.DetalharNoticia" />
+        <activity android:name=".activity.Usuario"></activity>
     </application>
 
 </manifest>

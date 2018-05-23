@@ -1,6 +1,6 @@
 package com.androidi.fos.alunoonline.activity
 
-import android.graphics.BitmapFactory
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -115,7 +115,7 @@ class Home : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.menuUsuario -> {
-            longToast("Usuário")
+          startActivity(Intent(this@Home ,Usuario::class.java))
             true
         }
         else ->

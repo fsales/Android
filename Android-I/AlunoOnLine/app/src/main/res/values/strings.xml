@@ -6,6 +6,9 @@
     <string name="ou">ou</string>
     <string name="btn_cadastra_se">Cadastra-se</string>
     <string name="hint_senha">Senha</string>
+    <string name="hint_nome">Nome</string>
+    <string name="hint_matricula">Matrícula</string>
+    <string name="hint_telefone">Telefone</string>
     <string name="hint_e_mail">E-mail</string>
     <string name="titulo_confirmar">Confirmar</string>
     <string name="msg_email_obrigatorio">E-mail obrigatório!</string>
