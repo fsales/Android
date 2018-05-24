@@ -22,4 +22,7 @@
     <string name="msg_matricula_obrigatorio">Matrícula obrigatório!</string>
     <string name="msg_nome_obrigatorio">Nome obrigatório!</string>
     <string name="msg_telefone_obrigatorio">Telefone obrigatório!</string>
+    <string name="msg_email_ja_cadastrado">E-mail já cadastrado!</string>
+    <string name="msg_usuario_cadastrado_sucesso">Usuário Cadastrado com sucesso!</string>
+    <string name="msg_senha_diferente">Senha diferente!</string>
 </resources>

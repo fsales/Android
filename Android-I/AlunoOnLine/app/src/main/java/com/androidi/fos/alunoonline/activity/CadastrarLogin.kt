@@ -34,10 +34,10 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
                     val usuarioExistente = it.usuarioDAO().getUsuario(usuario.email!!)
 
                     if (!usuarioExistente?.email.isNullOrBlank()) {
-                        toast("E-mail já cadastrado!")
+                        toast(getString(R.string.msg_email_ja_cadastrado))
                     } else {
                         it.usuarioDAO().incluir(usuario)
-                        toast("Usuário Cadastrado com sucesso!")
+                        toast(getString(R.string.msg_usuario_cadastrado_sucesso))
                     }
 
 
@@ -53,7 +53,7 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
         true
     } else {
         textInputLayoutConfirmacao.isErrorEnabled = true
-        textInputLayoutConfirmacao?.error = "Senha diferente!"
+        textInputLayoutConfirmacao?.error = getString(R.string.msg_senha_diferente)
         false
     }
 
