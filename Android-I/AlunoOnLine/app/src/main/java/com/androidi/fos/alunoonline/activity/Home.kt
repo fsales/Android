@@ -21,7 +21,7 @@ class Home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar);
-        collapseLayout.title = "Aluno On Line"
+        collapseLayout.title = getString(R.string.app_name)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = RecyclerViewNoticia(list)

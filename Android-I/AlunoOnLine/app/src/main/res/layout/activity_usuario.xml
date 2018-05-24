@@ -159,7 +159,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/button4"
+            app:layout_constraintBottom_toTopOf="@+id/btnConfirmar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -169,12 +169,12 @@
                 android:id="@+id/editTextConfirmarSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/confirmar_senha_obrigatorio"
+                android:hint="@string/msg_confirmar_senha_obrigatorio"
                 android:inputType="textWebPassword" />
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btnConfirmar"
             style="@style/RaisedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
