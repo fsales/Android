@@ -115,7 +115,7 @@ class Home : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.menuUsuario -> {
-          startActivity(Intent(this@Home ,Usuario::class.java))
+          startActivity(Intent(this@Home ,AlterarUsuario::class.java))
             true
         }
         else ->

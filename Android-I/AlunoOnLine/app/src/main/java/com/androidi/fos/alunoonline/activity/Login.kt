@@ -3,6 +3,7 @@ package com.androidi.fos.alunoonline.activity
 import android.content.Intent
 import android.os.Bundle
 import com.androidi.fos.alunoonline.R
+import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.toast
@@ -13,6 +14,7 @@ class Login : AlunoOnLineBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        val alunoAplication = application as? AlunoOnlineApplication
 
         buttonEntrar.onClick {
 
@@ -31,6 +33,11 @@ class Login : AlunoOnLineBaseActivity() {
 
 
                     usuario?.let {
+
+                        alunoAplication?.let { alunoOnlineApplication ->
+                            alunoAplication.usuarioLogado = usuario
+                        }
+
                         val intent = Intent(this@Login, Home::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         startActivity(intent)

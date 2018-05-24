@@ -4,7 +4,6 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
-import java.util.*
 
 @Entity(tableName = "usuario", indices = arrayOf(Index(value = "email")))
 class Usuario(
@@ -13,5 +12,11 @@ class Usuario(
 
         @ColumnInfo(name = "email") var email: String? = "",
 
-        @ColumnInfo(name = "senha") var senha: String? = ""
+        @ColumnInfo(name = "senha") var senha: String? = "",
+
+        @ColumnInfo(name = "matricula") var matricula: Int? = null,
+
+        @ColumnInfo(name = "nome") var nome: String? = "",
+
+        @ColumnInfo(name = "telefone") var telefone: String? = ""
 )

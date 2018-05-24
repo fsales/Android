@@ -20,6 +20,10 @@ abstract class AlunoOnLineBaseActivity() : AppCompatActivity() {
         }
     }
 
+    protected  fun getValor(textInputEditText: TextInputEditText?): String{
+        return textInputEditText?.text.toString()
+    }
+
     protected fun appDataBase(): AppDataBase? {
         AppDataBase?.let {
             return it.getDatabase(context = applicationContext)
