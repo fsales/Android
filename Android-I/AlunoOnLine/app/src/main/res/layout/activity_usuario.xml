@@ -1,187 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.Usuario">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guidelineToolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="?attr/actionBarSize" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineToolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imgFoto"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutNome"
-        app:layout_constraintEnd_toStartOf="@+id/textInputLayoutMatricula"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineToolbar"
-        app:srcCompat="@mipmap/ic_launcher" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayoutMatricula"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutNome"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imgFoto"
-        app:layout_constraintTop_toTopOf="@+id/guidelineToolbar">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/editTextMatricula"
-            android:layout_width="match_parent"
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineToolbar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_matricula"
-            android:inputType="number" />
-    </android.support.design.widget.TextInputLayout>
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="?attr/actionBarSize" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayoutNome"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMatricula">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/editTextNome"
-            android:layout_width="match_parent"
+        <include
+            android:id="@+id/include"
+            layout="@layout/toolbar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_nome"
-            android:inputType="textPersonName" />
-    </android.support.design.widget.TextInputLayout>
+            app:layout_constraintBottom_toTopOf="@+id/guidelineToolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayoutEmail"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutTelefone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutNome">
+        <ImageView
+            android:id="@+id/imgFoto"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayoutNome"
+            app:layout_constraintEnd_toStartOf="@+id/textInputLayoutMatricula"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guidelineToolbar"
+            app:srcCompat="@mipmap/ic_launcher" />
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutMatricula"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_e_mail"
-            android:inputType="textWebEmailAddress" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayoutNome"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imgFoto"
+            app:layout_constraintTop_toTopOf="@+id/guidelineToolbar">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayoutTelefone"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutSenha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/editTextMatricula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_matricula"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/editTextTelefone"
-            android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutNome"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_telefone"
-            android:inputType="phone" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayoutEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMatricula">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayoutSenha"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutConfirmarSenha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTelefone">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/editTextNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_nome"
+                android:inputType="textPersonName" />
+        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/editTextSenha"
-            android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutEmail"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_senha"
-            android:inputType="textWebPassword" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayoutTelefone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutNome">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayoutConfirmarSenha"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutSenha">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_e_mail"
+                android:inputType="textWebEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/editTextConfirmarSenha"
-            android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutTelefone"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/confirmar_senha_obrigatorio"
-            android:inputType="textWebPassword" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayoutSenha"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
 
-    <Button
-        android:id="@+id/button4"
-        style="@style/RaisedButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Confirmar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutConfirmarSenha" />
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/editTextTelefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_telefone"
+                android:inputType="phone" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutSenha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayoutConfirmarSenha"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTelefone">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/editTextSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_senha"
+                android:inputType="textWebPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutConfirmarSenha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/button4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutSenha">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/editTextConfirmarSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/confirmar_senha_obrigatorio"
+                android:inputType="textWebPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/RaisedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Confirmar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutConfirmarSenha" />
 
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v4.widget.NestedScrollView>
