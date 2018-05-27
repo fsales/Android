@@ -1,10 +1,13 @@
 package com.androidi.fos.alunoonline.activity
 
+import android.content.Intent
 import android.os.Bundle
 import com.androidi.fos.alunoonline.R
 import com.androidi.fos.alunoonline.entity.Usuario
+import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
 import kotlinx.android.synthetic.main.activity_cadastrar_login.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.jetbrains.anko.longToast
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.toast
 
@@ -16,6 +19,8 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
         setSupportActionBar(toolbar)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
+
+        val alunoAplication = application as? AlunoOnlineApplication
 
         btnConfirmar.onClick {
 
@@ -34,10 +39,19 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
                     val usuarioExistente = it.usuarioDAO().getUsuario(usuario.email!!)
 
                     if (!usuarioExistente?.email.isNullOrBlank()) {
-                        toast(getString(R.string.msg_email_ja_cadastrado))
+                        longToast(getString(R.string.msg_email_ja_cadastrado))
+
                     } else {
                         it.usuarioDAO().incluir(usuario)
-                        toast(getString(R.string.msg_usuario_cadastrado_sucesso))
+                        longToast(getString(R.string.msg_usuario_cadastrado_sucesso))
+
+                        alunoAplication?.let { alunoOnlineApplication ->
+                            alunoAplication.usuarioLogado = usuario
+                        }
+
+                        val intent = Intent(this@CadastrarLogin, Home::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
                     }
 
 

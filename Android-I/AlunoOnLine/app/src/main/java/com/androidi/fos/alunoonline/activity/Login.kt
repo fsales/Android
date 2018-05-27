@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.androidi.fos.alunoonline.R
 import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.longToast
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.toast
 
@@ -28,7 +29,7 @@ class Login : AlunoOnLineBaseActivity() {
                     val usuario = it.usuarioDAO().getUsuario(email, senha)
 
                     if (usuario == null) {
-                        toast("Usuário ou Senha inválido!")
+                        longToast("Usuário ou Senha inválido!")
                     }
 
 
