@@ -18,5 +18,7 @@ class Usuario(
 
         @ColumnInfo(name = "nome") var nome: String? = "",
 
-        @ColumnInfo(name = "telefone") var telefone: String? = ""
+        @ColumnInfo(name = "telefone") var telefone: String? = "",
+
+        @ColumnInfo(name = "fotoBase64") var fotoBase64: String? = ""
 )

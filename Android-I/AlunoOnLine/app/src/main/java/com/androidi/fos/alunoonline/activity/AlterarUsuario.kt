@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,11 +15,16 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.text.Editable
+import android.util.Base64
 import com.androidi.fos.alunoonline.R
 import com.androidi.fos.alunoonline.entity.Usuario
 import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
 import kotlinx.android.synthetic.main.activity_usuario.*
+import kotlinx.android.synthetic.main.activity_usuario.view.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.jetbrains.anko.image
+import org.jetbrains.anko.imageBitmap
+import org.jetbrains.anko.imageURI
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.io.ByteArrayOutputStream
@@ -57,6 +63,11 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
                     editTextTelefone.text = Editable.Factory.getInstance().newEditable(telefone)
                 }
 
+                usuario.fotoBase64?.let {
+                    if (it.isNotEmpty()) {
+                        imgFoto.imageBitmap = convetStringBase64ToBitMap(it)
+                    }
+                }
 
             }
         }
@@ -104,6 +115,13 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
                         telefone = getValor(editTextTelefone),
                         email = getValor(editTextEmail),
                         senha = getValor(editTextSenha))
+
+                val bitmapDrawable = imgFoto?.drawable as? BitmapDrawable
+                bitmapDrawable?.let {
+                    usuario.fotoBase64 = convertImageToStringBase64(it.bitmap)
+                }
+
+
 
                 alunoOnLineAplication?.let { alunoOnlineApplication ->
                     alunoOnLineAplication.usuarioLogado?.let {
@@ -184,17 +202,27 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
         }
     }
 
-    private fun convertImageToByte(uri: Uri): ByteArray {
-        var data: ByteArray? = null
+    private fun convertImageToStringBase64(bitMap: Bitmap?): String? {
+        var dataString: String? = null
 
-        val cr = baseContext.contentResolver
-        val inputStream = cr.openInputStream(uri)
-        val bitmap = BitmapFactory.decodeStream(inputStream)
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        data = baos.toByteArray()
+        bitMap?.let {
+            val baos = ByteArrayOutputStream()
+            it.compress(Bitmap.CompressFormat.PNG, 100, baos)
+            dataString = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
+        }
 
-        return data
+        return dataString
+    }
+
+
+    private fun convetStringBase64ToBitMap(imgBase64: String?): Bitmap? {
+        var imgBitMap: Bitmap? = null
+        imgBase64?.let {
+            val decodedString = Base64.decode(it, Base64.DEFAULT)
+            imgBitMap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+        }
+
+        return imgBitMap
     }
 
 
