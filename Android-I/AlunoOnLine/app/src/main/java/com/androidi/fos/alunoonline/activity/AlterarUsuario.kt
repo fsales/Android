@@ -17,14 +17,12 @@ import android.support.v7.app.AlertDialog
 import android.text.Editable
 import android.util.Base64
 import com.androidi.fos.alunoonline.R
+import com.androidi.fos.alunoonline.db.AppDataBase
 import com.androidi.fos.alunoonline.entity.Usuario
 import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
 import kotlinx.android.synthetic.main.activity_usuario.*
-import kotlinx.android.synthetic.main.activity_usuario.view.*
 import kotlinx.android.synthetic.main.toolbar.*
-import org.jetbrains.anko.image
 import org.jetbrains.anko.imageBitmap
-import org.jetbrains.anko.imageURI
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.io.ByteArrayOutputStream
@@ -34,6 +32,8 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
     private val USER_PROFILE_CAMERA_REQUEST_CODE = 9995
     private val USER_PROFILE_GALLERY_REQUEST_CODE = 9996
     private var imageUri: Uri? = null
+    var appDataBase: AppDataBase? = null
+    var alunoOnLineAplication: AlunoOnlineApplication? = null
 
     companion object {
         const val REQUEST_PERMISSION = 1
@@ -43,32 +43,15 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_usuario)
 
-        val alunoOnLineAplication = application as? AlunoOnlineApplication
+        alunoOnLineAplication = application as? AlunoOnlineApplication
+
 
         // carregar dados do usuario logado
-        alunoOnLineAplication?.let { alunoOnlineApplication ->
+        alunoOnLineAplication?.let { alOnlineApplication ->
+            appDataBase = alOnlineApplication.appDataBase()
 
-            alunoOnLineAplication.usuarioLogado?.let { usuario ->
-                editTextEmail.text = Editable.Factory.getInstance().newEditable(usuario.email)
-
-                usuario.matricula?.let { matricula ->
-                    editTextMatricula.text = Editable.Factory.getInstance().newEditable(matricula.toString())
-                }
-
-                usuario.nome?.let { nome ->
-                    editTextNome.text = Editable.Factory.getInstance().newEditable(nome)
-                }
-
-                usuario.telefone?.let { telefone ->
-                    editTextTelefone.text = Editable.Factory.getInstance().newEditable(telefone)
-                }
-
-                usuario.fotoBase64?.let {
-                    if (it.isNotEmpty()) {
-                        imgFoto.imageBitmap = convetStringBase64ToBitMap(it)
-                    }
-                }
-
+            alOnlineApplication.usuarioLogado?.let { usuTemp ->
+                carregarDadoUsuarioTela(usuTemp.uid)
             }
         }
 
@@ -114,25 +97,19 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
                         nome = getValor(editTextNome),
                         telefone = getValor(editTextTelefone),
                         email = getValor(editTextEmail),
-                        senha = getValor(editTextSenha))
+                        senha = getValor(editTextSenha)
+                        )
+
+                alunoOnLineAplication?.usuarioLogado?.uid?.let {
+                    usuario.uid = it
+                }
 
                 val bitmapDrawable = imgFoto?.drawable as? BitmapDrawable
                 bitmapDrawable?.let {
                     usuario.fotoBase64 = convertImageToStringBase64(it.bitmap)
                 }
 
-
-
-                alunoOnLineAplication?.let { alunoOnlineApplication ->
-                    alunoOnLineAplication.usuarioLogado?.let {
-                        usuario.uid = it.uid
-                    }
-
-                    alunoOnLineAplication.usuarioLogado = usuario
-                }
-
-
-                appDataBase()?.let { appDataBase ->
+                appDataBase?.let { appDataBase ->
 
                     appDataBase.usuarioDAO().atualizar(usuario)
                 }
@@ -140,6 +117,40 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
                 longToast("Usuário alterado com sucesso!")
             }
 
+        }
+    }
+
+    private fun carregarDadoUsuarioTela(uid: Int) {
+        var usuario: Usuario? = null
+
+        appDataBase?.let { appDataBase ->
+            val usu = appDataBase.usuarioDAO().getUsuario(uid)
+            usu?.let {
+                usuario = usu
+            }
+        }
+
+        usuario?.let {
+
+            editTextEmail.text = Editable.Factory.getInstance().newEditable(it.email)
+
+            it.matricula?.let { matricula ->
+                editTextMatricula.text = Editable.Factory.getInstance().newEditable(matricula.toString())
+            }
+
+            it.nome?.let { nome ->
+                editTextNome.text = Editable.Factory.getInstance().newEditable(nome)
+            }
+
+            it.telefone?.let { telefone ->
+                editTextTelefone.text = Editable.Factory.getInstance().newEditable(telefone)
+            }
+
+            it.fotoBase64?.let {
+                if (it.isNotEmpty()) {
+                    imgFoto.imageBitmap = convetStringBase64ToBitMap(it)
+                }
+            }
         }
     }
 
@@ -207,7 +218,7 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
 
         bitMap?.let {
             val baos = ByteArrayOutputStream()
-            it.compress(Bitmap.CompressFormat.PNG, 100, baos)
+            it.compress(Bitmap.CompressFormat.JPEG, 60, baos)
             dataString = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
         }
 

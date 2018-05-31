@@ -10,12 +10,12 @@ interface UsuarioDAO {
     fun incluir(usuario: Usuario)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun atualizar(usuario:Usuario)
+    fun atualizar(usuario: Usuario)
 
-    @Query("SELECT * FROM Usuario WHERE email = :email ")
+    @Query("SELECT uid, email, nome FROM Usuario WHERE email = :email ")
     fun getUsuario(email: String): Usuario?
 
-    @Query("SELECT * FROM Usuario WHERE email = :email AND senha = :senha ")
+    @Query("SELECT uid FROM Usuario WHERE email = :email AND senha = :senha ")
     fun getUsuario(email: String, senha: String): Usuario?
 
     @Query("SELECT * FROM Usuario WHERE uid = :uid ")

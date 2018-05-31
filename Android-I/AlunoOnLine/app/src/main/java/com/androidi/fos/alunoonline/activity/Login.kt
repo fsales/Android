@@ -3,19 +3,26 @@ package com.androidi.fos.alunoonline.activity
 import android.content.Intent
 import android.os.Bundle
 import com.androidi.fos.alunoonline.R
+import com.androidi.fos.alunoonline.db.AppDataBase
+import com.androidi.fos.alunoonline.entity.Usuario
 import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.sdk25.coroutines.onClick
-import org.jetbrains.anko.toast
 
 class Login : AlunoOnLineBaseActivity() {
 
+    var alunoOnLineAplication: AlunoOnlineApplication? = null
+    var appDataBase: AppDataBase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        val alunoAplication = application as? AlunoOnlineApplication
+        alunoOnLineAplication = application as? AlunoOnlineApplication
+
+        alunoOnLineAplication?.let { alOnLineAplication ->
+            appDataBase = alOnLineAplication.appDataBase()
+        }
 
         buttonEntrar.onClick {
 
@@ -25,7 +32,7 @@ class Login : AlunoOnLineBaseActivity() {
             if (!textInputLayoutEmail.isErrorEnabled && !textInputLayoutSenha.isErrorEnabled) {
                 val email = editTextEmail.text.toString().toLowerCase()
                 val senha = editTextSenha.text.toString()
-                appDataBase()?.let {
+                appDataBase?.let {
                     val usuario = it.usuarioDAO().getUsuario(email, senha)
 
                     if (usuario == null) {
@@ -35,8 +42,8 @@ class Login : AlunoOnLineBaseActivity() {
 
                     usuario?.let {
 
-                        alunoAplication?.let { alunoOnlineApplication ->
-                            alunoAplication.usuarioLogado = usuario
+                        alunoOnLineAplication?.let { alOnlineApplication ->
+                            alOnlineApplication.usuarioLogado = Usuario(uid = usuario.uid)
                         }
 
                         val intent = Intent(this@Login, Home::class.java)
