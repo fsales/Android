@@ -2,6 +2,7 @@ package com.androidi.fos.alunoonline.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import com.androidi.fos.alunoonline.R
 import com.androidi.fos.alunoonline.db.AppDataBase
 import com.androidi.fos.alunoonline.entity.Usuario
@@ -39,6 +40,8 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
 
             if (!textInputLayoutConfirmacao.isErrorEnabled && !textInputLayoutEmail.isErrorEnabled && !textInputLayoutSenha.isErrorEnabled && validaConfirmacaoSenha()) {
 
+                load()
+
                 val usuario = Usuario(email = editTextEmail.text.toString().toLowerCase(), senha = editTextSenha.text.toString())
 
                 appDataBase?.let {
@@ -56,9 +59,13 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
                             alOnlineApplication.usuarioLogado = usuario
                         }
 
-                        val intent = Intent(this@CadastrarLogin, Home::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        startActivity(intent)
+                        Handler().postDelayed({
+                            val intent = Intent(this@CadastrarLogin, Home::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
+                        }, 700)
+
+
                     }
 
 

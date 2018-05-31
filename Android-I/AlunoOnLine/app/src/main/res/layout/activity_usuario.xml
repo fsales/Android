@@ -169,7 +169,7 @@
                 android:id="@+id/editTextConfirmarSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/msg_confirmar_senha_obrigatorio"
+                android:hint="@string/titulo_confirmar_senha"
                 android:inputType="textWebPassword" />
         </android.support.design.widget.TextInputLayout>
 

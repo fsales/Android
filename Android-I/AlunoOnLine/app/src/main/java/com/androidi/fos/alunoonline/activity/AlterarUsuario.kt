@@ -23,6 +23,7 @@ import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
 import kotlinx.android.synthetic.main.activity_usuario.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.imageBitmap
+import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.io.ByteArrayOutputStream
@@ -51,9 +52,11 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
             appDataBase = alOnlineApplication.appDataBase()
 
             alOnlineApplication.usuarioLogado?.let { usuTemp ->
+                load()
                 carregarDadoUsuarioTela(usuTemp.uid)
             }
         }
+
 
         // toolbar
         setSupportActionBar(toolbar)
@@ -75,14 +78,13 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
         }
 
         btnConfirmar.onClick {
+
             validarCampoObrigatorio(textInputLayoutMatricula, editTextMatricula, getString(R.string.msg_matricula_obrigatorio))
             validarCampoObrigatorio(textInputLayoutNome, editTextNome, getString(R.string.msg_nome_obrigatorio))
             validarCampoObrigatorio(textInputLayoutEmail, editTextEmail, getString(R.string.msg_email_obrigatorio))
             validarCampoObrigatorio(textInputLayoutTelefone, editTextTelefone, getString(R.string.msg_telefone_obrigatorio))
             validarCampoObrigatorio(textInputLayoutSenha, editTextSenha, getString(R.string.msg_senha_obrigatorio))
             validarCampoObrigatorio(textInputLayoutConfirmarSenha, editTextConfirmarSenha, getString(R.string.msg_confirmar_senha_obrigatorio))
-
-
 
             if (!textInputLayoutMatricula.isErrorEnabled
                     && !textInputLayoutNome.isErrorEnabled
@@ -92,13 +94,15 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
                     && !textInputLayoutConfirmarSenha.isErrorEnabled
                     && validaConfirmacaoSenha()) {
 
+                load(1500)
+
                 val usuario: Usuario = Usuario(
                         matricula = getValor(editTextMatricula).toInt(),
                         nome = getValor(editTextNome),
                         telefone = getValor(editTextTelefone),
                         email = getValor(editTextEmail),
                         senha = getValor(editTextSenha)
-                        )
+                )
 
                 alunoOnLineAplication?.usuarioLogado?.uid?.let {
                     usuario.uid = it
@@ -116,6 +120,7 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
 
                 longToast("Usuário alterado com sucesso!")
             }
+
 
         }
     }
