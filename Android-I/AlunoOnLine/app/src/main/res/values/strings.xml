@@ -25,4 +25,5 @@
     <string name="msg_email_ja_cadastrado">E-mail já cadastrado!</string>
     <string name="msg_usuario_cadastrado_sucesso">Usuário Cadastrado com sucesso!</string>
     <string name="msg_senha_diferente">Senha diferente!</string>
+    <string name="msg_processando">Processando...</string>
 </resources>

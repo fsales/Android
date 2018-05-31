@@ -19,11 +19,11 @@ import android.util.Base64
 import com.androidi.fos.alunoonline.R
 import com.androidi.fos.alunoonline.db.AppDataBase
 import com.androidi.fos.alunoonline.entity.Usuario
+import com.androidi.fos.alunoonline.extension.load
 import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
 import kotlinx.android.synthetic.main.activity_usuario.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.imageBitmap
-import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.io.ByteArrayOutputStream
