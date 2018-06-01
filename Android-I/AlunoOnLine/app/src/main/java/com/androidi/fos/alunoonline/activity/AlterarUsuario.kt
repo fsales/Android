@@ -21,6 +21,8 @@ import com.androidi.fos.alunoonline.db.AppDataBase
 import com.androidi.fos.alunoonline.entity.Usuario
 import com.androidi.fos.alunoonline.extension.load
 import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
+import com.androidi.fos.alunoonline.util.validarEmail
+import com.androidi.fos.alunoonline.util.validarSenha
 import kotlinx.android.synthetic.main.activity_usuario.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.imageBitmap
@@ -79,20 +81,30 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
 
         btnConfirmar.onClick {
 
-            validarCampoObrigatorio(textInputLayoutMatricula, editTextMatricula, getString(R.string.msg_matricula_obrigatorio))
-            validarCampoObrigatorio(textInputLayoutNome, editTextNome, getString(R.string.msg_nome_obrigatorio))
-            validarCampoObrigatorio(textInputLayoutEmail, editTextEmail, getString(R.string.msg_email_obrigatorio))
-            validarCampoObrigatorio(textInputLayoutTelefone, editTextTelefone, getString(R.string.msg_telefone_obrigatorio))
-            validarCampoObrigatorio(textInputLayoutSenha, editTextSenha, getString(R.string.msg_senha_obrigatorio))
-            validarCampoObrigatorio(textInputLayoutConfirmarSenha, editTextConfirmarSenha, getString(R.string.msg_confirmar_senha_obrigatorio))
+            val isMatriculaPreenchida = validarCampoObrigatorio(textInputLayoutMatricula, editTextMatricula, getString(R.string.msg_matricula_obrigatorio))
+            val isNomePreenchido = validarCampoObrigatorio(textInputLayoutNome, editTextNome, getString(R.string.msg_nome_obrigatorio))
+            val isEmailPreenchido = validarCampoObrigatorio(textInputLayoutEmail, editTextEmail, getString(R.string.msg_email_obrigatorio))
+            val isTelefonePreenchido = validarCampoObrigatorio(textInputLayoutTelefone, editTextTelefone, getString(R.string.msg_telefone_obrigatorio))
+            val isSenhaPreenchido = validarCampoObrigatorio(textInputLayoutSenha, editTextSenha, getString(R.string.msg_senha_obrigatorio))
+            val isConfirmarSenhaPreenchido = validarCampoObrigatorio(textInputLayoutConfirmarSenha, editTextConfirmarSenha, getString(R.string.msg_confirmar_senha_obrigatorio))
 
-            if (!textInputLayoutMatricula.isErrorEnabled
-                    && !textInputLayoutNome.isErrorEnabled
-                    && !textInputLayoutEmail.isErrorEnabled
-                    && !textInputLayoutTelefone.isErrorEnabled
-                    && !textInputLayoutSenha.isErrorEnabled
-                    && !textInputLayoutConfirmarSenha.isErrorEnabled
-                    && validaConfirmacaoSenha()) {
+            val isEmailValido = validarEmail(getValor(editTextEmail)) { emalValido ->
+                if (emalValido == false && isEmailPreenchido) longToast(getString(R.string.msg_email_invalido))
+            }
+
+            val isSenhaValida = validarSenha(getValor(editTextSenha)) { senhaValida ->
+                if (senhaValida == false && isSenhaPreenchido) longToast(getString(R.string.msg_senha_invalido))
+            }
+
+            if (isMatriculaPreenchida
+                    && isNomePreenchido
+                    && isEmailPreenchido
+                    && isTelefonePreenchido
+                    && isSenhaPreenchido
+                    && isConfirmarSenhaPreenchido
+                    && validaConfirmacaoSenha()
+                    && isEmailValido
+                    && isSenhaValida) {
 
                 load(1500)
 
