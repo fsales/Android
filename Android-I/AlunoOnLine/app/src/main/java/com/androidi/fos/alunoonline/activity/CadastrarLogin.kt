@@ -66,9 +66,15 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
                         it.usuarioDAO().incluir(usuario)
                         longToast(getString(R.string.msg_usuario_cadastrado_sucesso))
 
-                        alunoOnLineAplication?.let { alOnlineApplication ->
-                            alOnlineApplication.usuarioLogado = usuario
+                        val usuarioCadastrado = it.usuarioDAO().getUsuario(usuario.email!!)
+
+                        usuarioCadastrado?.let { usuarioCadastrado ->
+                            alunoOnLineAplication?.let { alOnlineApplication ->
+                                alOnlineApplication.usuarioLogado = Usuario(uid = usuarioCadastrado.uid)
+                            }
                         }
+
+
 
                         Handler().postDelayed({
                             val intent = Intent(this@CadastrarLogin, Home::class.java)
