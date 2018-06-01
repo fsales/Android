@@ -8,6 +8,7 @@ import com.androidi.fos.alunoonline.db.AppDataBase
 import com.androidi.fos.alunoonline.entity.Usuario
 import com.androidi.fos.alunoonline.extension.load
 import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
+import com.androidi.fos.alunoonline.util.validarEmail
 import kotlinx.android.synthetic.main.activity_cadastrar_login.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.longToast
@@ -33,13 +34,15 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
 
         btnConfirmar.onClick {
 
-            validarCampoObrigatorio(textInputLayoutEmail, editTextEmail, getString(R.string.msg_email_obrigatorio))
-            validarCampoObrigatorio(textInputLayoutSenha, editTextSenha, getString(R.string.msg_senha_obrigatorio))
-            validarCampoObrigatorio(textInputLayoutConfirmacao, editTextSenhaConfirmacao, getString(R.string.msg_confirmar_senha_obrigatorio))
+            val emailPreenchido = validarCampoObrigatorio(textInputLayoutEmail, editTextEmail, getString(R.string.msg_email_obrigatorio))
+            val senhaPreenchido = validarCampoObrigatorio(textInputLayoutSenha, editTextSenha, getString(R.string.msg_senha_obrigatorio))
+            val confirmacaoSenhaPreenchido = validarCampoObrigatorio(textInputLayoutConfirmacao, editTextSenhaConfirmacao, getString(R.string.msg_confirmar_senha_obrigatorio))
 
-
-
-            if (!textInputLayoutConfirmacao.isErrorEnabled && !textInputLayoutEmail.isErrorEnabled && !textInputLayoutSenha.isErrorEnabled && validaConfirmacaoSenha()) {
+            val isEmailValido = validarEmail(editTextEmail.text.toString()) { emalValido ->
+                if (emalValido == false && emailPreenchido && senhaPreenchido && confirmacaoSenhaPreenchido) longToast(getString(R.string.msg_email_invalido))
+            }
+            
+            if (emailPreenchido && senhaPreenchido && confirmacaoSenhaPreenchido && isEmailValido) {
 
                 load()
 

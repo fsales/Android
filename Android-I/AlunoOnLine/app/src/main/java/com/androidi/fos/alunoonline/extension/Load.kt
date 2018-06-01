@@ -12,7 +12,7 @@ fun AppCompatActivity.load(delay: Long = 1000){
         setCancelable(false)
         show()
     }
-    
+
     Handler().postDelayed({
         a.dismiss()
     }, delay)

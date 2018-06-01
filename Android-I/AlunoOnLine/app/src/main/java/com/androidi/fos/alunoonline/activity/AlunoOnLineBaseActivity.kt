@@ -9,16 +9,24 @@ import android.view.MenuItem
 
 abstract class AlunoOnLineBaseActivity() : AppCompatActivity() {
 
+    /***
+     * retorna verdadeiro se o campo obrigatorio for preenchido
+     */
+    protected fun validarCampoObrigatorio(textInputLayout: TextInputLayout?, textInputEditText: TextInputEditText?, mensagem: String) : Boolean {
 
-    protected fun validarCampoObrigatorio(textInputLayout: TextInputLayout?, textInputEditText: TextInputEditText?, mensagem: String) {
+        var isCampoPreenchido = true
+
         textInputEditText?.let {
             if (it.text.isNullOrEmpty()) {
                 textInputLayout?.isErrorEnabled = true
                 textInputLayout?.error = mensagem
+                isCampoPreenchido = false
             } else {
                 textInputLayout?.isErrorEnabled = false
             }
         }
+
+        return isCampoPreenchido
     }
 
     protected fun getValor(textInputEditText: TextInputEditText?): String {
