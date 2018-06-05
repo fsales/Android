@@ -13,15 +13,6 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun usuarioDAO(): UsuarioDAO
 
     companion object {
-        val DB_NAME = "aluno_online_db"
-        var dbInstance: AppDataBase? = null
-
-
-        fun getDatabase(context: Context): AppDataBase? {
-            if (dbInstance == null) {
-                dbInstance = Room.databaseBuilder<AppDataBase>(context.applicationContext, AppDataBase::class.java, DB_NAME).allowMainThreadQueries().build()
-            }
-            return dbInstance
-        }
+        val DB_NAME = "aluno_online_iesb_db"
     }
 }

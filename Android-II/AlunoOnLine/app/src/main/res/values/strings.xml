@@ -6,9 +6,26 @@
     <string name="ou">ou</string>
     <string name="btn_cadastra_se">Cadastra-se</string>
     <string name="hint_senha">Senha</string>
+    <string name="hint_nome">Nome</string>
+    <string name="hint_matricula">Matrícula</string>
+    <string name="hint_telefone">Telefone</string>
     <string name="hint_e_mail">E-mail</string>
     <string name="titulo_confirmar">Confirmar</string>
+    <string name="titulo_confirmar_senha">Confirmar senha</string>
+    <string name="menu_usuario">Usuário</string>
+
+
+
     <string name="msg_email_obrigatorio">E-mail obrigatório!</string>
     <string name="msg_senha_obrigatorio">Senha obrigatório!</string>
-    <string name="titulo_confirmar_senha">Confirmar senha</string>
+    <string name="msg_confirmar_senha_obrigatorio">Confirmar senha obrigatório</string>
+    <string name="msg_matricula_obrigatorio">Matrícula obrigatório!</string>
+    <string name="msg_nome_obrigatorio">Nome obrigatório!</string>
+    <string name="msg_telefone_obrigatorio">Telefone obrigatório!</string>
+    <string name="msg_email_ja_cadastrado">E-mail já cadastrado!</string>
+    <string name="msg_usuario_cadastrado_sucesso">Usuário Cadastrado com sucesso!</string>
+    <string name="msg_senha_diferente">Senha diferente!</string>
+    <string name="msg_processando">Processando...</string>
+    <string name="msg_email_invalido">E-mail inválido</string>
+    <string name="msg_senha_invalido">A senha deve ter no mínimo 6 caracteres, deve conter pelo menos 1 caractere Maíusculo, deve conter pelo menos um caractere especial e deve conter pelo menos 1 número</string>
 </resources>
