@@ -5,9 +5,10 @@ import android.support.design.widget.TextInputEditText
 import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import org.jetbrains.anko.AnkoLogger
 
 
-abstract class AlunoOnLineBaseActivity() : AppCompatActivity() {
+abstract class AlunoOnLineBaseActivity() : AppCompatActivity(), AnkoLogger {
 
     /***
      * retorna verdadeiro se o campo obrigatorio for preenchido

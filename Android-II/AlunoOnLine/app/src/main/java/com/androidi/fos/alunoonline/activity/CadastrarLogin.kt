@@ -2,23 +2,23 @@ package com.androidi.fos.alunoonline.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import com.androidi.fos.alunoonline.R
-import com.androidi.fos.alunoonline.db.AppDataBase
 import com.androidi.fos.alunoonline.entity.Usuario
 import com.androidi.fos.alunoonline.extension.load
 import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
 import com.androidi.fos.alunoonline.util.validarEmail
 import com.androidi.fos.alunoonline.util.validarSenha
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_cadastrar_login.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.jetbrains.anko.debug
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class CadastrarLogin : AlunoOnLineBaseActivity() {
 
     var alunoOnLineAplication: AlunoOnlineApplication? = null
-    var appDataBase: AppDataBase? = null
+    var mAuth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +29,7 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
 
         alunoOnLineAplication = application as? AlunoOnlineApplication
 
-        alunoOnLineAplication?.let { alOnLineAplication ->
-            appDataBase = alOnLineAplication.appDataBase()
-        }
+        mAuth = FirebaseAuth.getInstance()
 
         btnConfirmar.onClick {
 
@@ -55,7 +53,34 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
 
                 val usuario = Usuario(email = editTextEmail.text.toString().toLowerCase(), senha = editTextSenha.text.toString())
 
-                appDataBase?.let {
+                mAuth?.let { mAuth ->
+
+                    mAuth.fetchSignInMethodsForEmail(usuario.email!!).addOnCompleteListener({ task ->
+
+                        var signInMethods = task.result.signInMethods
+
+
+                        if (!signInMethods?.isEmpty()!!) {
+                            longToast(getString(R.string.msg_email_ja_cadastrado))
+                        } else {
+                            mAuth.createUserWithEmailAndPassword(usuario.email!!, usuario.senha!!).addOnCompleteListener({ task ->
+                                if (task.isSuccessful) {
+                                    longToast(getString(R.string.msg_usuario_cadastrado_sucesso))
+
+                                    val intent = Intent(this@CadastrarLogin, Home::class.java)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    startActivity(intent)
+
+                                } else {
+                                    debug { task.exception }
+                                }
+                            })
+                        }
+
+                    })
+                }
+
+                /*appDataBase?.let {
 
                     val usuarioExistente = it.usuarioDAO().getUsuario(usuario.email!!)
 
@@ -86,7 +111,7 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
                     }
 
 
-                }
+                }*/
             }
 
 
