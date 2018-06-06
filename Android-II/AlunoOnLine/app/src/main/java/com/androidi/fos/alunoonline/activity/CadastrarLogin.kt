@@ -9,9 +9,9 @@ import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
 import com.androidi.fos.alunoonline.util.validarEmail
 import com.androidi.fos.alunoonline.util.validarSenha
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.android.synthetic.main.activity_cadastrar_login.*
 import kotlinx.android.synthetic.main.toolbar.*
-import org.jetbrains.anko.debug
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
@@ -55,28 +55,31 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
 
                 mAuth?.let { mAuth ->
 
-                    mAuth.fetchSignInMethodsForEmail(usuario.email!!).addOnCompleteListener({ task ->
+                    mAuth.createUserWithEmailAndPassword(usuario.email!!, usuario.senha!!).addOnCompleteListener({ task ->
 
-                        var signInMethods = task.result.signInMethods
+                        try {
+                            if (task.isSuccessful) {
+                                longToast(getString(R.string.msg_usuario_cadastrado_sucesso))
+                                val intent = Intent(this@CadastrarLogin, Home::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                startActivity(intent)
+                            }
 
-
-                        if (!signInMethods?.isEmpty()!!) {
-                            longToast(getString(R.string.msg_email_ja_cadastrado))
-                        } else {
-                            mAuth.createUserWithEmailAndPassword(usuario.email!!, usuario.senha!!).addOnCompleteListener({ task ->
-                                if (task.isSuccessful) {
-                                    longToast(getString(R.string.msg_usuario_cadastrado_sucesso))
-
-                                    val intent = Intent(this@CadastrarLogin, Home::class.java)
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                    startActivity(intent)
-
-                                } else {
-                                    debug { task.exception }
-                                }
-                            })
+                            msgErro(task.exception)
+                        } catch (firebaseAuthUserException: FirebaseAuthUserCollisionException) {
+                            msgErro(firebaseAuthUserException)
                         }
+                       /* if (task.isSuccessful) {
+                            longToast(getString(R.string.msg_usuario_cadastrado_sucesso))
 
+                            val intent = Intent(this@CadastrarLogin, Home::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
+
+                        } else {
+                            longToast(getString(R.string.msg_email_ja_cadastrado))
+                            debug { task.exception }
+                        }*/
                     })
                 }
 
@@ -115,6 +118,16 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
             }
 
 
+        }
+    }
+
+    fun msgErro(exception: Exception?) {
+        if (exception is FirebaseAuthUserCollisionException) {
+
+            when (exception.errorCode) {
+                "ERROR_EMAIL_ALREADY_IN_USE" ->
+                    longToast(getString(R.string.msg_email_ja_cadastrado))
+            }
         }
     }
 
