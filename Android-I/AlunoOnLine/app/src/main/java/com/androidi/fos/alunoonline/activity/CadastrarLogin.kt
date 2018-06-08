@@ -49,7 +49,9 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
                 }
             }
 
-            if (emailPreenchido && senhaPreenchido && confirmacaoSenhaPreenchido && isEmailValido && isSenhaValida) {
+            val isSalvaDados = emailPreenchido && senhaPreenchido && confirmacaoSenhaPreenchido && isEmailValido && isSenhaValida && validaConfirmacaoSenha()
+            
+            if (isSalvaDados) {
 
                 load()
 
