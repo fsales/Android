@@ -16,72 +16,20 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class Login : AlunoOnLineBaseActivity() {
 
-    var alunoOnLineAplication: AlunoOnlineApplication? = null
     var mAuth: FirebaseAuth? = null
-    //var appDataBase: AppDataBase? = null
+
+    override fun onStart() {
+        super.onStart()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        alunoOnLineAplication = application as? AlunoOnlineApplication
 
         mAuth = FirebaseAuth.getInstance()
 
-       /* alunoOnLineAplication?.let { alOnLineAplication ->
-            appDataBase = alOnLineAplication.appDataBase()
-        }*/
-
         buttonEntrar.onClick {
-
-            validarCampoObrigatorio(textInputLayoutEmail, editTextEmail, getString(R.string.msg_email_obrigatorio))
-            validarCampoObrigatorio(textInputLayoutSenha, editTextSenha, getString(R.string.msg_senha_obrigatorio))
-
-            if (!textInputLayoutEmail.isErrorEnabled && !textInputLayoutSenha.isErrorEnabled) {
-
-                load()
-
-                val email = editTextEmail.text.toString().toLowerCase()
-                val senha = editTextSenha.text.toString()
-
-                mAuth?.let { m ->
-
-                    m.signInWithEmailAndPassword(email, senha).addOnCompleteListener { task ->
-                        if(task.isSuccessful){
-                            val intent = Intent(this@Login, Home::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            startActivity(intent)
-                        }else{
-                            longToast("Usuário ou Senha inválido!")
-                        }
-                    }
-                }
-
-                /*appDataBase?.let {
-                    val usuario = it.usuarioDAO().getUsuario(email, senha)
-
-                    if (usuario == null) {
-                        longToast("Usuário ou Senha inválido!")
-                    }
-
-
-                    usuario?.let {
-
-                        alunoOnLineAplication?.let { alOnlineApplication ->
-                            alOnlineApplication.usuarioLogado = Usuario(uid = usuario.uid)
-                        }
-
-                        Handler().postDelayed({
-                            val intent = Intent(this@Login, Home::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            startActivity(intent)
-                        }, 700)
-
-
-                    }
-                }*/
-            }
-
-
+            signInWithEmailAndPassword()
         }
 
         btnEsqueceuSenha.onClick {
@@ -92,5 +40,37 @@ class Login : AlunoOnLineBaseActivity() {
 
             startActivity(Intent(this@Login, CadastrarLogin::class.java))
         }
+    }
+
+    private fun signInWithEmailAndPassword() {
+        if (!formValido()) {
+            return
+        }
+
+        load()
+
+        val email = editTextEmail.text.toString().toLowerCase()
+        val senha = editTextSenha.text.toString()
+
+        mAuth?.let { m ->
+
+            val signIn = m.signInWithEmailAndPassword(email, senha)
+            signIn.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val intent = Intent(this@Login, Home::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                } else {
+                    longToast(getString(R.string.msg_usuario_senha_invalido))
+                }
+            }
+        }
+    }
+
+    private fun formValido(): Boolean {
+        val emailValido = validarCampoObrigatorio(textInputLayoutEmail, editTextEmail, getString(R.string.msg_email_obrigatorio))
+        val senhaValido = validarCampoObrigatorio(textInputLayoutSenha, editTextSenha, getString(R.string.msg_senha_obrigatorio))
+
+        return emailValido && senhaValido
     }
 }

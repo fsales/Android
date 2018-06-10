@@ -28,4 +28,5 @@
     <string name="msg_processando">Processando...</string>
     <string name="msg_email_invalido">E-mail inválido</string>
     <string name="msg_senha_invalido">A senha deve ter no mínimo 6 caracteres, deve conter pelo menos 1 caractere Maíusculo, deve conter pelo menos um caractere especial e deve conter pelo menos 1 número</string>
+    <string name="msg_usuario_senha_invalido">Usuário ou Senha inválido!</string>
 </resources>

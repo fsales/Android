@@ -5,10 +5,25 @@ import android.support.design.widget.TextInputEditText
 import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.ProgressBar
+import com.androidi.fos.alunoonline.R
 import org.jetbrains.anko.AnkoLogger
+import com.google.firebase.auth.FirebaseAuthException
+
+
 
 
 abstract class AlunoOnLineBaseActivity() : AppCompatActivity(), AnkoLogger {
+
+    private var mProgressBar: ProgressBar? = null
+
+    fun showProgressBar(mensagem:String = getString(R.string.msg_processando)){
+
+       // progressbar
+
+        mProgressBar = ProgressBar(this)
+        mProgressBar
+    }
 
     /***
      * retorna verdadeiro se o campo obrigatorio for preenchido

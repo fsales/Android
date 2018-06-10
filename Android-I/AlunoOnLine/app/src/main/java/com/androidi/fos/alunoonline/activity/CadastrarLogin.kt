@@ -50,7 +50,7 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
             }
 
             val isSalvaDados = emailPreenchido && senhaPreenchido && confirmacaoSenhaPreenchido && isEmailValido && isSenhaValida && validaConfirmacaoSenha()
-            
+
             if (isSalvaDados) {
 
                 load()
