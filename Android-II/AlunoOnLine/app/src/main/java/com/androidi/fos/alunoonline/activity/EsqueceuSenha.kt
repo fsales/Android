@@ -5,6 +5,7 @@ import com.androidi.fos.alunoonline.R
 import com.androidi.fos.alunoonline.extension.load
 import com.androidi.fos.alunoonline.util.validarEmail
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.android.synthetic.main.activity_esqueceu_senha.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.longToast
@@ -37,13 +38,21 @@ class EsqueceuSenha : AlunoOnLineBaseActivity() {
         load()
 
         mAuth?.let { mAuth ->
-            val passwordReset = mAuth.sendPasswordResetEmail(textEditEmail.text.toString())
-            passwordReset.addOnCompleteListener{task ->
-                if(task.isSuccessful){
-                    longToast(String.format("Enviado para o endereço %s, um e-mail com as informações de recuperação.", textEditEmail.text.toString()))
-                }
 
+            try {
+                val passwordReset = mAuth.sendPasswordResetEmail(textEditEmail.text.toString())
+                passwordReset.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        longToast(String.format("Enviado para o endereço %s, um e-mail com as informações de recuperação.", textEditEmail.text.toString()))
+                    }
+
+                    msgErro(task.exception)
+                }
+            } catch (firebaseAuthUserException: FirebaseAuthUserCollisionException) {
+                msgErro(firebaseAuthUserException)
             }
+
+
         }
     }
 

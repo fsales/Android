@@ -7,10 +7,11 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.ProgressBar
 import com.androidi.fos.alunoonline.R
+import com.androidi.fos.alunoonline.util.FirebaseAuthError
 import org.jetbrains.anko.AnkoLogger
 import com.google.firebase.auth.FirebaseAuthException
-
-
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import org.jetbrains.anko.longToast
 
 
 abstract class AlunoOnLineBaseActivity() : AppCompatActivity(), AnkoLogger {
@@ -56,6 +57,22 @@ abstract class AlunoOnLineBaseActivity() : AppCompatActivity(), AnkoLogger {
         }
         else ->
             super.onOptionsItemSelected(item)
+    }
+
+    protected fun msgErro(exception: Exception?) {
+
+        exception?.let { ex ->
+            var msgError = FirebaseAuthError.ERROR_UNKNOWN.description
+
+            when (ex) {
+                is FirebaseAuthException -> {
+                    val firebaseAuthError = FirebaseAuthError.fromException(ex)
+                    msgError = firebaseAuthError.description
+                }
+            }
+
+            longToast(msgError)
+        }
     }
     
 }

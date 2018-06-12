@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.androidi.fos.alunoonline.R
 import com.androidi.fos.alunoonline.entity.Usuario
 import com.androidi.fos.alunoonline.extension.load
-import com.androidi.fos.alunoonline.util.FirebaseAuthError
 import com.androidi.fos.alunoonline.util.validarEmail
 import com.androidi.fos.alunoonline.util.validarSenha
 import com.google.firebase.auth.FirebaseAuth
@@ -63,21 +62,7 @@ class CadastrarLogin : AlunoOnLineBaseActivity() {
         }
     }
 
-    private fun msgErro(exception: Exception?) {
 
-        exception?.let { ex ->
-            var msgError = FirebaseAuthError.ERROR_UNKNOWN.description
-
-            when (ex) {
-                is FirebaseAuthUserCollisionException -> {
-                    val firebaseAuthError = FirebaseAuthError.fromException(ex)
-                    msgError = firebaseAuthError.description
-                }
-            }
-
-            longToast(msgError)
-        }
-    }
 
     private fun formValido(): Boolean {
 
