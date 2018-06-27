@@ -21,11 +21,6 @@ class MainActivity : AppCompatActivity() {
     var dataSource: MutableList<Usuario> = mutableListOf<Usuario>()
     lateinit var adptador: AdaptadorUsuario
 
-    val dadosRecyclerView = mutableListOf<Usuario>(
-            Usuario(nome = "Camilo"),
-            Usuario(nome = "Matheus"),
-            Usuario(nome = "Arthur"))
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,9 +29,10 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         adptador = AdaptadorUsuario(dataSource, this)
         recyclerView.adapter = adptador
-        //  recyclerView.adapter.notifyDataSetChanged()
+        recyclerView.adapter.notifyDataSetChanged()
 
-        editsearch.queryHint = "Teste"
+        editsearch.queryHint = "Buscar Usuário"
+
 
         editsearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -50,12 +46,15 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        dataSource.addAll(dadosRecyclerView)
+        dataSource.addAll(mutableListOf<Usuario>(
+                Usuario(nome = "Camilo"),
+                Usuario(nome = "Matheus"),
+                Usuario(nome = "Arthur")))
 
     }
 
 
-    inner class AdaptadorUsuario(private var lista: List<Usuario>, private var context: Context) : RecyclerView.Adapter<UsuarioViewHolder>(), Filterable {
+    inner class AdaptadorUsuario(private var lista: List<Usuario>, private var contexto: Context) : RecyclerView.Adapter<UsuarioViewHolder>(), Filterable {
         internal var filterList: List<Usuario>
 
         init {
@@ -63,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsuarioViewHolder {
-            val v = LayoutInflater.from(context).inflate(R.layout.usuario_item_lista, parent, false)
+            val v = LayoutInflater.from(contexto).inflate(R.layout.usuario_item_lista, parent, false)
 
             return UsuarioViewHolder(v)
         }
