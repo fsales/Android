@@ -92,10 +92,6 @@ class MainActivity : AppCompatActivity() {
                             newLista.add(usu)
                         }
                     }
-
-                }
-
-                if (newLista.size > 0) {
                     result.count = newLista.size
                     result.values = newLista
                 } else {
