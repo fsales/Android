@@ -1,10 +1,49 @@
+# built application files
+*.apk
+*.ap_
+apks
+
+#keystore
+*.keystore
+
+infer-out
+
+# files for the dex VM
+*.dex
+# Java class files
+*.class
+#Git merge files
+*.orig
+# generated files
+bin/
+gen/
+lint.xml
+captures/
+com_crashlytics_export_strings.xml
+# Local configuration file (sdk path, etc)
+local.properties
+# Eclipse project files
+.classpath
+.project
+#MacOS files
+.DS_STORE
+*.sublime-project
+*.sublime-workspace
+
+#gradle
+build
+libs/*/build/
+MicroHealth/build/*
+!MicroHealth/build/proguard/release/mapping.txt
+.gradle/
+
+#intelij
 *.iml
-.gradle
-/local.properties
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
+.idea/
+.navigation
+*.sublime-*
+
+#symlinks
+AlarmSchedulerLibrary
+CalendarViewLibrary
+MPAndroidChart
