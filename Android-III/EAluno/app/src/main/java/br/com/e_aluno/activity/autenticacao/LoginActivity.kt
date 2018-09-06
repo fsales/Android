@@ -6,6 +6,7 @@ import br.com.e_aluno.R
 import br.com.e_aluno.extension.campoPreenchido
 import br.com.e_aluno.extension.mensagemCampoObrigatorio
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.startActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -16,6 +17,15 @@ class LoginActivity : AppCompatActivity() {
         buttonEntrar.setOnClickListener {
             signInWithEmailAndPassword()
         }
+
+        esqueceuSenhaTxt.setOnClickListener {
+            startActivity<RecuperarSenhaActivity>()
+        }
+
+        buttonCadastrar.setOnClickListener {
+            startActivity<CadastrarActivity>()
+        }
+
     }
 
     private fun signInWithEmailAndPassword() {
@@ -28,11 +38,11 @@ class LoginActivity : AppCompatActivity() {
 
         campoPreenchido(emailInputLayout,
                 emailTextInput,
-                mensagemCampoObrigatorio(R.string.e_mail)) { preenchido -> isPreenchido = preenchido }
+                mensagemCampoObrigatorio(R.string.e_mail)) { preenchido -> if (preenchido == false) isPreenchido = preenchido }
 
         campoPreenchido(senhaInputLayout,
                 senhaTextInput,
-                mensagemCampoObrigatorio(R.string.senha)) { preenchido -> isPreenchido = preenchido }
+                mensagemCampoObrigatorio(R.string.senha)) { preenchido -> if (preenchido == false) isPreenchido = preenchido }
 
         return isPreenchido
     }
