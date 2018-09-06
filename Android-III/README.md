@@ -1,6 +1,4 @@
-# Android
-
-# Trabalho Final de Android III
+# Android - Trabalho Final de Android III
 
 ## Curso
 Pós-Graduação em Dispositivos Móveis
