@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "106794579548",
+    "firebase_url": "https://alunoonline-4907f.firebaseio.com",
+    "project_id": "alunoonline-4907f",
+    "storage_bucket": "alunoonline-4907f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106794579548:android:fdd173cca81bc56e",
+        "android_client_info": {
+          "package_name": "com.androidi.fos.alunoonline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106794579548-65il4jhjgr6a3h2m2dqrgbj08ndrt0mc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.androidi.fos.alunoonline",
+            "certificate_hash": "84b0170cc7eb962fe1c7f0c359a192338f0b86d5"
+          }
+        },
+        {
+          "client_id": "106794579548-ba0gtn91g3ado8t27u2f79fk5qplnh39.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9Sx2wicS4SoDyLh50VxZLthFeHCNaMn0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106794579548-ba0gtn91g3ado8t27u2f79fk5qplnh39.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
