@@ -1,9 +1,10 @@
 package br.com.e_aluno.firebase
 
-import br.com.e_aluno.extension.capturarMensagemErro
 import br.com.e_aluno.model.Usuario
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseUser
+
 
 class Auth {
     companion object {
@@ -17,29 +18,50 @@ class Auth {
         FirebaseAuth.getInstance()
     }
 
+    fun sendPasswordResetEmail(usuario: Usuario,
+                               onComplete: () -> Unit,
+                               onError: (exception: Exception?) -> Unit) {
+        try {
+            val resetPassword = instanceAuthFirebase.sendPasswordResetEmail(usuario.email!!)
+            resetPassword.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onComplete()
+                    return@addOnCompleteListener
+                }
+
+                onError(task.exception)
+            }
+        } catch (firebaseAuthUserException: FirebaseAuthUserCollisionException) {
+            onError(firebaseAuthUserException)
+        }
+    }
+
     fun signInWithEmailAndPassword(usuario: Usuario,
                                    onComplete: () -> Unit,
-                                   onError: (msgErro: String?) -> Unit) {
+                                   onError: (exception: Exception?) -> Unit) {
 
-        val signIn = instanceAuthFirebase.signInWithEmailAndPassword(usuario.email!!.toLowerCase(), usuario.senha!!)
-        signIn.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                onComplete()
-                return@addOnCompleteListener
-            }
-            onError
+        try {
+            val signIn = instanceAuthFirebase.signInWithEmailAndPassword(usuario.email!!.toLowerCase(), usuario.senha!!)
+            signIn.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onComplete()
+                    return@addOnCompleteListener
+                }
 
-        }.addOnFailureListener { exception ->
-            capturarMensagemErro(exception) {
-                onError(it)
+                onError(task.exception)
+
+            }.addOnFailureListener { exception ->
+                onError(exception)
             }
+        } catch (firebaseAuthUserException: FirebaseAuthUserCollisionException) {
+            onError(firebaseAuthUserException)
         }
 
     }
 
     fun createUserWithEmailAndPassword(usuario: Usuario,
                                        onComplete: () -> Unit,
-                                       onError: (exception: Exception) -> Unit) {
+                                       onError: (exception: Exception?) -> Unit) {
 
         val criarUsuario = instanceAuthFirebase.createUserWithEmailAndPassword(usuario.email!!.toLowerCase(), usuario.senha!!)
         criarUsuario.addOnCompleteListener { task ->
@@ -47,11 +69,10 @@ class Auth {
             try {
                 if (task.isSuccessful) {
                     onComplete()
+                    return@addOnCompleteListener
                 }
 
-                task.exception?.let {
-                    onError(it)
-                }
+                onError(task.exception)
 
             } catch (firebaseAuthUserException: FirebaseAuthUserCollisionException) {
                 onError(firebaseAuthUserException)

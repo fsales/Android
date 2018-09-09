@@ -9,15 +9,23 @@ import br.com.e_aluno.R
 import br.com.e_aluno.extension.campoPreenchido
 import br.com.e_aluno.extension.dialogCarregando
 import br.com.e_aluno.extension.mensagemCampoObrigatorio
+import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.model.Usuario
 import br.com.e_aluno.viewmodel.autenticacao.LoginViewModel
-import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.*
 
 class LoginActivity : EAlunoActivity() {
 
     private val viewModel: LoginViewModel by lazy {
         ViewModelProviders.of(this).get(LoginViewModel::class.java)
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +63,7 @@ class LoginActivity : EAlunoActivity() {
         })
 
         viewModel.signInWithEmailAndPassword(onComplete = {
-
+            val a = Auth.instance.currentUser()
             startActivity(intentFor<MainActivity>().newTask().clearTask())
             progressDialog.dismiss()
         }, onError = { msg ->
