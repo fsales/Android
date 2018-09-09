@@ -12,20 +12,13 @@ import br.com.e_aluno.extension.mensagemCampoObrigatorio
 import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.model.Usuario
 import br.com.e_aluno.viewmodel.autenticacao.LoginViewModel
+import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.*
 
 class LoginActivity : EAlunoActivity() {
 
     private val viewModel: LoginViewModel by lazy {
         ViewModelProviders.of(this).get(LoginViewModel::class.java)
-    }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
