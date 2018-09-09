@@ -3,12 +3,8 @@ package com.androidi.fos.alunoonline.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import com.androidi.fos.alunoonline.R
-import com.androidi.fos.alunoonline.db.AppDataBase
-import com.androidi.fos.alunoonline.entity.Usuario
 import com.androidi.fos.alunoonline.extension.load
-import com.androidi.fos.alunoonline.util.AlunoOnlineApplication
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.longToast

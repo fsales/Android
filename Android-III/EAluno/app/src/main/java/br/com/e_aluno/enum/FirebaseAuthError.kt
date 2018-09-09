@@ -14,7 +14,7 @@ enum class FirebaseAuthError private constructor(val description: String) {
 
     ERROR_INVALID_EMAIL("The email address is badly formatted."),
 
-    ERROR_WRONG_PASSWORD("The password is invalid or the user does not have a password."),
+    ERROR_WRONG_PASSWORD("A senha é inválida ou o usuário não possui uma senha."),
 
     ERROR_USER_MISMATCH("The supplied credentials do not correspond to the previously signed in user."),
 
@@ -28,7 +28,7 @@ enum class FirebaseAuthError private constructor(val description: String) {
 
     ERROR_USER_TOKEN_EXPIRED("The user's credential has expired. The user must sign in again."),
 
-    ERROR_USER_NOT_FOUND("There is no user record corresponding to this identifier. The user may have been deleted."),
+    ERROR_USER_NOT_FOUND("Não há registro de usuário correspondente a esse identificador. O usuário pode ter sido excluído."),
 
     ERROR_INVALID_USER_TOKEN("The user's credential is no longer valid. The user must sign in again."),
 

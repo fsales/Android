@@ -14,7 +14,8 @@ class CadastrarViewModel : ViewModel {
 
     val usuario = MutableLiveData<Usuario>()
 
-    fun createUserWithEmailAndPassword(onComplete: () -> Unit, onError: (mensagem: String?) -> Unit?) {
+    fun createUserWithEmailAndPassword(onComplete: () -> Unit,
+                                       onError: (mensagem: String?) -> Unit?) {
 
         try {
             usuario.value?.let { usuario ->
@@ -28,14 +29,14 @@ class CadastrarViewModel : ViewModel {
                     })
 
                 }, onError = { exception ->
-                    capturarMensagemErro(exception){
+                    capturarMensagemErro(exception) {
                         onError(it)
                     }
 
                 })
             }
         } catch (firebaseAuthUserException: FirebaseAuthUserCollisionException) {
-            capturarMensagemErro(firebaseAuthUserException){
+            capturarMensagemErro(firebaseAuthUserException) {
                 onError(it)
             }
         }
