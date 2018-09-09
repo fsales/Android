@@ -60,14 +60,16 @@ class CadastrarActivity : EAlunoActivity() {
 
         val progressDialog = dialogCarregando("Configurando sua conta")
 
+
         viewModel.createUserWithEmailAndPassword(onComplete = {
             confirmarSenhaTextInputEdit.setText("")
             progressDialog.dismiss()
             longToast(getString(R.string.msg_usuario_sucesso))
         }) {
             progressDialog.dismiss()
-            dialogErro()
+            dialogErro(it)
         }
+
     }
 
     private fun validarEmail(): Boolean {

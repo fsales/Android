@@ -6,7 +6,7 @@ import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.indeterminateProgressDialog
 
 fun EAlunoActivity.dialogErro(mensagem: String? = "Acontece um erro inesperado",
-                              titulo: String? = "Erro") {
+                              titulo: String? = "Atenção") {
     alert(Appcompat, mensagem!!) {
         title = titulo!!
     }.show()

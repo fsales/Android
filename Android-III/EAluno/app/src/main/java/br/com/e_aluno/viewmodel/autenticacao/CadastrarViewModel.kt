@@ -2,9 +2,11 @@ package br.com.e_aluno.viewmodel.autenticacao
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import br.com.e_aluno.extension.capturarMensagemErro
 import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.firebase.firestone.UsuarioFirestone
 import br.com.e_aluno.model.Usuario
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
 class CadastrarViewModel : ViewModel {
 
@@ -14,21 +16,28 @@ class CadastrarViewModel : ViewModel {
 
     fun createUserWithEmailAndPassword(onComplete: () -> Unit, onError: (mensagem: String?) -> Unit?) {
 
-        usuario.value?.let { usuario ->
-            Auth.instance.createUserWithEmailAndPassword(usuario, onComplete = {
-                UsuarioFirestone.instance.criarUsuario(onComplete = {
-                    this.usuario.value = Usuario()
-                    onComplete()
+        try {
+            usuario.value?.let { usuario ->
+                Auth.instance.createUserWithEmailAndPassword(usuario, onComplete = {
+                    UsuarioFirestone.instance.criarUsuario(onComplete = {
+                        this.usuario.value = Usuario()
+                        onComplete()
+                    }, onError = { exception ->
+                        exception?.let { e -> error(e) }
+                        onError
+                    })
+
                 }, onError = { exception ->
-                    exception?.let { e -> error(e) }
-                    onError
+                    capturarMensagemErro(exception){
+                        onError(it)
+                    }
+
                 })
-
-            }, onError = { exception ->
-                error(exception)
-                onError
-            })
+            }
+        } catch (firebaseAuthUserException: FirebaseAuthUserCollisionException) {
+            capturarMensagemErro(firebaseAuthUserException){
+                onError(it)
+            }
         }
-
     }
 }
