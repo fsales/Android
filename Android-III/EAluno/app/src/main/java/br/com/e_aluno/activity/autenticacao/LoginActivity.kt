@@ -1,14 +1,14 @@
 package br.com.e_aluno.activity.autenticacao
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import br.com.e_aluno.EAlunoActivity
 import br.com.e_aluno.R
 import br.com.e_aluno.extension.campoPreenchido
 import br.com.e_aluno.extension.mensagemCampoObrigatorio
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : EAlunoActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

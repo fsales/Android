@@ -1,10 +1,10 @@
 package br.com.e_aluno.model
 
-import java.util.*
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.ServerTimestamp
 
-data class Usuario(var email: String,
-                   var nome: String,
-                   val caminhoFoto: String?,
-                   val cricao: Date) {
-    constructor() : this("", "", null, Date(0))
-}
+data class Usuario(var email: String? = "",
+                   var senha: String? = "",
+                   var nome: String? = "",
+                   var caminhoFoto: String? = "",
+                   @ServerTimestamp var cadastro: Timestamp? = null)

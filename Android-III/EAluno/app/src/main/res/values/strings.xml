@@ -17,4 +17,5 @@
     <string name="senha_invalido">A senha deve ter no mínimo: \n 1) 6 caracteres. \n 2) Ao  menos 1 caractere Maíusculo. \n 3) Um caractere especial. \n 4) Pelo menos 1 número.</string>
     <string name="email_invalido">E-mail inválido!</string>
     <string name="esqueceu_a_senha">Esqueceu a senha?</string>
+    <string name="msg_usuario_sucesso">Usuário cadastrado com sucesso!</string>
 </resources>

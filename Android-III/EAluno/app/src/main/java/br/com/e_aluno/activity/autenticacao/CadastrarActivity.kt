@@ -1,17 +1,22 @@
 package br.com.e_aluno.activity.autenticacao
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import br.com.e_aluno.EAlunoActivity
 import br.com.e_aluno.R
 import br.com.e_aluno.extension.*
+import br.com.e_aluno.model.Usuario
+import br.com.e_aluno.viewmodel.autenticacao.CadastrarViewModel
 import kotlinx.android.synthetic.main.activity_cadastrar.*
 import kotlinx.android.synthetic.main.toolbar.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.appcompat.v7.Appcompat
-import org.jetbrains.anko.info
 import org.jetbrains.anko.longToast
 
 class CadastrarActivity : EAlunoActivity() {
+
+    private val viewModel: CadastrarViewModel by lazy {
+        ViewModelProviders.of(this).get(CadastrarViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +32,13 @@ class CadastrarActivity : EAlunoActivity() {
         buttonConfirmar.setOnClickListener {
             cadastrar()
         }
-        info("teste")
+
+        viewModel.usuario.observe(this, Observer { value ->
+            value.apply {
+                emailTextInputEdit.setText(this?.email)
+                senhaTextInputEdit.setText(this?.senha)
+            }
+        })
     }
 
     private fun cadastrar() {
@@ -41,6 +52,22 @@ class CadastrarActivity : EAlunoActivity() {
             return
         if (!validarEmail())
             return
+
+        viewModel.usuario.postValue(Usuario().apply {
+            this?.email = emailTextInputEdit.text.toString()
+            this?.senha = senhaTextInputEdit.text.toString()
+        })
+
+        val progressDialog = dialogCarregando("Configurando sua conta")
+
+        viewModel.createUserWithEmailAndPassword(onComplete = {
+            confirmarSenhaTextInputEdit.setText("")
+            progressDialog.dismiss()
+            longToast(getString(R.string.msg_usuario_sucesso))
+        }) {
+            progressDialog.dismiss()
+            dialogErro()
+        }
     }
 
     private fun validarEmail(): Boolean {
@@ -61,7 +88,7 @@ class CadastrarActivity : EAlunoActivity() {
             senhaValida = it
 
             if (senhaValida == false) {
-                alert(Appcompat, getString(R.string.senha_invalido)).show()
+                dialogInfo(mensagem = getString(R.string.senha_invalido))
             }
         }
 
