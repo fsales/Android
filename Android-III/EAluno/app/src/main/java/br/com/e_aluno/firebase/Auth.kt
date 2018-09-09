@@ -3,7 +3,6 @@ package br.com.e_aluno.firebase
 import br.com.e_aluno.model.Usuario
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseUser
 
 
 class Auth {
@@ -44,6 +43,7 @@ class Auth {
             val signIn = instanceAuthFirebase.signInWithEmailAndPassword(usuario.email!!.toLowerCase(), usuario.senha!!)
             signIn.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    currentUser()?.reload()
                     onComplete()
                     return@addOnCompleteListener
                 }
