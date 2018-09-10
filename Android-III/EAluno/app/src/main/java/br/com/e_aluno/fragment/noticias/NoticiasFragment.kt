@@ -18,9 +18,9 @@ import kotlinx.android.synthetic.main.fragment_noticias.view.*
 class NoticiasFragment : Fragment() {
 
     private var adapter: NoticiaRecyclerView? = null
-    private val list = arrayListOf<Noticia>()
-
-
+    private val list: ArrayList<Noticia> by lazy {
+        arrayListOf<Noticia>()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
