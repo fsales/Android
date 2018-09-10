@@ -1,7 +1,7 @@
 package br.com.e_aluno.extension
 
 import br.com.e_aluno.R
-import br.com.e_aluno.fragment.NoticiasFragment
+import br.com.e_aluno.fragment.noticias.NoticiasFragment
 import br.com.e_aluno.model.Noticia
 
 fun NoticiasFragment.mockNoticias(): List<Noticia> {

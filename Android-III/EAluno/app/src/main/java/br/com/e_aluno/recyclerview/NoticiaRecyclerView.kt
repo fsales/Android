@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.card_noticia.view.*
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class NoticiaRecyclerView(private val list: List<Noticia>) : RecyclerView.Adapter<ViewHolder>() {
+class NoticiaRecyclerView(private val list: List<Noticia>) : RecyclerView.Adapter<NoticiaRecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_noticia, parent, false)
@@ -44,19 +44,19 @@ class NoticiaRecyclerView(private val list: List<Noticia>) : RecyclerView.Adapte
     override fun getItemCount(): Int {
         return list.size
     }
-}
 
-class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    var featuredImage: ImageView
-    var title: TextView
-    var desc: TextView
+        var featuredImage: ImageView
+        var title: TextView
+        var desc: TextView
 
-    init {
+        init {
 
 
-        this.featuredImage = itemView.featureImage
-        this.title = itemView.titulo
-        this.desc = itemView.desc
+            this.featuredImage = itemView.featureImage
+            this.title = itemView.titulo
+            this.desc = itemView.desc
+        }
     }
 }

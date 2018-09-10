@@ -1,4 +1,4 @@
-package br.com.e_aluno.fragment
+package br.com.e_aluno.fragment.alunos
 
 
 import android.os.Bundle
@@ -8,27 +8,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import br.com.e_aluno.R
-import br.com.e_aluno.extension.mockNoticias
-import br.com.e_aluno.model.Noticia
-import br.com.e_aluno.recyclerview.NoticiaRecyclerView
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
 
 
-class NoticiasFragment : Fragment() {
-
-    private var adapter: NoticiaRecyclerView? = null
-    private val list = arrayListOf<Noticia>()
-
-
+class AlunosFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
-        val view = inflater.inflate(R.layout.fragment_noticias, container, false)
+        val view = inflater.inflate(R.layout.fragment_alunos, container, false)
 
         view.apply {
-
             val activityAppCompatActivity = (activity as? AppCompatActivity)
 
             activityAppCompatActivity?.let {
@@ -36,16 +27,9 @@ class NoticiasFragment : Fragment() {
             }
 
             recyclerView.layoutManager = LinearLayoutManager(activity)
-            adapter = NoticiaRecyclerView(list)
-            recyclerView.adapter = adapter
-
-
-
-            list.addAll(mockNoticias())
-            adapter?.notifyDataSetChanged();
-            this.collapseLayout.title = getString(R.string.app_name)
 
         }
+
         return view
     }
 
