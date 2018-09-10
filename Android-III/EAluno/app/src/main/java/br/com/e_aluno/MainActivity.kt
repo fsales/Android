@@ -1,32 +1,32 @@
 package br.com.e_aluno
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.View
-import br.com.e_aluno.autenticacao.CadastarFragment
+import android.support.v7.app.AppCompatActivity
+import br.com.e_aluno.fragment.NoticiasFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
 
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-       // replaceFragment(LoginFragment())
-
-        button.setOnClickListener {
-            button.visibility = View.GONE
-            replaceFragment(CadastarFragment())
-
+        replaceFragment(NoticiasFragment())
+        navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.navigation_alunos -> {
+                    replaceFragment(NoticiasFragment())
+                    return@setOnNavigationItemSelectedListener true
+                }
+                else -> return@setOnNavigationItemSelectedListener false
+            }
         }
+
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().apply {
-           // addToBackStack()
-            replace(R.id.frameLayout, fragment)
-            commit()
-        }
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_layout, fragment)
+                .commit()
     }
 }
