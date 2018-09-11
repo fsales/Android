@@ -1,6 +1,8 @@
 package br.com.e_aluno.fragment.alunos
 
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -12,8 +14,9 @@ import br.com.e_aluno.R
 import br.com.e_aluno.firebase.firestone.UsuarioFirestone
 import br.com.e_aluno.model.Usuario
 import br.com.e_aluno.recyclerview.AlunoRecyclerView
+import br.com.e_aluno.viewmodel.aluno.AlunoViewModel
 import com.google.firebase.firestore.ListenerRegistration
-import kotlinx.android.synthetic.main.fragment_alunos.*
+import kotlinx.android.synthetic.main.fragment_noticias.*
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
 
 
@@ -22,9 +25,8 @@ class AlunosFragment : Fragment() {
     private lateinit var adapter: AlunoRecyclerView
     private lateinit var userListenerRegistration: ListenerRegistration
 
-    private val list: ArrayList<Usuario> by lazy {
-        arrayListOf<Usuario>()
-    }
+    private lateinit var viewModel: AlunoViewModel
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -43,25 +45,31 @@ class AlunosFragment : Fragment() {
             activityAppCompatActivity?.let {
                 it.setSupportActionBar(toolbar)
             }
+
             this.collapseLayout.title = getString(R.string.app_name)
             recyclerView.layoutManager = LinearLayoutManager(activity)
         }
+
+
+        viewModel = ViewModelProviders.of(this).get(AlunoViewModel::class.java)
+        viewModel.usuarios.observe(this, Observer { list ->
+
+            list?.let {
+                adapter = AlunoRecyclerView(it)
+                this.recyclerView.adapter = adapter
+                adapter?.notifyDataSetChanged();
+            }
+        })
+
 
         userListenerRegistration =
                 UsuarioFirestone.instance.recuperarUsuario(this.activity!!, this::updateRecyclerView, onError = {})
         return view
     }
 
-    fun updateRecyclerView(items: ArrayList<Usuario>) {
+    fun updateRecyclerView(itens: ArrayList<Usuario>) {
 
-        recyclerView.apply {
-            adapter = AlunoRecyclerView(list)
-            recyclerView.adapter = adapter
-            adapter?.notifyDataSetChanged();
-
-            list.addAll(items)
-        }
-
+        viewModel.usuarios.value = itens
     }
 
 

@@ -8,9 +8,13 @@ import br.com.e_aluno.firebase.firestone.UsuarioFirestone
 import br.com.e_aluno.model.Usuario
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
-class CadastrarViewModel(val usuario: MutableLiveData<Usuario> = MutableLiveData<Usuario>().apply {
-    value = Usuario()
-}) : ViewModel() {
+class CadastrarViewModel() : ViewModel() {
+
+    val usuario: MutableLiveData<Usuario> by lazy {
+        MutableLiveData<Usuario>().apply {
+            value = Usuario()
+        }
+    }
 
     fun updateValueUsuario(usuario: Usuario) {
         this.usuario.value = usuario

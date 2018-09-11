@@ -6,7 +6,13 @@ import br.com.e_aluno.extension.capturarMensagemErro
 import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.model.Usuario
 
-class LoginViewModel(val usuario: MutableLiveData<Usuario> = MutableLiveData<Usuario>().apply { value = Usuario() }) : ViewModel() {
+class LoginViewModel() : ViewModel() {
+    
+    val usuario: MutableLiveData<Usuario> by lazy {
+        MutableLiveData<Usuario>().apply {
+            value = Usuario()
+        }
+    }
 
     fun updateValueUsuario(usuario: Usuario) {
         this.usuario.value = usuario
