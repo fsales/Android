@@ -10,7 +10,7 @@ import br.com.e_aluno.R
 import br.com.e_aluno.model.Usuario
 import kotlinx.android.synthetic.main.card_usuario.view.*
 
-class AlunoRecyclerView(private var list: List<Usuario>) : RecyclerView.Adapter<AlunoRecyclerView.ViewHolder>() {
+class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>()) : RecyclerView.Adapter<AlunoRecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_usuario, parent, false)
 
@@ -18,15 +18,16 @@ class AlunoRecyclerView(private var list: List<Usuario>) : RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return list?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val usuario = list[position] as Usuario
 
-        holder.nome.text = usuario.nome
-        holder.email.text = usuario.email
-
+        list?.let {
+            val usuario = it[position] as Usuario
+            holder.nome.text = usuario.nome
+            holder.email.text = usuario.email
+        }
     }
 
 
@@ -37,11 +38,9 @@ class AlunoRecyclerView(private var list: List<Usuario>) : RecyclerView.Adapter<
         var email: TextView
 
         init {
-
-
             this.featuredImage = itemView.imageView_profile_picture
-            this.nome = itemView.textView_name
             this.email = itemView.textView_email
+            this.nome = itemView.textView_name
         }
     }
 }

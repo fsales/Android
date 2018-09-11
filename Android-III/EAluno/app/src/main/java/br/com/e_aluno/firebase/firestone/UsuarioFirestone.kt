@@ -36,8 +36,8 @@ class UsuarioFirestone {
     }
 
     fun recuperarUsuario(context: Context,
-                         onLista: (ArrayList<Usuario>) -> Unit,
-                         onError: (exception: Exception) -> Unit): ListenerRegistration {
+                         onLista: (ArrayList<Usuario>) -> Unit
+    ): ListenerRegistration {
         return instance.collection("${PATH_USUARIOS}")
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
 
@@ -58,6 +58,7 @@ class UsuarioFirestone {
                         }
 
                         onLista(itens)
+
                     }
                 }
     }
