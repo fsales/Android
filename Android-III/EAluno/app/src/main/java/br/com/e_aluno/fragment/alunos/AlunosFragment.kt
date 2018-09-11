@@ -8,7 +8,9 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +44,11 @@ class AlunosFragment : Fragment() {
         super.onAttach(context)
         dialogProgress = dialogCarregando()
     }
+
+    override fun onDetach() {
+        super.onDetach()
+        dialogProgress.dismiss()
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -59,11 +66,13 @@ class AlunosFragment : Fragment() {
             recyclerView.layoutManager = LinearLayoutManager(activity)
             adapter = AlunoRecyclerView()
             this.recyclerView.adapter = adapter
+            dialogProgress.dismiss()
         }
 
         viewModel.usuarios.observe(this, Observer { list ->
 
             list?.let {
+                dialogProgress.show()
                 adapter.list = it
                 adapter?.notifyDataSetChanged();
 
