@@ -8,11 +8,13 @@ import br.com.e_aluno.firebase.firestone.UsuarioFirestone
 import br.com.e_aluno.model.Usuario
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
-class CadastrarViewModel : ViewModel {
+class CadastrarViewModel(val usuario: MutableLiveData<Usuario> = MutableLiveData<Usuario>().apply {
+    value = Usuario()
+}) : ViewModel() {
 
-    constructor() : super()
-
-    val usuario = MutableLiveData<Usuario>()
+    fun updateValueUsuario(usuario: Usuario) {
+        this.usuario.value = usuario
+    }
 
     fun createUserWithEmailAndPassword(onComplete: () -> Unit,
                                        onError: (mensagem: String?) -> Unit?) {

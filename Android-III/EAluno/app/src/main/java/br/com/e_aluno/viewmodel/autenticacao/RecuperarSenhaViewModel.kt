@@ -6,9 +6,11 @@ import br.com.e_aluno.extension.capturarMensagemErro
 import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.model.Usuario
 
-class RecuperarSenhaViewModel : ViewModel() {
+class RecuperarSenhaViewModel(val usuario: MutableLiveData<Usuario> = MutableLiveData<Usuario>().apply { value = Usuario() }) : ViewModel() {
 
-    val usuario = MutableLiveData<Usuario>()
+    fun updateValueUsuario(usuario: Usuario) {
+        this.usuario.value = usuario
+    }
 
     fun sendPasswordResetEmail(onComplete: (String) -> Unit,
                                onError: (String?) -> Unit) {

@@ -21,8 +21,8 @@ class Auth {
                                onComplete: () -> Unit,
                                onError: (exception: Exception?) -> Unit) {
         try {
-            val resetPassword = instanceAuthFirebase.sendPasswordResetEmail(usuario.email!!)
-            resetPassword.addOnCompleteListener { task ->
+            instanceAuthFirebase.sendPasswordResetEmail(usuario.email!!)
+                    .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     onComplete()
                     return@addOnCompleteListener
@@ -40,8 +40,8 @@ class Auth {
                                    onError: (exception: Exception?) -> Unit) {
 
         try {
-            val signIn = instanceAuthFirebase.signInWithEmailAndPassword(usuario.email!!.toLowerCase(), usuario.senha!!)
-            signIn.addOnCompleteListener { task ->
+            instanceAuthFirebase.signInWithEmailAndPassword(usuario.email!!.toLowerCase(), usuario.senha!!)
+                    .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     currentUser()?.reload()
                     onComplete()
@@ -63,8 +63,8 @@ class Auth {
                                        onComplete: () -> Unit,
                                        onError: (exception: Exception?) -> Unit) {
 
-        val criarUsuario = instanceAuthFirebase.createUserWithEmailAndPassword(usuario.email!!.toLowerCase(), usuario.senha!!)
-        criarUsuario.addOnCompleteListener { task ->
+        instanceAuthFirebase.createUserWithEmailAndPassword(usuario.email!!.toLowerCase(), usuario.senha!!)
+                .addOnCompleteListener { task ->
 
             try {
                 if (task.isSuccessful) {

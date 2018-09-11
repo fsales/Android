@@ -50,7 +50,10 @@ class LoginActivity : EAlunoActivity() {
             return
 
         val progressDialog = dialogCarregando("Autenticando!")
-        viewModel.usuario.postValue(Usuario().apply {
+
+
+
+        viewModel.updateValueUsuario(Usuario().apply {
             this.email = emailTextInput.text.toString()
             this.senha = senhaTextInput.text.toString()
         })

@@ -45,7 +45,7 @@ class RecuperarSenhaActivity : EAlunoActivity() {
 
         val progressDialog = dialogCarregando("Recuperando senha!")
 
-        viewModel.usuario.postValue(Usuario().apply {
+        viewModel.updateValueUsuario(Usuario().apply {
             this.email = emailTextInputEdit.text.toString()
         })
 
