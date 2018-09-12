@@ -15,7 +15,7 @@ import br.com.e_aluno.recyclerview.NoticiaRecyclerView
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
 
 
-class NoticiasFragment : Fragment() {
+class ListarNoticiasFragment : Fragment() {
 
     private var adapter: NoticiaRecyclerView? = null
     private val list: ArrayList<Noticia> by lazy {

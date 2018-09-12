@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:fillViewport="true"
-    tools:context=".fragment.alunos.AlunosFragment"
+    tools:context=".fragment.alunos.ListarAlunosFragment"
     tools:layout_editor_absoluteY="25dp">
 
 

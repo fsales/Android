@@ -1,10 +1,10 @@
 package br.com.e_aluno.extension
 
 import br.com.e_aluno.R
-import br.com.e_aluno.fragment.noticias.NoticiasFragment
+import br.com.e_aluno.fragment.noticias.ListarNoticiasFragment
 import br.com.e_aluno.model.Noticia
 
-fun NoticiasFragment.mockNoticias(): List<Noticia> {
+fun ListarNoticiasFragment.mockNoticias(): List<Noticia> {
 
     val not1 = Noticia(
             id = 1,

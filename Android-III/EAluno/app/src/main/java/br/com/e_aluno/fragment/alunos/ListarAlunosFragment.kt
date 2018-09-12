@@ -8,9 +8,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +22,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
 
 
-class AlunosFragment : Fragment() {
+class ListarAlunosFragment : Fragment() {
 
     private lateinit var adapter: AlunoRecyclerView
     private lateinit var userListenerRegistration: ListenerRegistration
@@ -52,7 +50,7 @@ class AlunosFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_alunos, container, false)
+        val view = inflater.inflate(R.layout.fragment_listar_alunos, container, false)
 
         view.run {
 

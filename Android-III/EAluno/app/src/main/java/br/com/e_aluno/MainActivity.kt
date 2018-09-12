@@ -7,8 +7,9 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import br.com.e_aluno.fragment.alunos.AlunosFragment
-import br.com.e_aluno.fragment.noticias.NoticiasFragment
+import br.com.e_aluno.fragment.alunos.AlunoFragment
+import br.com.e_aluno.fragment.alunos.ListarAlunosFragment
+import br.com.e_aluno.fragment.noticias.ListarNoticiasFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,12 +31,16 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_noticias -> {
-                    viewModel.onNavigationItemSelected(NoticiasFragment())
+                    viewModel.onNavigationItemSelected(ListarNoticiasFragment())
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.navigation_alunos -> {
 
-                    viewModel.onNavigationItemSelected(AlunosFragment())
+                    viewModel.onNavigationItemSelected(ListarAlunosFragment())
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.navigation_minha_conta -> {
+                    viewModel.onNavigationItemSelected(AlunoFragment())
                     return@setOnNavigationItemSelectedListener true
                 }
                 else -> return@setOnNavigationItemSelectedListener false
@@ -47,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragmento: MutableLiveData<Fragment> by lazy {
             MutableLiveData<Fragment>().apply {
-                value = NoticiasFragment()
+                value = ListarNoticiasFragment()
             }
         }
 
