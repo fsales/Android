@@ -7,6 +7,8 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import java.time.LocalDateTime
+import java.util.*
 
 class UsuarioFirestone  {
 
@@ -75,8 +77,8 @@ class UsuarioFirestone  {
                 val novoUsuario = Usuario().apply {
                     Auth.instance.currentUser()?.let { currentUser ->
                         this.email = currentUser.email?.toLowerCase() ?: ""
-                        this.nome = currentUser.displayName ?: ""
-                        this.cadastro = Timestamp.now()
+                        this.nome = currentUser.displayName ?: email?.substringBefore("@")
+                        this.cadastro = Calendar.getInstance().time
                     }
                 }
 

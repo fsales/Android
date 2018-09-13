@@ -9,4 +9,5 @@ data class Aluno(var nome: String? = "",
                  var telefone: String? = "",
                  var endereco: String? = "",
                  var cidade: String? = "",
-                 var uf: String? = "") : Parcelable
+                 var uf: String? = "",
+                 var usuario: Usuario? = null) : Parcelable
