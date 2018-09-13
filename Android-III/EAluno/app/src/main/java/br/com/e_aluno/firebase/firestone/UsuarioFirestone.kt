@@ -3,11 +3,9 @@ package br.com.e_aluno.firebase.firestone
 import android.content.Context
 import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.model.Usuario
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import java.time.LocalDateTime
 import java.util.*
 
 class UsuarioFirestone  {
@@ -33,9 +31,12 @@ class UsuarioFirestone  {
     fun getCurrentUser(onComplete: (Usuario) -> Unit) {
         currentUserDocRef.get()
                 .addOnSuccessListener {
-                    onComplete(it.toObject(Usuario::class.java)!!)
+                    it.toObject(Usuario::class.java)?.let {
+                        onComplete(it)
+                    }
                 }
     }
+
 
     fun recuperarUsuario(context: Context,
                          onLista: (ArrayList<Usuario>) -> Unit
@@ -79,6 +80,7 @@ class UsuarioFirestone  {
                         this.email = currentUser.email?.toLowerCase() ?: ""
                         this.nome = currentUser.displayName ?: email?.substringBefore("@")
                         this.cadastro = Calendar.getInstance().time
+                        this.uuid = UUID.randomUUID().toString()
                     }
                 }
 

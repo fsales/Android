@@ -30,4 +30,5 @@
     <string name="noticias">Notícias</string>
     <string name="cidade">Cidade</string>
     <string name="uf">UF</string>
+    <string name="sair">sair</string>
 </resources>

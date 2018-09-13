@@ -17,6 +17,8 @@ class Auth {
         FirebaseAuth.getInstance()
     }
 
+    fun signOut() = instanceAuthFirebase.signOut()
+
     fun sendPasswordResetEmail(usuario: Usuario,
                                onComplete: () -> Unit,
                                onError: (exception: Exception?) -> Unit) {
