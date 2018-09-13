@@ -11,12 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.e_aluno.R
 import br.com.e_aluno.extension.campoPreenchido
+import br.com.e_aluno.extension.dialogCarregando
 import br.com.e_aluno.extension.mensagemCampoObrigatorio
 import br.com.e_aluno.model.Aluno
 import br.com.e_aluno.viewmodel.aluno.AlunoViewModel
 import kotlinx.android.synthetic.main.fragment_aluno.*
 import kotlinx.android.synthetic.main.fragment_aluno.view.*
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.support.v4.longToast
 
 class AlunoFragment : Fragment() {
 
@@ -59,6 +62,8 @@ class AlunoFragment : Fragment() {
         if (!isCamposObrigatoriosPreenchidos())
             return
 
+        val progressDialog = dialogCarregando("Salvando dados do usuário")
+
         viewModel.updateValueAluno(Aluno().apply {
             this.nome = nomeTextInptEdit.text.toString()
             this.telefone = telefoneTextInputEdit.text.toString()
@@ -68,7 +73,19 @@ class AlunoFragment : Fragment() {
             this.uf = ufInputEdit.text.toString()
         })
 
-        viewModel.criarAluno()
+        viewModel.criarAluno(onComplete = {
+            progressDialog.dismiss()
+            longToast(getString(R.string.msg_aluno_sucesso))
+        }, onError = { msg ->
+
+            progressDialog.dismiss()
+            msg?.let {
+                alert {
+                    message = it
+                }.show()
+            }
+
+        })
     }
 
 

@@ -4,6 +4,7 @@ import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.model.Aluno
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 class AlunoFirestone {
 
@@ -32,11 +33,8 @@ class AlunoFirestone {
               onError: (exception: Exception?) -> Unit) {
         currentDocRef.get().addOnSuccessListener { documentSnapshot ->
 
-            if (documentSnapshot.exists()) {
-                onComplete()
-            } else {
-                currentDocRef.set(aluno).addOnCompleteListener { onComplete() }
-            }
+            currentDocRef.set(aluno, SetOptions.merge()).addOnCompleteListener { onComplete() }
+
         }.addOnFailureListener { exception ->
             onError(exception)
         }

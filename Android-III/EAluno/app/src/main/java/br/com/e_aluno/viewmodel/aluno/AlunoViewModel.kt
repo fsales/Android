@@ -18,14 +18,15 @@ class AlunoViewModel : ViewModel() {
         this.aluno.value = aluno
     }
 
-    fun criarAluno() {
+    fun criarAluno(onComplete: () -> Unit,
+                   onError: (String?) -> Unit) {
 
         this.aluno.value?.let { aluno ->
             AlunoFirestone.instance.criar(aluno, onComplete = {
-                val a = ""
+                onComplete()
             }, onError = { exception ->
-                capturarMensagemErro(exception) {
-                    val a = ""
+                capturarMensagemErro(exception) { msg ->
+                    onError(msg)
                 }
             })
         }
