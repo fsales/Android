@@ -28,12 +28,15 @@ class UsuarioFirestone  {
         get() = instance.document("${PATH_USUARIOS}/${Auth.instance.uid()}")
                 ?: throw  NullPointerException("UID está nulo")
 
-    fun getCurrentUser(onComplete: (Usuario) -> Unit) {
+    fun getCurrentUser(onComplete: (Usuario) -> Unit,
+                       onError: (exception: Exception?) -> Unit?) {
         currentUserDocRef.get()
                 .addOnSuccessListener {
                     it.toObject(Usuario::class.java)?.let {
                         onComplete(it)
                     }
+                }.addOnFailureListener {
+                    onError(it)
                 }
     }
 

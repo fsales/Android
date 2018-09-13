@@ -16,8 +16,6 @@ fun EAlunoActivity.dialogErro(mensagem: String? = "Acontece um erro inesperado",
     }.show()
 }
 
-
-
 fun EAlunoActivity.dialogInfo(mensagem: String,
                               titulo: String? = "Informação") =
         alert(Appcompat, mensagem!!) {

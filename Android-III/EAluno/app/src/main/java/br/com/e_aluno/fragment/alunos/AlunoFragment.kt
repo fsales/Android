@@ -3,7 +3,6 @@ package br.com.e_aluno.fragment.alunos
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
@@ -24,22 +23,33 @@ import org.jetbrains.anko.support.v4.longToast
 
 
 class AlunoFragment : MenuFragment() {
-/*
+
     private val viewModel: AlunoViewModel by lazy {
         ViewModelProviders.of(this).get(AlunoViewModel::class.java)
-    }*/
-
-
-    private  lateinit var viewModel: AlunoViewModel
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        viewModel = ViewModelProviders.of(this).get(AlunoViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_aluno, container, false)
+
+        viewModel.aluno.observe(this, Observer { value ->
+            value.apply {
+                nomeTextInptEdit.setText(this?.nome)
+                telefoneTextInputEdit.setText(this?.telefone)
+                enderecoInputEdit.setText(this?.endereco)
+                matriculaTextInputEdit.setText(this?.matricula)
+                cidadeInputEdit.setText(this?.cidade)
+                ufInputEdit.setText(this?.uf)
+            }
+        })
+
+        viewModel.usuario.observe(this, Observer { value ->
+            value.apply {
+                emailTextView.setText(this?.email)
+            }
+        })
+
+
         setHasOptionsMenu(true);
         view.run {
 
@@ -54,22 +64,18 @@ class AlunoFragment : MenuFragment() {
             }
         }
 
-        viewModel.aluno.observe(this, Observer { value ->
-            value.apply {
-                this?.nome = nomeTextInptEdit.text.toString()
-                this?.telefone = telefoneTextInputEdit.text.toString()
-                this?.endereco = enderecoInputEdit.text.toString()
-                this?.matricula = matriculaTextInputEdit.text.toString()
-                this?.cidade = cidadeInputEdit.text.toString()
-                this?.uf = ufInputEdit.text.toString()
-            }
+        val progress = dialogCarregando()
+
+        viewModel.carregarDadosUsuario(onComplete = {
+            viewModel.carregarDadosAluno(onComplete = {
+                progress.dismiss()
+            }, onErro = {
+                progress.dismiss()
+            })
+        }, onErro = { exception ->
+            progress.dismiss()
         })
 
-        viewModel.usuario.observe(this, Observer { value ->
-            value.apply {
-                emailTextView.setText(this?.email)
-            }
-        })
 
         return view
     }
@@ -79,7 +85,7 @@ class AlunoFragment : MenuFragment() {
         if (!isCamposObrigatoriosPreenchidos())
             return
 
-        val progressDialog = dialogCarregando("Salvando dados do usuário")
+       val progress = dialogCarregando("Salvando dados do usuário")
 
         viewModel.updateValueAluno(Aluno().apply {
             this.nome = nomeTextInptEdit.text.toString()
@@ -91,11 +97,11 @@ class AlunoFragment : MenuFragment() {
         })
 
         viewModel.criarAluno(onComplete = {
-            progressDialog.dismiss()
+            progress.dismiss()
             longToast(getString(R.string.msg_aluno_sucesso))
         }, onError = { msg ->
 
-            progressDialog.dismiss()
+            progress.dismiss()
             msg?.let {
                 alert {
                     message = it

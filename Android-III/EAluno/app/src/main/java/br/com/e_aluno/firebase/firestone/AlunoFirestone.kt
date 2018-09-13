@@ -43,12 +43,15 @@ class AlunoFirestone {
     }
 
 
-    fun alunoCurrent(onComplete: (Aluno) -> Unit) {
+    fun getAluno(onComplete: (Aluno) -> Unit,
+                     onError: (exception: Exception?) -> Unit) {
         currentDocRef.get()
                 .addOnSuccessListener {
                     it.toObject(Aluno::class.java)?.let {
                         onComplete(it)
                     }
+                }.addOnFailureListener {
+                    onError(it)
                 }
     }
 
