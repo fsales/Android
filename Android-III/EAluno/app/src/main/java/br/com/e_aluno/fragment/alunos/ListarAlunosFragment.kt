@@ -17,7 +17,7 @@ import br.com.e_aluno.extension.dialogCarregando
 import br.com.e_aluno.firebase.firestone.UsuarioFirestone
 import br.com.e_aluno.model.Usuario
 import br.com.e_aluno.recyclerview.AlunoRecyclerView
-import br.com.e_aluno.viewmodel.aluno.AlunoViewModel
+import br.com.e_aluno.viewmodel.aluno.ListarAlunosViewModel
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
 
@@ -28,8 +28,8 @@ class ListarAlunosFragment : Fragment() {
     private lateinit var userListenerRegistration: ListenerRegistration
     private lateinit var dialogProgress: ProgressDialog
 
-    private val viewModel: AlunoViewModel by lazy {
-        ViewModelProviders.of(this).get(AlunoViewModel::class.java)
+    private val viewModel: ListarAlunosViewModel by lazy {
+        ViewModelProviders.of(this).get(ListarAlunosViewModel::class.java)
     }
 
 

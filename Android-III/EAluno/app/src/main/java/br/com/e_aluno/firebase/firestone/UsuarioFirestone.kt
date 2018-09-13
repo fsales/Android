@@ -8,7 +8,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
-class UsuarioFirestone {
+class UsuarioFirestone  {
 
     companion object {
         val instance: UsuarioFirestone by lazy {

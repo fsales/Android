@@ -1,8 +1,12 @@
 package br.com.e_aluno.model
 
-data class Aluno(val nome: String,
-                 val matricula: String,
-                 val telefone: String,
-                 val usuario: Usuario?) {
-    constructor() : this("", "", "", null)
-}
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class Aluno(var nome: String? = "",
+                 var matricula: String? = "",
+                 var telefone: String? = "",
+                 var endereco: String? = "",
+                 var cidade: String? = "",
+                 var uf: String? = "") : Parcelable

@@ -59,7 +59,7 @@ class LoginActivity : EAlunoActivity() {
         })
 
         viewModel.signInWithEmailAndPassword(onComplete = {
-            val a = Auth.instance.currentUser()
+
             startActivity(intentFor<MainActivity>().newTask().clearTask())
             progressDialog.dismiss()
         }, onError = { msg ->

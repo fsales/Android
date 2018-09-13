@@ -2,6 +2,7 @@ package br.com.e_aluno.extension
 
 import android.support.design.widget.TextInputEditText
 import android.support.design.widget.TextInputLayout
+import android.support.v4.app.Fragment
 import br.com.e_aluno.EAlunoActivity
 import br.com.e_aluno.R
 import java.util.regex.Pattern
@@ -43,11 +44,26 @@ fun EAlunoActivity.validarSenha(senha: String, callback: ((senhaValido: Boolean)
     return senhaValida
 }
 
+fun Fragment.campoPreenchido(textInputLayout: TextInputLayout?,
+                             textInputEditText: TextInputEditText?,
+                             mensagem: String,
+                             onSuccess: (preenchido: Boolean) -> Unit) {
+    validaCampoPreenchido(textInputLayout, textInputEditText, mensagem, onSuccess)
+}
+
 
 fun EAlunoActivity.campoPreenchido(textInputLayout: TextInputLayout?,
                                    textInputEditText: TextInputEditText?,
                                    mensagem: String,
                                    onSuccess: (preenchido: Boolean) -> Unit) {
+    validaCampoPreenchido(textInputLayout, textInputEditText, mensagem, onSuccess)
+}
+
+private fun validaCampoPreenchido(textInputLayout: TextInputLayout?,
+                                  textInputEditText: TextInputEditText?,
+                                  mensagem: String,
+                                  onSuccess: (preenchido: Boolean) -> Unit) {
+
     textInputEditText?.let {
         if (it.text.isNullOrEmpty()) {
             textInputLayout?.isErrorEnabled = true
@@ -58,9 +74,12 @@ fun EAlunoActivity.campoPreenchido(textInputLayout: TextInputLayout?,
             onSuccess(true)
         }
     }
+
 }
 
 fun EAlunoActivity.mensagemCampoObrigatorio(resIdCampo: Int) = getString(R.string.template_msg_obrigatorio).format(getString(resIdCampo))
+
+fun Fragment.mensagemCampoObrigatorio(resIdCampo: Int) = getString(R.string.template_msg_obrigatorio).format(getString(resIdCampo))
 
 fun EAlunoActivity.camposIguais(textInputEditText1: TextInputEditText,
                                 textInputEditText2: TextInputEditText,

@@ -5,47 +5,65 @@
     android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:fillViewport="true"
-    tools:context=".fragment.alunos.AlunoFragment">
+    tools:context=".fragment.alunos.AlunoFragment"
+    tools:layout_editor_absoluteY="25dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <include
-            android:id="@+id/include"
             layout="@layout/toolbar"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/guidelineToolbar"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineInclude"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.38" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <android.support.constraint.Guideline
-            android:id="@+id/guidelineToolbar"
-            android:layout_width="wrap_content"
+            android:id="@+id/guidelineInclude"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/fotoImageView"
-            app:layout_constraintGuide_end="511dp"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
+            app:layout_constraintGuide_begin="?attr/actionBarSize" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineFotD"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.390625" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineFotoB"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:minHeight="150dp"
+            android:minWidth="150dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/nomeTextInputLaout"
+            app:layout_constraintGuide_percent="0.44973546"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/fotoImageView"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/foto"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_add_a_photo_black_24dp"
-            app:layout_constraintBottom_toTopOf="@+id/emailTextView"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineFotoB"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineFotD"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guidelineToolbar" />
+            app:layout_constraintTop_toTopOf="@+id/guidelineInclude" />
 
         <TextView
             android:id="@+id/emailTextView"
@@ -53,13 +71,49 @@
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:paddingTop="16dp"
             android:text="@string/e_mail"
-            app:layout_constraintBottom_toTopOf="@+id/nomeTextInputLaout"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            app:layout_constraintBottom_toTopOf="@+id/telefoneTextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guidelineFotD"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineInclude" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/matriculaTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineFotoB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guidelineFotD"
+            app:layout_constraintTop_toBottomOf="@+id/telefoneTextInputLayout">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/matriculaTextInputEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/matricula"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/confirmarBotton"
+            style="@style/RaisedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:padding="5dp"
+            android:text="@string/confirmar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fotoImageView" />
+            app:layout_constraintTop_toBottomOf="@+id/cidadeTextInputLayout" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/nomeTextInputLaout"
@@ -67,86 +121,120 @@
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/telefoneTextInputLayout"
+            app:layout_constraintBottom_toTopOf="@+id/enderecoTextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailTextView">
+            app:layout_constraintTop_toBottomOf="@+id/guidelineFotoB">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/nomeTextInptEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/nome" />
+                android:hint="@string/nome"
+                android:inputType="textWebEditText" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/telefoneTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/enderecoTextInputLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nomeTextInputLaout">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/telefoneTextInputEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/telefone" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/enderecoTextInputLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             app:layout_constraintBottom_toTopOf="@+id/matriculaTextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guidelineFotD"
+            app:layout_constraintTop_toBottomOf="@+id/emailTextView">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/telefoneTextInputEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/telefone"
+                android:inputType="textPhonetic|phone" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/enderecoTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/cidadeTextInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/telefoneTextInputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/nomeTextInputLaout">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/enderecoInputEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/endereco" />
+                android:hint="@string/endereco"
+                android:inputType="textWebEditText" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/matriculaTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/confirmarBotton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enderecoTextInputLayout">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/matriculaTextInputEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/matricula" />
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/confirmarBotton"
-            style="@style/RaisedButton"
-            android:layout_width="match_parent"
+            android:id="@+id/cidadeTextInputLayout"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/confirmar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/confirmarBotton"
+            app:layout_constraintEnd_toStartOf="@+id/guideline9"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/matriculaTextInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/enderecoTextInputLayout">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/cidadeInputEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/cidade"
+                android:inputType="textAutoCorrect|textWebEditText" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline9"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:padding="5dp"
+            app:layout_constraintGuide_percent="0.6354167" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/ufTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/cidadeTextInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cidadeTextInputLayout"
+            app:layout_constraintTop_toTopOf="@+id/cidadeTextInputLayout">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/ufInputEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/uf"
+                android:inputType="textAutoCorrect|textWebEditText" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.constraint.Group
+            android:id="@+id/group"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="guideline9,ufTextInputLayout,cidadeTextInputLayout" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="emailTextView,telefoneTextInputLayout,matriculaTextInputLayout" />
 
 
     </android.support.constraint.ConstraintLayout>

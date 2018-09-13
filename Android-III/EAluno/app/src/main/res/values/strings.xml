@@ -27,4 +27,6 @@
     <string name="minha_conta">Minha conta</string>
     <string name="alunos">Alunos</string>
     <string name="noticias">Notícias</string>
+    <string name="cidade">Cidade</string>
+    <string name="uf">UF</string>
 </resources>
