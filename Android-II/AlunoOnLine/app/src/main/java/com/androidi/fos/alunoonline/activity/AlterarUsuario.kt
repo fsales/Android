@@ -66,7 +66,7 @@ class AlterarUsuario : AlunoOnLineBaseActivity() {
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
 
         imgFoto.setOnClickListener {
-
+            val a:Strng  = Manifest.permission.CAMERA
             val isPermissionCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
             val isPermissionReadExtenalStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
             val isPermissionWriteExtenalStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED

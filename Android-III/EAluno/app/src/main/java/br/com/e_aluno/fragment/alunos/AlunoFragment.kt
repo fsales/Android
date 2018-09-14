@@ -1,10 +1,14 @@
 package br.com.e_aluno.fragment.alunos
 
 
+import android.Manifest
 import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,12 +17,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.e_aluno.R
+import br.com.e_aluno.dialogPermissao
 import br.com.e_aluno.extension.campoPreenchido
 import br.com.e_aluno.extension.dialogCarregando
 import br.com.e_aluno.extension.mensagemCampoObrigatorio
 import br.com.e_aluno.firebase.Storage
 import br.com.e_aluno.fragment.MenuFragment
 import br.com.e_aluno.model.Aluno
+import br.com.e_aluno.permissoesConcedidas
+import br.com.e_aluno.solicitarPermissao
 import br.com.e_aluno.viewmodel.aluno.AlunoViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
@@ -34,6 +41,7 @@ import java.io.ByteArrayOutputStream
 
 class AlunoFragment : MenuFragment() {
 
+    private val RC_SELECT_CAMERA = 1
     private val RC_SELECT_IMAGE = 2
     private var imagemSelecionadaBytes: ByteArray? = null
 
@@ -92,7 +100,27 @@ class AlunoFragment : MenuFragment() {
             }
 
             fotoImageView.setOnClickListener {
-                fotoOnClick()
+
+                activityAppCompatActivity?.let { ac ->
+
+                    val listaPermissaoNecessaria = arrayListOf(Manifest.permission.CAMERA,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+                    solicitarPermissao(context!!, ac, listaPermissaoNecessaria, 1)
+
+                    permissoesConcedidas(context!!, ac, listaPermissaoNecessaria, onComplete = {
+                        if (it.size == listaPermissaoNecessaria.size) {
+
+                            dialogPermissao(ac, "Fotos do usuáro", arrayOf<CharSequence>("Câmera", "Galeria"), onComplete = { dialog, which ->
+                                if (which == 0)
+                                    cameraIntent(RC_SELECT_CAMERA, packageManager = ac.packageManager, contentResolver = ac.contentResolver)
+                                else
+                                    fotoIntent(RC_SELECT_IMAGE)
+                            })
+                        }
+                    })
+                }
             }
         }
 
@@ -176,20 +204,44 @@ class AlunoFragment : MenuFragment() {
         return isPreenchido
     }
 
-    private fun fotoOnClick() {
+    private fun fotoIntent(requestCode: Int) {
         val intent = Intent().apply {
             type = "image/*"
             action = Intent.ACTION_GET_CONTENT
             putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/jpeg", "image/png"))
         }
-        startActivityForResult(Intent.createChooser(intent, "Select Image"), RC_SELECT_IMAGE)
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), requestCode)
+    }
+
+    private fun cameraIntent(requestCode: Int,
+                             packageManager: PackageManager,
+                             contentResolver: ContentResolver) {
+        val values = ContentValues().apply {
+            put(MediaStore.Images.Media.TITLE, "Foto Usuário")
+            put(MediaStore.Images.Media.DESCRIPTION, "Câmera")
+        }
+
+        val imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+
+        val intent = Intent().apply {
+            action = MediaStore.ACTION_IMAGE_CAPTURE
+            putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+            flags.plus(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        }
+
+        startActivityForResult(intent, RC_SELECT_CAMERA)
     }
 
     private fun carregarImagemGaleria(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RC_SELECT_IMAGE && resultCode == Activity.RESULT_OK &&
+
+        if ((requestCode == RC_SELECT_IMAGE || requestCode == RC_SELECT_CAMERA) &&
+                resultCode == Activity.RESULT_OK &&
                 data != null && data.data != null) {
 
             val caminhoImagemSelecionada = data.data
+
+
             val imagemSelecionada = MediaStore.Images.Media.getBitmap(activity?.contentResolver, caminhoImagemSelecionada)
 
             val outputStream = ByteArrayOutputStream()
