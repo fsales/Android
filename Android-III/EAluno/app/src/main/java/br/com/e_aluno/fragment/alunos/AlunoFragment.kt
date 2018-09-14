@@ -10,6 +10,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
@@ -44,6 +45,7 @@ class AlunoFragment : MenuFragment() {
     private val RC_SELECT_CAMERA = 1
     private val RC_SELECT_IMAGE = 2
     private var imagemSelecionadaBytes: ByteArray? = null
+    private var imageUri: Uri? = null
 
     private val viewModel: AlunoViewModel by lazy {
         ViewModelProviders.of(this).get(AlunoViewModel::class.java)
@@ -221,7 +223,7 @@ class AlunoFragment : MenuFragment() {
             put(MediaStore.Images.Media.DESCRIPTION, "Câmera")
         }
 
-        val imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
 
         val intent = Intent().apply {
             action = MediaStore.ACTION_IMAGE_CAPTURE
@@ -233,7 +235,7 @@ class AlunoFragment : MenuFragment() {
         startActivityForResult(intent, RC_SELECT_CAMERA)
     }
 
-    private fun carregarImagemGaleria(requestCode: Int, resultCode: Int, data: Intent?) {
+    private fun carregarImagem(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if ((requestCode == RC_SELECT_IMAGE || requestCode == RC_SELECT_CAMERA) &&
                 resultCode == Activity.RESULT_OK &&
@@ -261,7 +263,10 @@ class AlunoFragment : MenuFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        carregarImagemGaleria(requestCode, resultCode, data)
 
+        if (data?.data == null && imageUri != null) {
+            data?.data = imageUri
+        }
+        carregarImagem(requestCode, resultCode, data)
     }
 }
