@@ -5,6 +5,7 @@ import br.com.e_aluno.model.Aluno
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import java.lang.NullPointerException
 import java.util.*
 
 class AlunoFirestone {
@@ -26,7 +27,7 @@ class AlunoFirestone {
 
     private val currentDocRef: DocumentReference
         get() = instance.document("${PATH_ALUNOS}/${Auth.instance.uid()}")
-                ?: throw  NullPointerException("UID está nulo")
+                ?: throw  NullPointerException("UUID null")
 
 
     fun criar(aluno: Aluno,

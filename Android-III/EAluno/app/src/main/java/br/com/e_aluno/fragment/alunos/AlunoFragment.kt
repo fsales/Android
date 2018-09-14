@@ -16,10 +16,14 @@ import br.com.e_aluno.R
 import br.com.e_aluno.extension.campoPreenchido
 import br.com.e_aluno.extension.dialogCarregando
 import br.com.e_aluno.extension.mensagemCampoObrigatorio
+import br.com.e_aluno.firebase.Storage
 import br.com.e_aluno.fragment.MenuFragment
 import br.com.e_aluno.model.Aluno
 import br.com.e_aluno.viewmodel.aluno.AlunoViewModel
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.fragment_aluno.*
 import kotlinx.android.synthetic.main.fragment_aluno.view.*
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
@@ -31,6 +35,7 @@ import java.io.ByteArrayOutputStream
 class AlunoFragment : MenuFragment() {
 
     private val RC_SELECT_IMAGE = 2
+    private var imagemSelecionadaBytes: ByteArray? = null
 
     private val viewModel: AlunoViewModel by lazy {
         ViewModelProviders.of(this).get(AlunoViewModel::class.java)
@@ -50,10 +55,25 @@ class AlunoFragment : MenuFragment() {
                 ufInputEdit.setText(this?.uf)
             }
         })
-
+        val context = this.context
         viewModel.usuario.observe(this, Observer { value ->
             value.apply {
                 emailTextView.setText(this?.email)
+
+                this?.caminhoFoto?.let { caminhoFoto ->
+                    if (caminhoFoto.isNotEmpty()) {
+                      /*  val options = RequestOptions()
+                                .centerCrop()
+                                .placeholder(R.drawable.ic_add_a_photo_black_24dp)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .priority(Priority.HIGH)
+                                .dontAnimate()
+                                .dontTransform()
+            */
+                       Glide.with(context!!).load(Storage.INSTANCE.pathToReference(caminhoFoto)).into(fotoImageView)
+                    }
+                }
+
             }
         })
 
@@ -108,7 +128,8 @@ class AlunoFragment : MenuFragment() {
             this.uf = ufInputEdit.text.toString()
         })
 
-        viewModel.criarAluno(onComplete = {
+        viewModel.criarAluno(imagemSelecionadaBytes,
+                onComplete = {
             progress.dismiss()
             longToast(getString(R.string.msg_aluno_sucesso))
         }, onError = { msg ->
@@ -173,7 +194,7 @@ class AlunoFragment : MenuFragment() {
 
             val outputStream = ByteArrayOutputStream()
             imagemSelecionada.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
-
+            imagemSelecionadaBytes = outputStream.toByteArray()
             Glide.with(this).load(imagemSelecionada).into(fotoImageView)
 
         }

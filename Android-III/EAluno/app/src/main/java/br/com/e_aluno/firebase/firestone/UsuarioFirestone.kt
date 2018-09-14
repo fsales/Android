@@ -109,4 +109,11 @@ class UsuarioFirestone  {
 
     }
 
+
+    fun updateUsuario(caminhoFoto: String) {
+        val usuFieldMap = mutableMapOf<String, Any>()
+        usuFieldMap["caminhoFoto"] = caminhoFoto
+        currentUserDocRef.update(usuFieldMap)
+    }
+
 }
