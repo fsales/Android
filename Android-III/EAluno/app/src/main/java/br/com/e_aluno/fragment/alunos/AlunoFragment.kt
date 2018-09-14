@@ -62,15 +62,15 @@ class AlunoFragment : MenuFragment() {
 
                 this?.caminhoFoto?.let { caminhoFoto ->
                     if (caminhoFoto.isNotEmpty()) {
-                      /*  val options = RequestOptions()
+                        val options = RequestOptions()
                                 .centerCrop()
                                 .placeholder(R.drawable.ic_add_a_photo_black_24dp)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .priority(Priority.HIGH)
                                 .dontAnimate()
                                 .dontTransform()
-            */
-                       Glide.with(context!!).load(Storage.INSTANCE.pathToReference(caminhoFoto)).into(fotoImageView)
+
+                       Glide.with(context!!).load(Storage.INSTANCE.pathToReference(caminhoFoto)).apply(options).into(fotoImageView)
                     }
                 }
 
