@@ -4,13 +4,17 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import br.com.e_aluno.EAlunoActivity
+import br.com.e_aluno.MainActivity
 import br.com.e_aluno.R
 import br.com.e_aluno.extension.*
 import br.com.e_aluno.model.Usuario
 import br.com.e_aluno.viewmodel.autenticacao.CadastrarViewModel
 import kotlinx.android.synthetic.main.activity_cadastrar.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.longToast
+import org.jetbrains.anko.newTask
 
 class CadastrarActivity : EAlunoActivity() {
 
@@ -65,6 +69,7 @@ class CadastrarActivity : EAlunoActivity() {
             confirmarSenhaTextInputEdit.setText("")
             progressDialog.dismiss()
             longToast(getString(R.string.msg_usuario_sucesso))
+            startActivity(intentFor<MainActivity>().newTask().clearTask())
         }) {
             progressDialog.dismiss()
             dialogErro(it)

@@ -25,7 +25,7 @@ class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>()) : Recycler
 
         list?.let {
             val usuario = it[position] as Usuario
-            holder.nome.text = usuario.nome
+          //  holder.nome.text = usuario.nome
             holder.email.text = usuario.email
         }
     }

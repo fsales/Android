@@ -2,6 +2,7 @@ package br.com.e_aluno.firebase.firestone
 
 import android.content.Context
 import br.com.e_aluno.firebase.Auth
+import br.com.e_aluno.model.Aluno
 import br.com.e_aluno.model.Usuario
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -72,23 +73,36 @@ class UsuarioFirestone  {
     fun removeListener(registration: ListenerRegistration) = registration.remove()
 
     fun criarUsuario(onComplete: () -> Unit, onError: (exception: Exception?) -> Unit) {
+
         currentUserDocRef.get().addOnSuccessListener { documentSnapshot ->
 
             if (documentSnapshot.exists()) {
                 onComplete()
-            } else {
+                return@addOnSuccessListener
+            }
+
+            Auth.instance.currentUser()?.let { usuario ->
 
                 val novoUsuario = Usuario().apply {
-                    Auth.instance.currentUser()?.let { currentUser ->
-                        this.email = currentUser.email?.toLowerCase() ?: ""
-                        this.nome = currentUser.displayName ?: email?.substringBefore("@")
-                        this.cadastro = Calendar.getInstance().time
-                        this.uuid = UUID.randomUUID().toString()
-                    }
+                    this.email = usuario?.email?.toLowerCase() ?: ""
+                    this.cadastro = Calendar.getInstance().time
+                    this.uuid = UUID.randomUUID().toString()
                 }
 
-                currentUserDocRef.set(novoUsuario).addOnCompleteListener { onComplete() }
+                currentUserDocRef.set(novoUsuario).addOnCompleteListener {
+
+                    val aluno = Aluno().apply {
+                        this.nome = usuario?.displayName ?: novoUsuario.email?.substringBefore("@")
+                        this.uuidUsuario = novoUsuario.uuid
+                    }
+
+                    AlunoFirestone.instance.criar(aluno, onComplete = { onComplete() }, onError = { onError(it) })
+                }.addOnFailureListener {
+                    onError(it)
+                }
+
             }
+
         }.addOnFailureListener { exception ->
             onError(exception)
         }
