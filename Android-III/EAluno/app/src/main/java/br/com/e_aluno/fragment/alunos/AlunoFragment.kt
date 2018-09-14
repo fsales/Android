@@ -195,7 +195,14 @@ class AlunoFragment : MenuFragment() {
             val outputStream = ByteArrayOutputStream()
             imagemSelecionada.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
             imagemSelecionadaBytes = outputStream.toByteArray()
-            Glide.with(this).load(imagemSelecionada).into(fotoImageView)
+
+            val options = RequestOptions()
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .priority(Priority.HIGH)
+                    .dontAnimate()
+                    .dontTransform()
+            Glide.with(this).load(imagemSelecionada).apply(options).into(fotoImageView)
 
         }
     }
