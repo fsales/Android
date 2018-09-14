@@ -1,9 +1,13 @@
 package br.com.e_aluno.fragment.alunos
 
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
@@ -15,14 +19,18 @@ import br.com.e_aluno.extension.mensagemCampoObrigatorio
 import br.com.e_aluno.fragment.MenuFragment
 import br.com.e_aluno.model.Aluno
 import br.com.e_aluno.viewmodel.aluno.AlunoViewModel
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_aluno.*
 import kotlinx.android.synthetic.main.fragment_aluno.view.*
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.longToast
+import java.io.ByteArrayOutputStream
 
 
 class AlunoFragment : MenuFragment() {
+
+    private val RC_SELECT_IMAGE = 2
 
     private val viewModel: AlunoViewModel by lazy {
         ViewModelProviders.of(this).get(AlunoViewModel::class.java)
@@ -61,6 +69,10 @@ class AlunoFragment : MenuFragment() {
 
             this.confirmarBotton.setOnClickListener {
                 salvar()
+            }
+
+            fotoImageView.setOnClickListener {
+                fotoOnClick()
             }
         }
 
@@ -143,4 +155,33 @@ class AlunoFragment : MenuFragment() {
         return isPreenchido
     }
 
+    private fun fotoOnClick() {
+        val intent = Intent().apply {
+            type = "image/*"
+            action = Intent.ACTION_GET_CONTENT
+            putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/jpeg", "image/png"))
+        }
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), RC_SELECT_IMAGE)
+    }
+
+    private fun carregarImagemGaleria(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RC_SELECT_IMAGE && resultCode == Activity.RESULT_OK &&
+                data != null && data.data != null) {
+
+            val caminhoImagemSelecionada = data.data
+            val imagemSelecionada = MediaStore.Images.Media.getBitmap(activity?.contentResolver, caminhoImagemSelecionada)
+
+            val outputStream = ByteArrayOutputStream()
+            imagemSelecionada.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+
+            Glide.with(this).load(imagemSelecionada).into(fotoImageView)
+
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        carregarImagemGaleria(requestCode, resultCode, data)
+
+    }
 }

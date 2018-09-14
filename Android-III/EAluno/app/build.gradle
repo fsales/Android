@@ -5,6 +5,7 @@ def firebase_core = '16.0.1'
 def firebase_libs = '11.8.0'
 def firebase_firestore = '17.0.1'
 def firebase_auth = '16.0.2'
+def glide = '4.8.0'
 
 apply plugin: 'com.android.application'
 
@@ -64,6 +65,13 @@ dependencies {
     implementation "com.google.firebase:firebase-storage:$firebase_libs"
     implementation "com.google.firebase:firebase-auth:$firebase_auth"
     implementation "com.google.firebase:firebase-firestore:$firebase_firestore"
+
+    //glide
+    implementation "com.github.bumptech.glide:glide:$glide"
+    kapt "com.github.bumptech.glide:compiler:$glide"
+
+    // firebase ui
+    implementation "com.firebaseui:firebase-ui-storage:4.2.0"
 }
 
 apply plugin: 'com.google.gms.google-services'
