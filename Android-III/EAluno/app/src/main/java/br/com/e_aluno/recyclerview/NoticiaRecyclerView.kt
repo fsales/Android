@@ -11,7 +11,7 @@ import br.com.e_aluno.model.Noticia
 import kotlinx.android.synthetic.main.card_noticia.view.*
 import org.jetbrains.anko.imageBitmap
 
-class NoticiaRecyclerView(private val list: List<Noticia>,
+class NoticiaRecyclerView(var list: List<Noticia>? = listOf<Noticia>(),
                           private val clickListener: (Noticia?) -> Unit) : RecyclerView.Adapter<NoticiaRecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,17 +23,22 @@ class NoticiaRecyclerView(private val list: List<Noticia>,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val noticia = list[position] as Noticia
 
-        holder.title.text = noticia.dataNoticia + " - " + noticia.titulo
-        holder.desc.text = noticia.descricaoCurta
-        holder.featuredImage.imageBitmap = noticia.imagem(holder.itemView.context.resources)
-        holder.noticia = noticia
+        list?.let { it ->
+
+            val noticia = it[position] as Noticia
+
+            holder.title.text = noticia.dataNoticia + " - " + noticia.titulo
+            holder.desc.text = noticia.descricaoCurta
+            holder.featuredImage.imageBitmap = noticia.imagem(holder.itemView.context.resources)
+            holder.noticia = noticia
+        }
+
 
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return list?.size ?: 0
     }
 
     inner class ViewHolder(itemView: View,

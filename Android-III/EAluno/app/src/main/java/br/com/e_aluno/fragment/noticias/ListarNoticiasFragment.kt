@@ -1,6 +1,8 @@
 package br.com.e_aluno.fragment.noticias
 
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -10,9 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.e_aluno.R
 import br.com.e_aluno.activity.noticias.DetalharNoticiaActivity
-import br.com.e_aluno.extension.mockNoticias
-import br.com.e_aluno.model.Noticia
 import br.com.e_aluno.recyclerview.NoticiaRecyclerView
+import br.com.e_aluno.viewmodel.noticia.ListaNoticiaViewModel
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
 import org.jetbrains.anko.support.v4.intentFor
 
@@ -21,8 +22,8 @@ class ListarNoticiasFragment : Fragment() {
 
     private var adapter: NoticiaRecyclerView? = null
 
-    private val list: ArrayList<Noticia> by lazy {
-        arrayListOf<Noticia>()
+    private val viewModel: ListaNoticiaViewModel by lazy {
+        ViewModelProviders.of(this).get(ListaNoticiaViewModel::class.java)
     }
 
     companion object {
@@ -43,18 +44,31 @@ class ListarNoticiasFragment : Fragment() {
             }
 
             recyclerView.layoutManager = LinearLayoutManager(activity)
-            adapter = NoticiaRecyclerView(list, clickListener = { noticia ->
+
+            val lista = viewModel.noticias.value ?: arrayListOf();
+
+            adapter = NoticiaRecyclerView(lista, clickListener = { noticia ->
                 startActivity(intentFor<DetalharNoticiaActivity>().apply {
                     putExtra(INTENT_NOTICIA, noticia)
                 })
             })
             recyclerView.adapter = adapter
-
-            list.addAll(mockNoticias())
             adapter?.notifyDataSetChanged();
             this.collapseLayout.title = getString(R.string.app_name)
 
+
         }
+
+        viewModel.noticias.observe(this, Observer { list ->
+            list?.let { listaNoticia ->
+                adapter?.let { adp ->
+                    adp.list = listaNoticia
+                    adp.notifyDataSetChanged();
+                }
+            }
+        })
+
+
         return view
     }
 

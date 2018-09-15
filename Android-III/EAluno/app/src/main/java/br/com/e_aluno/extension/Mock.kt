@@ -1,10 +1,9 @@
 package br.com.e_aluno.extension
 
 import br.com.e_aluno.R
-import br.com.e_aluno.fragment.noticias.ListarNoticiasFragment
 import br.com.e_aluno.model.Noticia
 
-fun ListarNoticiasFragment.mockNoticias(): List<Noticia> {
+fun mockNoticias(): List<Noticia> {
 
     val not1 = Noticia(
             id = 1,
@@ -25,7 +24,6 @@ fun ListarNoticiasFragment.mockNoticias(): List<Noticia> {
                     "Similar em outras linguagens, Kotlin pode declarar métodos em tipos que você não controla , por exemplo:\n" +
                     "\n" +
                     "fun String.hello(): String{\n" +
-                    " return “Hello ${this}”\n" +
                     "}\n" +
                     "\n" +
                     "val x = \"Kotlin\"\n" +
@@ -46,7 +44,6 @@ fun ListarNoticiasFragment.mockNoticias(): List<Noticia> {
             descricao = "Similar em outras linguagens, Kotlin pode declarar métodos em tipos que você não controla , por exemplo:\n" +
                     "\n" +
                     "fun String.hello(): String{\n" +
-                    " return “Hello ${this}”\n" +
                     "}\n" +
                     "\n" +
                     "val x = \"Kotlin\"\n" +
@@ -116,5 +113,5 @@ fun ListarNoticiasFragment.mockNoticias(): List<Noticia> {
             titulo = "Algumas mudanças",
             codigoImagem = R.drawable.senhores)
 
-    return kotlin.collections.arrayListOf<Noticia>(not1, not2, not3, not4, not5)
+    return arrayListOf<Noticia>(not1, not2, not3, not4, not5)
 }
