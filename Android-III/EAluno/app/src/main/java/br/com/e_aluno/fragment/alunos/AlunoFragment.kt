@@ -7,6 +7,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.ContentResolver
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -46,6 +47,16 @@ class AlunoFragment : MenuFragment() {
     private val RC_SELECT_IMAGE = 2
     private var imagemSelecionadaBytes: ByteArray? = null
     private var imageUri: Uri? = null
+
+    companion object {
+        const val REQUEST_PERMISSION = 1
+    }
+
+    private val listaPermissaoFoto: ArrayList<String> by lazy {
+        arrayListOf(Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
 
     private val viewModel: AlunoViewModel by lazy {
         ViewModelProviders.of(this).get(AlunoViewModel::class.java)
@@ -105,23 +116,9 @@ class AlunoFragment : MenuFragment() {
 
                 activityAppCompatActivity?.let { ac ->
 
-                    val listaPermissaoNecessaria = arrayListOf(Manifest.permission.CAMERA,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
-                    solicitarPermissao(context!!, ac, listaPermissaoNecessaria, 1)
-
-                    permissoesConcedidas(context!!, ac, listaPermissaoNecessaria, onComplete = {
-                        if (it.size == listaPermissaoNecessaria.size) {
-
-                            dialogPermissao(ac, "Fotos do usuáro", arrayOf<CharSequence>("Câmera", "Galeria"), onComplete = { dialog, which ->
-                                if (which == 0)
-                                    cameraIntent(RC_SELECT_CAMERA, packageManager = ac.packageManager, contentResolver = ac.contentResolver)
-                                else
-                                    fotoIntent(RC_SELECT_IMAGE)
-                            })
-                        }
-                    })
+                    solicitarPermissao(context!!, ac, listaPermissaoFoto, 1)
+                    capturarFoto(context!!, ac, listaPermissaoFoto)
                 }
             }
         }
@@ -140,6 +137,22 @@ class AlunoFragment : MenuFragment() {
 
 
         return view
+    }
+
+    private fun capturarFoto(context: Context,
+                             activity: Activity,
+                             permissao: ArrayList<String>) {
+        permissoesConcedidas(context!!, activity, permissao, onComplete = {
+            if (it.size == permissao.size) {
+
+                dialogPermissao(activity, "Fotos do usuáro", arrayOf<CharSequence>("Câmera", "Galeria"), onComplete = { dialog, which ->
+                    if (which == 0)
+                        cameraIntent(RC_SELECT_CAMERA, packageManager = context.packageManager, contentResolver = context.contentResolver)
+                    else
+                        fotoIntent(RC_SELECT_IMAGE)
+                })
+            }
+        })
     }
 
 
@@ -269,4 +282,17 @@ class AlunoFragment : MenuFragment() {
         }
         carregarImagem(requestCode, resultCode, data)
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            REQUEST_PERMISSION -> {
+                capturarFoto(context!!, activity!!, listaPermissaoFoto)
+            }
+        }
+
+
+    }
+
 }
