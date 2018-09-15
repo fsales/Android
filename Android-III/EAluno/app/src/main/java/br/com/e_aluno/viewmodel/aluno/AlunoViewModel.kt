@@ -57,15 +57,21 @@ class AlunoViewModel : ViewModel() {
                    onError: (String?) -> Unit) {
 
         imagemUsuario?.let {
-            Storage.INSTANCE.uploadFoto(it, Auth.instance?.uid()!!, onComplete = {
-                UsuarioFirestone.instance.updateUsuario(it)
+            Storage.INSTANCE.uploadFoto(it, onComplete = {
+                UsuarioFirestone.instance.updateUsuario(it, onComplete = {
+                    usuario.postValue(it)
+                    onComplete()
+                }, onError = {
+                    capturarMensagemErro(it) { msg ->
+                        onError(msg)
+                    }
+                })
             }, onError = {
                 capturarMensagemErro(it) { msg ->
                     onError(msg)
                 }
             })
         }
-
 
         this.aluno.value?.let { aluno ->
 

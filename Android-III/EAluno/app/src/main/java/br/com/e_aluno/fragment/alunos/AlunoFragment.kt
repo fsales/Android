@@ -3,6 +3,7 @@ package br.com.e_aluno.fragment.alunos
 
 import android.Manifest
 import android.app.Activity
+import android.app.ProgressDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.ContentResolver
@@ -18,6 +19,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import br.com.e_aluno.R
 import br.com.e_aluno.dialogPermissao
 import br.com.e_aluno.extension.campoPreenchido
@@ -33,12 +35,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import kotlinx.android.synthetic.main.fragment_aluno.*
 import kotlinx.android.synthetic.main.fragment_aluno.view.*
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
 import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.longToast
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 
 class AlunoFragment : MenuFragment() {
@@ -47,6 +50,8 @@ class AlunoFragment : MenuFragment() {
     private val RC_SELECT_IMAGE = 2
     private var imagemSelecionadaBytes: ByteArray? = null
     private var imageUri: Uri? = null
+
+    private var progress: ProgressDialog? = null
 
     companion object {
         const val REQUEST_PERMISSION = 1
@@ -60,6 +65,16 @@ class AlunoFragment : MenuFragment() {
 
     private val viewModel: AlunoViewModel by lazy {
         ViewModelProviders.of(this).get(AlunoViewModel::class.java)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        progress?.dismiss()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        progress?.dismiss()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -83,15 +98,21 @@ class AlunoFragment : MenuFragment() {
 
                 this?.caminhoFoto?.let { caminhoFoto ->
                     if (caminhoFoto.isNotEmpty()) {
+
                         val options = RequestOptions()
                                 .centerCrop()
                                 .placeholder(R.drawable.ic_add_a_photo_black_24dp)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .signature(ObjectKey(System.currentTimeMillis()))
                                 .priority(Priority.HIGH)
                                 .dontAnimate()
                                 .dontTransform()
 
-                       Glide.with(context!!).load(Storage.INSTANCE.pathToReference(caminhoFoto)).apply(options).into(fotoImageView)
+                        Glide.with(context!!)
+                                .load(Storage.INSTANCE.pathToReference(caminhoFoto))
+                                .apply(options)
+                                .into(fotoImageView)
+                                .clearOnDetach()
                     }
                 }
 
@@ -123,16 +144,16 @@ class AlunoFragment : MenuFragment() {
             }
         }
 
-        val progress = dialogCarregando()
+        progress = dialogCarregando()
 
         viewModel.carregarDadosUsuario(onComplete = {
             viewModel.carregarDadosAluno(onComplete = {
-                progress.dismiss()
+                progress?.dismiss()
             }, onErro = {
-                progress.dismiss()
+                progress?.dismiss()
             })
         }, onErro = { exception ->
-            progress.dismiss()
+            progress?.dismiss()
         })
 
 
@@ -160,7 +181,7 @@ class AlunoFragment : MenuFragment() {
         if (!isCamposObrigatoriosPreenchidos())
             return
 
-       val progress = dialogCarregando("Salvando dados do usuário")
+        progress = dialogCarregando("Salvando dados do usuário")
 
         viewModel.updateValueAluno(Aluno().apply {
             this.nome = nomeTextInptEdit.text.toString()
@@ -173,11 +194,16 @@ class AlunoFragment : MenuFragment() {
 
         viewModel.criarAluno(imagemSelecionadaBytes,
                 onComplete = {
-            progress.dismiss()
-            longToast(getString(R.string.msg_aluno_sucesso))
+                    progress?.dismiss()
+
+                    activity?.let {
+                        Toast.makeText(it, getString(R.string.msg_aluno_sucesso), Toast.LENGTH_SHORT).show()
+                    }
+
+
         }, onError = { msg ->
 
-            progress.dismiss()
+            progress?.dismiss()
             msg?.let {
                 alert {
                     message = it
@@ -263,13 +289,20 @@ class AlunoFragment : MenuFragment() {
             imagemSelecionada.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
             imagemSelecionadaBytes = outputStream.toByteArray()
 
+
             val options = RequestOptions()
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .signature(ObjectKey(System.currentTimeMillis()))
                     .priority(Priority.HIGH)
                     .dontAnimate()
                     .dontTransform()
-            Glide.with(this).load(imagemSelecionada).apply(options).into(fotoImageView)
+
+            Glide.with(this)
+                    .load(imagemSelecionada)
+                    .apply(options)
+                    .into(fotoImageView)
+                    .clearOnDetach()
 
         }
     }

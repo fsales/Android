@@ -110,10 +110,22 @@ class UsuarioFirestone  {
     }
 
 
-    fun updateUsuario(caminhoFoto: String) {
+    fun updateUsuario(caminhoFoto: String,
+                      onComplete: (Usuario) -> Unit,
+                      onError: (Exception?) -> Unit) {
         val usuFieldMap = mutableMapOf<String, Any>()
         usuFieldMap["caminhoFoto"] = caminhoFoto
-        currentUserDocRef.update(usuFieldMap)
+
+        currentUserDocRef.update(usuFieldMap).addOnCompleteListener {
+
+            getCurrentUser(onComplete = {
+                onComplete(it)
+            }, onError = {
+                onError(it)
+            })
+
+        }
+
     }
 
 }
