@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import br.com.e_aluno.AppContantes.INTENT_NOTICIA
 import br.com.e_aluno.R
 import br.com.e_aluno.activity.noticias.DetalharNoticiaActivity
 import br.com.e_aluno.recyclerview.NoticiaRecyclerView
@@ -24,10 +25,6 @@ class ListarNoticiasFragment : Fragment() {
 
     private val viewModel: ListaNoticiaViewModel by lazy {
         ViewModelProviders.of(this).get(ListaNoticiaViewModel::class.java)
-    }
-
-    companion object {
-        val INTENT_NOTICIA = "noticia"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

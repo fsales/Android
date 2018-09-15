@@ -86,7 +86,7 @@ class UsuarioFirestone  {
                 val novoUsuario = Usuario().apply {
                     this.email = usuario?.email?.toLowerCase() ?: ""
                     this.cadastro = Calendar.getInstance().time
-                    this.uuid = UUID.randomUUID().toString()
+                    this.uuid = Auth.instance.uid()
                 }
 
                 currentUserDocRef.set(novoUsuario).addOnCompleteListener {

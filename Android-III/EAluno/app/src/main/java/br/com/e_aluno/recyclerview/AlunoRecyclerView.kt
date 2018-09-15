@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.card_usuario.view.*
 
 class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>(),
                         private val context: Context,
-                        private val clickListerner: (Usuario) -> Unit) : RecyclerView.Adapter<AlunoRecyclerView.ViewHolder>() {
+                        private val clickListerner: (Usuario?) -> Unit) : RecyclerView.Adapter<AlunoRecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_usuario, parent, false)
@@ -58,6 +58,8 @@ class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>(),
 
             }
 
+            holder.usuario = usuario
+
         }
     }
 
@@ -66,6 +68,7 @@ class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>(),
         var featuredImage: ImageView
         var nome: TextView
         var email: TextView
+        var usuario:Usuario? = null
 
         init {
             this.featuredImage = itemView.imageView_profile_picture
@@ -73,9 +76,7 @@ class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>(),
             this.nome = itemView.textView_name
 
             itemView.setOnClickListener {
-                clickListerner(Usuario().apply {
-                    this.email = email
-                })
+                clickListerner(usuario)
             }
         }
     }

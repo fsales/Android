@@ -3,9 +3,9 @@ package br.com.e_aluno.activity.noticias
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import br.com.e_aluno.AppContantes.INTENT_NOTICIA
 import br.com.e_aluno.EAlunoActivity
 import br.com.e_aluno.R
-import br.com.e_aluno.fragment.noticias.ListarNoticiasFragment.Companion.INTENT_NOTICIA
 import br.com.e_aluno.model.Noticia
 import br.com.e_aluno.viewmodel.noticia.DetalharNoticiaViewModel
 import kotlinx.android.synthetic.main.activity_detalhar_noticia.*

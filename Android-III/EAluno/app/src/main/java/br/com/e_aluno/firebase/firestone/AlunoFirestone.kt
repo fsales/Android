@@ -34,7 +34,7 @@ class AlunoFirestone {
               onComplete: () -> Unit,
               onError: (exception: Exception?) -> Unit) {
         currentDocRef.get().addOnSuccessListener { documentSnapshot ->
-            aluno.uuid = UUID.randomUUID().toString()
+            aluno.uuid = Auth.instance.uid()
             currentDocRef.set(aluno, SetOptions.merge()).addOnCompleteListener { onComplete() }
 
         }.addOnFailureListener { exception ->

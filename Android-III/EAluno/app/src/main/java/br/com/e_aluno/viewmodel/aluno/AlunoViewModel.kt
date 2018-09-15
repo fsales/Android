@@ -3,6 +3,7 @@ package br.com.e_aluno.viewmodel.aluno
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import br.com.e_aluno.extension.capturarMensagemErro
+import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.firebase.Storage
 import br.com.e_aluno.firebase.firestone.AlunoFirestone
 import br.com.e_aluno.firebase.firestone.UsuarioFirestone
@@ -56,7 +57,7 @@ class AlunoViewModel : ViewModel() {
                    onError: (String?) -> Unit) {
 
         imagemUsuario?.let {
-            Storage.INSTANCE.uploadFoto(it, onComplete = {
+            Storage.INSTANCE.uploadFoto(it, Auth.instance?.uid()!!, onComplete = {
                 UsuarioFirestone.instance.updateUsuario(it)
             }, onError = {
                 capturarMensagemErro(it) { msg ->
