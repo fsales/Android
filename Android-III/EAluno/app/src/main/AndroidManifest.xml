@@ -31,7 +31,8 @@
         <activity android:name=".activity.autenticacao.LoginActivity" />
         <activity android:name=".activity.autenticacao.RecuperarSenhaActivity" />
         <activity android:name=".activity.autenticacao.CadastrarActivity" />
-        <activity android:name=".activity.batepapo.BatePapoActivity"></activity>
+        <activity android:name=".activity.batepapo.BatePapoActivity" />
+        <activity android:name=".activity.noticias.DetalharNoticiaActivity"></activity>
     </application>
 
 </manifest>

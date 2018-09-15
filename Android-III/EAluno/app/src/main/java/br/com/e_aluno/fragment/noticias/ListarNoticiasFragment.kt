@@ -9,17 +9,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.e_aluno.R
+import br.com.e_aluno.activity.noticias.DetalharNoticiaActivity
 import br.com.e_aluno.extension.mockNoticias
 import br.com.e_aluno.model.Noticia
 import br.com.e_aluno.recyclerview.NoticiaRecyclerView
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
+import org.jetbrains.anko.support.v4.intentFor
 
 
 class ListarNoticiasFragment : Fragment() {
 
     private var adapter: NoticiaRecyclerView? = null
+
     private val list: ArrayList<Noticia> by lazy {
         arrayListOf<Noticia>()
+    }
+
+    companion object {
+        val INTENT_NOTICIA = "noticia"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -36,10 +43,12 @@ class ListarNoticiasFragment : Fragment() {
             }
 
             recyclerView.layoutManager = LinearLayoutManager(activity)
-            adapter = NoticiaRecyclerView(list)
+            adapter = NoticiaRecyclerView(list, clickListener = { noticia ->
+                startActivity(intentFor<DetalharNoticiaActivity>().apply {
+                    putExtra(INTENT_NOTICIA, noticia)
+                })
+            })
             recyclerView.adapter = adapter
-
-
 
             list.addAll(mockNoticias())
             adapter?.notifyDataSetChanged();
