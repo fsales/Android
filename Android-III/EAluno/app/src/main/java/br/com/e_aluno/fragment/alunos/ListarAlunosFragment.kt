@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.e_aluno.R
+import br.com.e_aluno.activity.batepapo.BatePapoActivity
 import br.com.e_aluno.extension.dialogCarregando
 import br.com.e_aluno.firebase.firestone.UsuarioFirestone
 import br.com.e_aluno.model.Usuario
@@ -20,6 +21,7 @@ import br.com.e_aluno.recyclerview.AlunoRecyclerView
 import br.com.e_aluno.viewmodel.aluno.ListarAlunosViewModel
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.fragment_noticias.view.*
+import org.jetbrains.anko.support.v4.startActivity
 
 
 class ListarAlunosFragment : Fragment() {
@@ -62,7 +64,10 @@ class ListarAlunosFragment : Fragment() {
             }
 
             recyclerView.layoutManager = LinearLayoutManager(activity)
-            adapter = AlunoRecyclerView(context = context)
+            adapter = AlunoRecyclerView(context = context!!, clickListerner = {
+                startActivity<BatePapoActivity>()
+            })
+
             this.recyclerView.adapter = adapter
             dialogProgress.dismiss()
         }

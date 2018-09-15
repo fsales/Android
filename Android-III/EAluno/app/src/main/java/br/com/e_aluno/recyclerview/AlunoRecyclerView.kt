@@ -16,14 +16,18 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.card_usuario.view.*
 
-class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>(), private val context: Context) : RecyclerView.Adapter<AlunoRecyclerView.ViewHolder>() {
-
-
+class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>(),
+                        private val context: Context,
+                        private val clickListerner: (Usuario) -> Unit) : RecyclerView.Adapter<AlunoRecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_usuario, parent, false)
 
         return ViewHolder(view)
+    }
+
+    fun on(func: () -> Unit) {
+
     }
 
     override fun getItemCount(): Int {
@@ -53,9 +57,9 @@ class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>(), private va
                         .into(holder.featuredImage)
 
             }
+
         }
     }
-
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -67,6 +71,12 @@ class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>(), private va
             this.featuredImage = itemView.imageView_profile_picture
             this.email = itemView.textView_email
             this.nome = itemView.textView_name
+
+            itemView.setOnClickListener {
+                clickListerner(Usuario().apply {
+                    this.email = email
+                })
+            }
         }
     }
 }
