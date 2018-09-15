@@ -62,7 +62,7 @@ class ListarAlunosFragment : Fragment() {
             }
 
             recyclerView.layoutManager = LinearLayoutManager(activity)
-            adapter = AlunoRecyclerView()
+            adapter = AlunoRecyclerView(context = context)
             this.recyclerView.adapter = adapter
             dialogProgress.dismiss()
         }
