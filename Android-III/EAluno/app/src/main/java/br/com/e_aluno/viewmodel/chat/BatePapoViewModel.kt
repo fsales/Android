@@ -25,6 +25,12 @@ class BatePapoViewModel : ViewModel() {
         }
     }
 
+    val mesagens: MutableLiveData<ArrayList<IMensagem>> by lazy {
+        MutableLiveData<ArrayList<IMensagem>>().apply {
+            value = arrayListOf()
+        }
+    }
+
 
     init {
         UsuarioFirestone.instance.getCurrentUser(onComplete = {
@@ -36,8 +42,11 @@ class BatePapoViewModel : ViewModel() {
 
 
     fun enviarMensagem(idCanal: String,
+                       onComplete: () -> Unit ,
                        onError: (String?) -> Unit?) {
-        ChatFirestore.instance.sendMessage(mensagem.value!!, idCanal, onErro = {
+        ChatFirestore.instance.sendMessage(mensagem.value!!, idCanal, onComplete = {
+            onComplete()
+        }, onErro = {
             capturarMensagemErro(it) { msg ->
                 onError(msg)
             }

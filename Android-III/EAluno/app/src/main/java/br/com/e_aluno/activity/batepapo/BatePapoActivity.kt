@@ -3,7 +3,6 @@ package br.com.e_aluno.activity.batepapo
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import br.com.e_aluno.AppContantes
 import br.com.e_aluno.EAlunoActivity
 import br.com.e_aluno.R
@@ -47,7 +46,6 @@ class BatePapoActivity : EAlunoActivity() {
 
         viewModel.otherUsuario.value = intent.extras.getParcelable(AppContantes.INTENT_USUARIO)
 
-
         viewModel.otherUsuario.observe(this, android.arch.lifecycle.Observer { usuario ->
             usuario?.let {
                 uidOtherUsuario = it.uuid
@@ -58,6 +56,14 @@ class BatePapoActivity : EAlunoActivity() {
 
         viewModel.usuarioCorrente.observe(this, android.arch.lifecycle.Observer { usuario ->
             usuarioAtual = usuario
+        })
+
+        viewModel.mesagens.observe(this, android.arch.lifecycle.Observer { list ->
+            list?.let {
+                adapter.list = it
+                adapter?.notifyDataSetChanged();
+                recyclerView.scrollToPosition(recyclerView.adapter.itemCount - 1)
+            }
         })
 
 
@@ -78,13 +84,13 @@ class BatePapoActivity : EAlunoActivity() {
         }
     }
 
-    private fun updateRecyclerView(messages: List<IMensagem>) {
+    private fun updateRecyclerView(mensagens: ArrayList<IMensagem>) {
 
-        Log.d("FIRESTORE", "ChatMessagesListener error.")
+        viewModel.mesagens.value = mensagens
 
-        adapter.list = messages
-        adapter?.notifyDataSetChanged();
-        recyclerView.scrollToPosition(recyclerView.adapter.itemCount - 1)
+        //  adapter.list = messages
+        //  adapter?.notifyDataSetChanged();
+        // recyclerView.scrollToPosition(recyclerView.adapter.itemCount - 1)
     }
 
     private fun enviarMensagem() {
@@ -100,7 +106,9 @@ class BatePapoActivity : EAlunoActivity() {
             this.recipientId = uidOtherUsuario!!
         }
 
-        viewModel.enviarMensagem(idCanalCorente, onError = {
+        viewModel.enviarMensagem(idCanalCorente, onComplete = {
+            editTextMensagem.setText("")
+        }, onError = {
             dialogErro(it)
         })
 

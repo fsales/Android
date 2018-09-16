@@ -31,10 +31,16 @@ class ChatFirestore {
     private val chatChannelsCollectionRef = firestoreInstance.collection(CHAT)
 
 
-    fun sendMessage(mensagem: IMensagem, channelId: String, onErro: (Exception?) -> Unit?) {
+    fun sendMessage(mensagem: IMensagem,
+                    channelId: String,
+                    onComplete: () -> Unit,
+                    onErro: (Exception?) -> Unit?) {
         chatChannelsCollectionRef.document(channelId)
                 .collection(MENSAGENS)
-                .add(mensagem).addOnFailureListener {
+                .add(mensagem).addOnCompleteListener {
+                    onComplete()
+                }
+                .addOnFailureListener {
                     onErro(it)
                 }
     }
@@ -60,7 +66,7 @@ class ChatFirestore {
 
     fun addChatMensagemListener(idCanal: String,
                                 context: Context,
-                                onListen: (List<IMensagem>) -> Unit): ListenerRegistration {
+                                onListen: (ArrayList<IMensagem>) -> Unit): ListenerRegistration {
 
         return chatChannelsCollectionRef.document(idCanal)
                 .collection(MENSAGENS)
@@ -71,7 +77,7 @@ class ChatFirestore {
                         return@addSnapshotListener
                     }
 
-                    val items = mutableListOf<IMensagem>()
+                    val items = arrayListOf<IMensagem>()
                     querySnapshot!!.documents.forEach {
                         items.add(it.toObject(MensagemTexto::class.java)!!)
                     }
