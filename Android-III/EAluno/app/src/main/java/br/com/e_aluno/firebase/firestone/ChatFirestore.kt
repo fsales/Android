@@ -26,10 +26,10 @@ class ChatFirestore {
     private val firestoreInstance: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
 
     private val currentUserDocRef: DocumentReference
-        get() = firestoreInstance.document("users/${Auth.instance.uid()
+        get() = firestoreInstance.document("usuarios/${Auth.instance.uid()
                 ?: throw NullPointerException("UID is null.")}")
 
-    private val chatChannelsCollectionRef = firestoreInstance.collection(CHAT)
+    private val chatChannelsCollectionRef = firestoreInstance.collection("chatChannels")
 
 
     fun sendMessage(mensagem: IMensagem,
@@ -49,9 +49,9 @@ class ChatFirestore {
     fun chat(otherUserUid: String,
              onComplete: (chatId: String) -> Unit) {
 
-        currentUserDocRef.collection(CANAIS_CHAT).document(otherUserUid).get().addOnSuccessListener {
+        currentUserDocRef.collection("engagedChatChannels").document(otherUserUid).get().addOnSuccessListener {
             if (it.exists()) {
-                onComplete(it["idCanal"] as String)
+                onComplete(it["channelId"] as String)
                 return@addOnSuccessListener
             }
 
@@ -60,7 +60,15 @@ class ChatFirestore {
             val novaCanal = chatChannelsCollectionRef.document()
 
             novaCanal.set(Canal(mutableListOf(idUsuarioCorrente, otherUserUid)))
-            currentUserDocRef.collection(CANAIS_CHAT).document(otherUserUid).set(mapOf("idCanal" to novaCanal.id))
+            currentUserDocRef
+                    .collection("engagedChatChannels")
+                    .document(otherUserUid)
+                    .set(mapOf("channelId" to novaCanal.id))
+
+            firestoreInstance.collection("usuarios").document(otherUserUid)
+                    .collection("engagedChatChannels")
+                    .document(idUsuarioCorrente!!)
+                    .set(mapOf("channelId" to novaCanal.id))
             onComplete(novaCanal.id)
         }
     }
