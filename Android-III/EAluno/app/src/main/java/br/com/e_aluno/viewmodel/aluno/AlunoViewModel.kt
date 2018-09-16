@@ -31,7 +31,7 @@ class AlunoViewModel : ViewModel() {
 
     private fun carregarUsuarioLogado() {
         UsuarioFirestone.instance.getCurrentUser(onComplete = { usuario ->
-            this.usuario.value = usuario
+            this.usuario.postValue(usuario)
         }, onError = { exception ->
             capturarMensagemErro(exception) {
                 Log.e("erro", exception.toString())

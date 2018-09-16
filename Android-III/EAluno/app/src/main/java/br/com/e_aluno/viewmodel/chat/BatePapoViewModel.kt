@@ -28,7 +28,7 @@ class BatePapoViewModel : ViewModel() {
 
     init {
         UsuarioFirestone.instance.getCurrentUser(onComplete = {
-            usuarioCorrente.value = it
+            usuarioCorrente.postValue(it)
         }, onError = {
             throw  NullPointerException("UID está nulo")
         })
