@@ -2,8 +2,8 @@ package br.com.e_aluno.viewmodel.aluno
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import br.com.e_aluno.extension.capturarMensagemErro
-import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.firebase.Storage
 import br.com.e_aluno.firebase.firestone.AlunoFirestone
 import br.com.e_aluno.firebase.firestone.UsuarioFirestone
@@ -24,20 +24,24 @@ class AlunoViewModel : ViewModel() {
         }
     }
 
-    fun updateValueAluno(aluno: Aluno) {
-        this.aluno.value = aluno
+    init {
+        carregarUsuarioLogado()
     }
 
-    fun carregarDadosUsuario(onComplete: () -> Unit,
-                             onErro: (exception: String?) -> Unit) {
+
+    private fun carregarUsuarioLogado() {
         UsuarioFirestone.instance.getCurrentUser(onComplete = { usuario ->
             this.usuario.value = usuario
-            onComplete()
         }, onError = { exception ->
             capturarMensagemErro(exception) {
-                onErro(it)
+                Log.e("erro", exception.toString())
             }
         })
+    }
+
+
+    fun updateValueAluno(aluno: Aluno) {
+        this.aluno.value = aluno
     }
 
     fun carregarDadosAluno(onComplete: () -> Unit,

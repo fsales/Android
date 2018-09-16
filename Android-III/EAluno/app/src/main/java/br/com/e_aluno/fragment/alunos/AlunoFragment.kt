@@ -146,16 +146,11 @@ class AlunoFragment : MenuFragment() {
 
         progress = dialogCarregando()
 
-        viewModel.carregarDadosUsuario(onComplete = {
-            viewModel.carregarDadosAluno(onComplete = {
-                progress?.dismiss()
-            }, onErro = {
-                progress?.dismiss()
-            })
-        }, onErro = { exception ->
+        viewModel.carregarDadosAluno(onComplete = {
+            progress?.dismiss()
+        }, onErro = {
             progress?.dismiss()
         })
-
 
         return view
     }
