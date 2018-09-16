@@ -9,9 +9,10 @@ import br.com.e_aluno.R
 import br.com.e_aluno.extension.dialogErro
 import br.com.e_aluno.firebase.firestone.ChatFirestore
 import br.com.e_aluno.model.IMensagem
+import br.com.e_aluno.model.Mensagem
 import br.com.e_aluno.model.MensagemTexto
 import br.com.e_aluno.model.Usuario
-import br.com.e_aluno.recyclerview.MensagemTexoRecyclerView
+import br.com.e_aluno.recyclerview.MensagemRecyclerView
 import br.com.e_aluno.viewmodel.chat.BatePapoViewModel
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.activity_bate_papo.*
@@ -26,7 +27,7 @@ class BatePapoActivity : EAlunoActivity() {
 
     private lateinit var mensagemListener: ListenerRegistration
     private lateinit var idCanalCorente: String
-    private lateinit var adapter: MensagemTexoRecyclerView
+    private lateinit var adapter: MensagemRecyclerView
 
     private var uidOtherUsuario: String? = null
     private var usuarioAtual: Usuario? = null
@@ -72,7 +73,7 @@ class BatePapoActivity : EAlunoActivity() {
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = MensagemTexoRecyclerView()
+        adapter = MensagemRecyclerView()
         this.recyclerView.adapter = adapter
     }
 
@@ -84,7 +85,7 @@ class BatePapoActivity : EAlunoActivity() {
         }
     }
 
-    private fun updateRecyclerView(mensagens: ArrayList<IMensagem>) {
+    private fun updateRecyclerView(mensagens: ArrayList<Mensagem>) {
 
         viewModel.mesagens.value = mensagens
 

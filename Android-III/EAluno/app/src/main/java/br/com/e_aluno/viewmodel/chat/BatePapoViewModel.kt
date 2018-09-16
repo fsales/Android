@@ -6,6 +6,7 @@ import br.com.e_aluno.extension.capturarMensagemErro
 import br.com.e_aluno.firebase.firestone.ChatFirestore
 import br.com.e_aluno.firebase.firestone.UsuarioFirestone
 import br.com.e_aluno.model.IMensagem
+import br.com.e_aluno.model.Mensagem
 import br.com.e_aluno.model.MensagemTexto
 import br.com.e_aluno.model.Usuario
 
@@ -25,8 +26,8 @@ class BatePapoViewModel : ViewModel() {
         }
     }
 
-    val mesagens: MutableLiveData<ArrayList<IMensagem>> by lazy {
-        MutableLiveData<ArrayList<IMensagem>>().apply {
+    val mesagens: MutableLiveData<ArrayList<Mensagem>> by lazy {
+        MutableLiveData<ArrayList<Mensagem>>().apply {
             value = arrayListOf()
         }
     }

@@ -14,5 +14,5 @@ interface IMensagem {
     var senderId: String
     var recipientId: String
     var nome: String
-    var type: String
+    val type: String
 }

@@ -6,12 +6,8 @@ import java.util.*
 
 
 @Parcelize
-data class MensagemTexto(var texto: String,
-                         override var dataHora: Date,
-                         override var senderId: String,
-                         override var recipientId: String,
-                         override var nome: String,
-                         override var type: String = TipoMensagem.TEXTO) : IMensagem, Parcelable {
+data class MensagemTexto(var texto: String) : Mensagem(
+        Date(0), "", "", "", TipoMensagem.TEXTO), Parcelable {
 
-    constructor() : this("", Date(0), "", "", "", TipoMensagem.TEXTO)
+    constructor() : this("")
 }

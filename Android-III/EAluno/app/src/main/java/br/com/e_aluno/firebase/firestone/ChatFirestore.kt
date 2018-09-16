@@ -5,6 +5,7 @@ import android.util.Log
 import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.model.Canal
 import br.com.e_aluno.model.IMensagem
+import br.com.e_aluno.model.Mensagem
 import br.com.e_aluno.model.MensagemTexto
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -66,7 +67,7 @@ class ChatFirestore {
 
     fun addChatMensagemListener(idCanal: String,
                                 context: Context,
-                                onListen: (ArrayList<IMensagem>) -> Unit): ListenerRegistration {
+                                onListen: (ArrayList<Mensagem>) -> Unit): ListenerRegistration {
 
         return chatChannelsCollectionRef.document(idCanal)
                 .collection(MENSAGENS)
@@ -77,7 +78,7 @@ class ChatFirestore {
                         return@addSnapshotListener
                     }
 
-                    val items = arrayListOf<IMensagem>()
+                    val items = arrayListOf<Mensagem>()
                     querySnapshot!!.documents.forEach {
                         items.add(it.toObject(MensagemTexto::class.java)!!)
                     }
