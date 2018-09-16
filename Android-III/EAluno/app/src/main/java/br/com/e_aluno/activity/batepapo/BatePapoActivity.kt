@@ -2,6 +2,7 @@ package br.com.e_aluno.activity.batepapo
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import br.com.e_aluno.AppContantes
 import br.com.e_aluno.EAlunoActivity
@@ -11,6 +12,7 @@ import br.com.e_aluno.firebase.firestone.ChatFirestore
 import br.com.e_aluno.model.IMensagem
 import br.com.e_aluno.model.MensagemTexto
 import br.com.e_aluno.model.Usuario
+import br.com.e_aluno.recyclerview.MensagemTexoRecyclerView
 import br.com.e_aluno.viewmodel.chat.BatePapoViewModel
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.activity_bate_papo.*
@@ -25,6 +27,7 @@ class BatePapoActivity : EAlunoActivity() {
 
     private lateinit var mensagemListener: ListenerRegistration
     private lateinit var idCanalCorente: String
+    private lateinit var adapter: MensagemTexoRecyclerView
 
     private var uidOtherUsuario: String? = null
     private var usuarioAtual: Usuario? = null
@@ -62,6 +65,9 @@ class BatePapoActivity : EAlunoActivity() {
             enviarMensagem()
         }
 
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = MensagemTexoRecyclerView()
+        this.recyclerView.adapter = adapter
     }
 
     private fun criarChate(uidOtherUsuario: String) {
@@ -75,6 +81,10 @@ class BatePapoActivity : EAlunoActivity() {
     private fun updateRecyclerView(messages: List<IMensagem>) {
 
         Log.d("FIRESTORE", "ChatMessagesListener error.")
+
+        adapter.list = messages
+        adapter?.notifyDataSetChanged();
+        recyclerView.scrollToPosition(recyclerView.adapter.itemCount - 1)
     }
 
     private fun enviarMensagem() {

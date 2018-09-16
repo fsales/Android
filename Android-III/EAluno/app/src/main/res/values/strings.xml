@@ -33,4 +33,5 @@
     <string name="sair">sair</string>
     <string name="bate_papo">Bate-Papo IESB</string>
     <string name="mensagem">mensagem</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
 </resources>
