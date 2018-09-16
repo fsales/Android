@@ -2,6 +2,8 @@ package br.com.e_aluno.viewmodel.chat
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import br.com.e_aluno.extension.capturarMensagemErro
+import br.com.e_aluno.firebase.firestone.ChatFirestore
 import br.com.e_aluno.firebase.firestone.UsuarioFirestone
 import br.com.e_aluno.model.IMensagem
 import br.com.e_aluno.model.MensagemTexto
@@ -33,8 +35,13 @@ class BatePapoViewModel : ViewModel() {
     }
 
 
-    fun enviarMensagem(){
-        //otherUsuario
+    fun enviarMensagem(idCanal: String,
+                       onError: (String?) -> Unit?) {
+        ChatFirestore.instance.sendMessage(mensagem.value!!, idCanal, onErro = {
+            capturarMensagemErro(it) { msg ->
+                onError(msg)
+            }
+        })
     }
 
 }

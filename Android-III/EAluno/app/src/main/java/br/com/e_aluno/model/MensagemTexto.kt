@@ -11,7 +11,7 @@ data class MensagemTexto(var texto: String,
                          override var senderId: String,
                          override var recipientId: String,
                          override var nome: String,
-                         override var type: String) : IMensagem, Parcelable {
+                         override var type: String = TipoMensagem.TEXTO) : IMensagem, Parcelable {
 
-    constructor() : this("", Date(0), "", "", "", "")
+    constructor() : this("", Date(0), "", "", "", TipoMensagem.TEXTO)
 }

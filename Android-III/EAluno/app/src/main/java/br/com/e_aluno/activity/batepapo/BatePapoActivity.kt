@@ -2,12 +2,17 @@ package br.com.e_aluno.activity.batepapo
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import br.com.e_aluno.AppContantes
 import br.com.e_aluno.EAlunoActivity
 import br.com.e_aluno.R
+import br.com.e_aluno.extension.dialogErro
+import br.com.e_aluno.firebase.firestone.ChatFirestore
+import br.com.e_aluno.model.IMensagem
 import br.com.e_aluno.model.MensagemTexto
 import br.com.e_aluno.model.Usuario
 import br.com.e_aluno.viewmodel.chat.BatePapoViewModel
+import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.activity_bate_papo.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
@@ -18,8 +23,12 @@ class BatePapoActivity : EAlunoActivity() {
         ViewModelProviders.of(this).get(BatePapoViewModel::class.java)
     }
 
+    private lateinit var mensagemListener: ListenerRegistration
+    private lateinit var idCanalCorente: String
+
     private var uidOtherUsuario: String? = null
     private var usuarioAtual: Usuario? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,18 +40,16 @@ class BatePapoActivity : EAlunoActivity() {
             it.setDisplayShowHomeEnabled(true)
         }
 
+        // view model
+
         viewModel.otherUsuario.value = intent.extras.getParcelable(AppContantes.INTENT_USUARIO)
 
-        imageViewEnviar.setOnClickListener {
-            enviarMensagem()
-        }
 
-
-        // view model
         viewModel.otherUsuario.observe(this, android.arch.lifecycle.Observer { usuario ->
             usuario?.let {
                 uidOtherUsuario = it.uuid
                 supportActionBar?.title = it.email
+                criarChate(it.uuid!!)
             }
         })
 
@@ -50,6 +57,24 @@ class BatePapoActivity : EAlunoActivity() {
             usuarioAtual = usuario
         })
 
+
+        imageViewEnviar.setOnClickListener {
+            enviarMensagem()
+        }
+
+    }
+
+    private fun criarChate(uidOtherUsuario: String) {
+        ChatFirestore.instance.chat(uidOtherUsuario) { canalId ->
+            idCanalCorente = canalId
+            mensagemListener = ChatFirestore.instance
+                    .addChatMensagemListener(canalId, this, this::updateRecyclerView)
+        }
+    }
+
+    private fun updateRecyclerView(messages: List<IMensagem>) {
+
+        Log.d("FIRESTORE", "ChatMessagesListener error.")
     }
 
     private fun enviarMensagem() {
@@ -64,5 +89,11 @@ class BatePapoActivity : EAlunoActivity() {
             this.nome = usuarioAtual?.email!!.substringBefore("@")
             this.recipientId = uidOtherUsuario!!
         }
+
+        viewModel.enviarMensagem(idCanalCorente, onError = {
+            dialogErro(it)
+        })
+
+
     }
 }
