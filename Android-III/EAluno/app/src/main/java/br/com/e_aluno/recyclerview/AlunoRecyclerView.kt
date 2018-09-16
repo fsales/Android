@@ -42,6 +42,7 @@ class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>(),
 
             usuario.caminhoFoto?.let { caminhoFoto ->
 
+
                 val options = RequestOptions()
                         .centerCrop()
                         .placeholder(R.drawable.ic_account_circle_black_24dp)
@@ -49,7 +50,7 @@ class AlunoRecyclerView(var list: List<Usuario>? = listOf<Usuario>(),
                         .priority(Priority.HIGH)
                         .dontAnimate()
                         .dontTransform()
-                val caminhoFotoStorage = Storage.INSTANCE.pathToReference(caminhoFoto)
+                val caminhoFotoStorage =  if(caminhoFoto.isNotBlank() && caminhoFoto.isNotEmpty()) Storage.INSTANCE.pathToReference(caminhoFoto) else caminhoFoto
 
                 Glide.with(context)
                         .load(caminhoFotoStorage)
