@@ -46,7 +46,7 @@ class MensagemRecyclerView(var list: List<Mensagem>? = listOf<Mensagem>())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
         TYPE_TEXTO_DIREITA ->
-            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_mensagem_texto, parent, false))
+            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_mensagem_texto_direita, parent, false))
         else ->
             ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_mensagem_texto, parent, false))
     }
