@@ -44,4 +44,13 @@
         <item name="android:windowBackground">@drawable/splash_screen_background</item>
     </style>
 
+
+    <style name="batePapoDireita" parent="CardView.Light">
+        <item name="cardBackgroundColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="batePapoEsquerda" parent="CardView.Light">
+        <item name="cardBackgroundColor">@color/colorAccent</item>
+    </style>
+
 </resources>
