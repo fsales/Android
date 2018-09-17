@@ -18,6 +18,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
         app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="6dp"
         >
 
         <android.support.constraint.ConstraintLayout
