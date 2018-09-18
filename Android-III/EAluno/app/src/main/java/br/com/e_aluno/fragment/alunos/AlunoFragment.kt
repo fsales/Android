@@ -303,24 +303,24 @@ class AlunoFragment : MenuFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+            super.onActivityResult(requestCode, resultCode, data)
 
-        if (data?.data == null && imageUri != null) {
-            data?.data = imageUri
-        }
-        carregarImagem(requestCode, resultCode, data)
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        when (requestCode) {
-            REQUEST_PERMISSION -> {
-                capturarFoto(context!!, activity!!, listaPermissaoFoto)
+            if (data?.data == null && imageUri != null) {
+                data?.data = imageUri
             }
+            carregarImagem(requestCode, resultCode, data)
         }
 
+        override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-    }
+            when (requestCode) {
+                REQUEST_PERMISSION -> {
+                    capturarFoto(context!!, activity!!, listaPermissaoFoto)
+                }
+            }
+
+
+        }
 
 }

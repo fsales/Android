@@ -3,10 +3,7 @@ package br.com.e_aluno.firebase.firestone
 import android.content.Context
 import android.util.Log
 import br.com.e_aluno.firebase.Auth
-import br.com.e_aluno.model.Canal
-import br.com.e_aluno.model.IMensagem
-import br.com.e_aluno.model.Mensagem
-import br.com.e_aluno.model.MensagemTexto
+import br.com.e_aluno.model.*
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -88,7 +85,12 @@ class ChatFirestore {
 
                     val items = arrayListOf<Mensagem>()
                     querySnapshot!!.documents.forEach {
-                        items.add(it.toObject(MensagemTexto::class.java)!!)
+                        items.add(if (it["type"] == TipoMensagem.TEXTO) {
+                            it.toObject(MensagemTexto::class.java)!!
+                        } else {
+                            it.toObject(MensagemImagem::class.java)!!
+                        })
+
                     }
                     onListen(items)
                 }

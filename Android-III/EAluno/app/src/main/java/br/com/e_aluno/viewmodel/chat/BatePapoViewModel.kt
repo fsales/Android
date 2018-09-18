@@ -3,12 +3,11 @@ package br.com.e_aluno.viewmodel.chat
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import br.com.e_aluno.extension.capturarMensagemErro
+import br.com.e_aluno.firebase.Storage
 import br.com.e_aluno.firebase.firestone.ChatFirestore
 import br.com.e_aluno.firebase.firestone.UsuarioFirestone
-import br.com.e_aluno.model.IMensagem
-import br.com.e_aluno.model.Mensagem
-import br.com.e_aluno.model.MensagemTexto
-import br.com.e_aluno.model.Usuario
+import br.com.e_aluno.model.*
+import java.io.ByteArrayOutputStream
 
 class BatePapoViewModel : ViewModel() {
 
@@ -17,6 +16,12 @@ class BatePapoViewModel : ViewModel() {
     val mensagem: MutableLiveData<IMensagem> by lazy {
         MutableLiveData<IMensagem>().apply {
             value = MensagemTexto()
+        }
+    }
+
+    val mensagemImagem: MutableLiveData<MensagemImagem> by lazy {
+        MutableLiveData<MensagemImagem>().apply {
+            value = MensagemImagem()
         }
     }
 
@@ -42,12 +47,38 @@ class BatePapoViewModel : ViewModel() {
     }
 
 
-    fun enviarMensagem(idCanal: String,
-                       onComplete: () -> Unit ,
-                       onError: (String?) -> Unit?) {
+    fun enviarMensagemTexto(idCanal: String,
+                            onComplete: () -> Unit,
+                            onError: (String?) -> Unit?) {
         ChatFirestore.instance.sendMessage(mensagem.value!!, idCanal, onComplete = {
             onComplete()
         }, onErro = {
+            capturarMensagemErro(it) { msg ->
+                onError(msg)
+            }
+        })
+    }
+
+    fun enviarMensagemImagem(idCanal: String,
+                             imagemBytes: ByteArrayOutputStream,
+                             onComplete: () -> Unit,
+                             onError: (String?) -> Unit?) {
+
+        Storage.INSTANCE.uploadFoto(imagemBytes = imagemBytes.toByteArray(), onComplete = {
+            mensagemImagem.value.apply {
+                this?.imagemPath = it
+            }
+
+            ChatFirestore.instance.sendMessage(mensagemImagem.value!!, idCanal, onComplete = {
+                onComplete()
+            }, onErro = {
+                capturarMensagemErro(it) { msg ->
+                    onError(msg)
+                }
+            })
+
+
+        }, onError = {
             capturarMensagemErro(it) { msg ->
                 onError(msg)
             }
