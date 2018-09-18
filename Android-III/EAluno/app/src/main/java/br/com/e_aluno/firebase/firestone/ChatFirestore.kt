@@ -16,24 +16,25 @@ class ChatFirestore {
         }
     }
 
-    private val CHAT = "chatIesb"
+    private val USUARIOS = "usuarios"
     private val MENSAGENS = "mensagens"
     private val CANAIS_CHAT = "canaisChat"
+    private val CANAIS_CHAT_PARTICIPANTES = "canaisChatParticipantes"
 
     private val firestoreInstance: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
 
     private val currentUserDocRef: DocumentReference
-        get() = firestoreInstance.document("usuarios/${Auth.instance.uid()
+        get() = firestoreInstance.document("${USUARIOS}/${Auth.instance.uid()
                 ?: throw NullPointerException("UID is null.")}")
 
-    private val chatChannelsCollectionRef = firestoreInstance.collection("chatChannels")
+    private val chatChannelsCollectionRef = firestoreInstance.collection(CANAIS_CHAT)
 
 
     fun sendMessage(mensagem: IMensagem,
-                    channelId: String,
+                    idCanal: String,
                     onComplete: () -> Unit,
                     onErro: (Exception?) -> Unit?) {
-        chatChannelsCollectionRef.document(channelId)
+        chatChannelsCollectionRef.document(idCanal)
                 .collection(MENSAGENS)
                 .add(mensagem).addOnCompleteListener {
                     onComplete()
@@ -46,9 +47,9 @@ class ChatFirestore {
     fun chat(otherUserUid: String,
              onComplete: (chatId: String) -> Unit) {
 
-        currentUserDocRef.collection("engagedChatChannels").document(otherUserUid).get().addOnSuccessListener {
+        currentUserDocRef.collection(CANAIS_CHAT_PARTICIPANTES).document(otherUserUid).get().addOnSuccessListener {
             if (it.exists()) {
-                onComplete(it["channelId"] as String)
+                onComplete(it["idCanal"] as String)
                 return@addOnSuccessListener
             }
 
@@ -58,14 +59,14 @@ class ChatFirestore {
 
             novaCanal.set(Canal(mutableListOf(idUsuarioCorrente, otherUserUid)))
             currentUserDocRef
-                    .collection("engagedChatChannels")
+                    .collection(CANAIS_CHAT_PARTICIPANTES)
                     .document(otherUserUid)
-                    .set(mapOf("channelId" to novaCanal.id))
+                    .set(mapOf("idCanal" to novaCanal.id))
 
-            firestoreInstance.collection("usuarios").document(otherUserUid)
-                    .collection("engagedChatChannels")
+            firestoreInstance.collection(USUARIOS).document(otherUserUid)
+                    .collection(CANAIS_CHAT_PARTICIPANTES)
                     .document(idUsuarioCorrente!!)
-                    .set(mapOf("channelId" to novaCanal.id))
+                    .set(mapOf("idCanal" to novaCanal.id))
             onComplete(novaCanal.id)
         }
     }
