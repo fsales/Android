@@ -1,10 +1,10 @@
 def lifecycle_version = "1.1.1"
 def support_version = '27.1.1'
 def anko_version = '0.10.5'
-def firebase_core = '16.0.1'
-def firebase_libs = '11.8.0'
-def firebase_firestore = '17.0.1'
-def firebase_auth = '16.0.2'
+def firebase_core = '15.0.2'
+def firebase_libs = '15.0.2'
+def firebase_firestore = '16.0.0'
+def firebase_auth = '15.1.0'
 def glide = '4.8.0'
 
 apply plugin: 'com.android.application'
@@ -63,6 +63,8 @@ dependencies {
     implementation "com.google.firebase:firebase-storage:$firebase_libs"
     implementation "com.google.firebase:firebase-auth:$firebase_auth"
     implementation "com.google.firebase:firebase-firestore:$firebase_firestore"
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.google.firebase:firebase-messaging:15.0.2'
 
     implementation 'com.github.bumptech.glide:glide:4.4.0'
     kapt 'com.github.bumptech.glide:compiler:4.4.0'

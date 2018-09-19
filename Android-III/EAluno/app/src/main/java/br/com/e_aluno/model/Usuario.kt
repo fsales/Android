@@ -10,4 +10,5 @@ data class Usuario(var uuid: String? = null,
                    var email: String? = "",
                    var senha: String? = "",
                    var caminhoFoto: String? = "",
-                   @ServerTimestamp var cadastro: Date? = null) : Parcelable
+                   @ServerTimestamp var cadastro: Date? = null,
+                   val registrationTokens : MutableList<String>? = mutableListOf<String>()) : Parcelable

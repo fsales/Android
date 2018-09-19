@@ -9,9 +9,10 @@ import br.com.e_aluno.R
 import br.com.e_aluno.extension.campoPreenchido
 import br.com.e_aluno.extension.dialogCarregando
 import br.com.e_aluno.extension.mensagemCampoObrigatorio
-import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.model.Usuario
+import br.com.e_aluno.service.MyFirebaseInstanceIDService
 import br.com.e_aluno.viewmodel.autenticacao.LoginViewModel
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.*
 
@@ -61,6 +62,10 @@ class LoginActivity : EAlunoActivity() {
         viewModel.signInWithEmailAndPassword(onComplete = {
 
             startActivity(intentFor<MainActivity>().newTask().clearTask())
+
+            val registrationToke = FirebaseInstanceId.getInstance().token
+            MyFirebaseInstanceIDService.addTokenToFirestore(registrationToke)
+
             progressDialog.dismiss()
         }, onError = { msg ->
             progressDialog.dismiss()
