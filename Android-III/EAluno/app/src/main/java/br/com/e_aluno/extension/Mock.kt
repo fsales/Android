@@ -3,6 +3,7 @@ package br.com.e_aluno.extension
 import br.com.e_aluno.R
 import br.com.e_aluno.model.Noticia
 
+/*
 fun mockNoticias(): List<Noticia> {
 
     val not1 = Noticia(
@@ -114,4 +115,4 @@ fun mockNoticias(): List<Noticia> {
             codigoImagem = R.drawable.senhores)
 
     return arrayListOf<Noticia>(not1, not2, not3, not4, not5)
-}
+}*/

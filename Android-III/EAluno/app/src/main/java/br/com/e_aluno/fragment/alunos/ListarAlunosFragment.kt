@@ -50,6 +50,7 @@ class ListarAlunosFragment : Fragment() {
         super.onDetach()
         dialogProgress.dismiss()
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -87,7 +88,7 @@ class ListarAlunosFragment : Fragment() {
         })
 
         userListenerRegistration =
-                UsuarioFirestone.instance.recuperarUsuario(this.activity!!, this::updateRecyclerView)
+                UsuarioFirestone.instance.recuperarUsuario(this::updateRecyclerView)
         return view
     }
 

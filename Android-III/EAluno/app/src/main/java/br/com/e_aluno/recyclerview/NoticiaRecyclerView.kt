@@ -7,43 +7,39 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import br.com.e_aluno.R
+import br.com.e_aluno.firebase.Storage
+import br.com.e_aluno.formataDataHora
 import br.com.e_aluno.model.Noticia
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.card_noticia.view.*
-import org.jetbrains.anko.imageBitmap
 
 class NoticiaRecyclerView(var list: List<Noticia>? = listOf<Noticia>(),
-                          private val clickListener: (Noticia?) -> Unit) : RecyclerView.Adapter<NoticiaRecyclerView.ViewHolder>() {
+                          private val clickListener: (Noticia?) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticiaViewHolder {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_noticia, parent, false)
 
-        return ViewHolder(view, clickListener)
+        return NoticiaViewHolder(view, clickListener)
 
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        list?.let { it ->
-
-            val noticia = it[position] as Noticia
-
-            holder.title.text = noticia.dataNoticia + " - " + noticia.titulo
-            holder.desc.text = noticia.descricaoCurta
-            holder.featuredImage.imageBitmap = noticia.imagem(holder.itemView.context.resources)
-            holder.noticia = noticia
+        list?.let { list ->
+            (holder as BindViewHolder<Noticia>).bindViews(list[position])
         }
-
-
     }
 
     override fun getItemCount(): Int {
         return list?.size ?: 0
     }
 
-    inner class ViewHolder(itemView: View,
-                           val clickListener: (Noticia?) -> Unit) : RecyclerView.ViewHolder(itemView) {
-
+    inner class NoticiaViewHolder(itemView: View,
+                                  val clickListener: (Noticia?) -> Unit) : RecyclerView.ViewHolder(itemView), BindViewHolder<Noticia> {
         var featuredImage: ImageView
         var title: TextView
         var desc: TextView
@@ -59,6 +55,34 @@ class NoticiaRecyclerView(var list: List<Noticia>? = listOf<Noticia>(),
 
             this.itemView.setOnClickListener {
                 clickListener(noticia)
+            }
+        }
+
+        override fun bindViews(noticia: Noticia) {
+            var data = ""
+            noticia.dataNoticia?.let {
+                data = formataDataHora(it)
+            }
+            this.title.setText(data + " - " + noticia.titulo)
+            this.desc.setText(noticia.descricaoCurta)
+            this.noticia = noticia
+
+            noticia.imagemPath?.let { imagemPath ->
+                if (imagemPath.isNotEmpty()) {
+                    val options = RequestOptions()
+                            .centerCrop()
+                            .placeholder(R.drawable.ic_image_black_24dp)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .priority(Priority.HIGH)
+                            .dontAnimate()
+                            .dontTransform()
+
+                    Glide.with(itemView.context)
+                            .load(Storage.INSTANCE.pathToReference(imagemPath))
+                            .apply(options)
+                            .into(this.featuredImage)
+                            .clearOnDetach()
+                }
             }
         }
     }

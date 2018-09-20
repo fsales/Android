@@ -10,6 +10,8 @@ import android.graphics.drawable.BitmapDrawable
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun transformeBitmap(rDrawable: Int): ByteArray {
     val bitmap = (rDrawable    as? BitmapDrawable)?.bitmap
@@ -55,4 +57,10 @@ fun dialogPermissao(activity: Activity,
     }
     getImageFrom.show()
 
+}
+
+fun formataDataHora(data: Date): String {
+    val format = SimpleDateFormat("dd/MM/yyy - HH:mm:ss ")
+
+    return format.format(data)
 }

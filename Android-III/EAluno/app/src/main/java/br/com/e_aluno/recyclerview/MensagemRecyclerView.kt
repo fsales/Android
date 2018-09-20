@@ -9,6 +9,7 @@ import android.widget.TextView
 import br.com.e_aluno.R
 import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.firebase.Storage
+import br.com.e_aluno.formataDataHora
 import br.com.e_aluno.model.Mensagem
 import br.com.e_aluno.model.MensagemImagem
 import br.com.e_aluno.model.MensagemTexto
@@ -17,9 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.signature.ObjectKey
 import kotlinx.android.synthetic.main.item_mensagem_texto.view.*
-import java.text.SimpleDateFormat
 
 class MensagemRecyclerView(var list: List<Mensagem>? = listOf<Mensagem>())
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -74,7 +73,7 @@ class MensagemRecyclerView(var list: List<Mensagem>? = listOf<Mensagem>())
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         list?.let { list ->
-            (holder as BindViewHolder).bindViews(list[position])
+            (holder as BindViewHolder<Mensagem>).bindViews(list[position])
         }
     }
 
@@ -84,11 +83,11 @@ class MensagemRecyclerView(var list: List<Mensagem>? = listOf<Mensagem>())
     }
 }
 
-interface BindViewHolder {
-    fun bindViews(mensagem: Mensagem)
+interface BindViewHolder<T> {
+    fun bindViews(t: T)
 }
 
-class MensagemTextoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), BindViewHolder {
+class MensagemTextoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), BindViewHolder<Mensagem> {
 
     var mensagemTexto: TextView
     var dataHoraMensagem: TextView
@@ -106,8 +105,7 @@ class MensagemTextoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
 
             itemView.apply {
                 this.mensagemTexto.setText(msgTexto.texto)
-                val format = SimpleDateFormat("dd/MM/yyy - HH:mm:ss ")
-                this.dataHoraMensagem.setText(format.format(msgTexto.dataHora))
+                this.dataHoraMensagem.setText(formataDataHora(msgTexto.dataHora))
             }
         }
 
@@ -115,7 +113,7 @@ class MensagemTextoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     }
 }
 
-class MensagemImagemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), BindViewHolder {
+class MensagemImagemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), BindViewHolder<Mensagem> {
 
     var imagemView: ImageView
     var dataHoraMensagem: TextView
@@ -133,8 +131,7 @@ class MensagemImagemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
 
             itemView.apply {
 
-                val format = SimpleDateFormat("dd/MM/yyy - HH:mm:ss ")
-                this.dataHoraMensagem.setText(format.format(msgTexto.dataHora))
+                this.dataHoraMensagem.setText(formataDataHora(msgTexto.dataHora))
 
                 if (msgTexto.imagemPath.isNotEmpty()) {
 

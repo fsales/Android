@@ -1,6 +1,5 @@
 package br.com.e_aluno.firebase.firestone
 
-import android.content.Context
 import br.com.e_aluno.firebase.Auth
 import br.com.e_aluno.model.Aluno
 import br.com.e_aluno.model.Usuario
@@ -42,9 +41,7 @@ class UsuarioFirestone  {
     }
 
 
-    fun recuperarUsuario(context: Context,
-                         onLista: (ArrayList<Usuario>) -> Unit
-    ): ListenerRegistration {
+    fun recuperarUsuario(onLista: (ArrayList<Usuario>) -> Unit ): ListenerRegistration {
         return instance.collection("${PATH_USUARIOS}")
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
 
